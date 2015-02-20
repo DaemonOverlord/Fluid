@@ -2,6 +2,7 @@
 Fluid is a flexible, all-in-one SDK for Everybody Edits made with the programmer in mind.
 
 ###Install
+If you're using visual studio, you can install via nuget.
 ```
 PM> Install-Package Fluid
 ```
@@ -33,3 +34,21 @@ To join a world, all you need is a client thats logged in. You can use a world i
 WorldConnection myWorldCon = client.JoinWorld("PWtGKa64_JbkI");
 
 ```
+
+######Managing world events
+After you've joined a world, you can now monitor the world's events
+
+```c#
+//Add your event handlers
+myWorldCon.AddServerEVentHandler<CrownEvent>(OnCrown);
+```
+
+After you've added your own event handlers you can now create the methods
+
+```c#
+public static void OnCrown(CrownEvent e)
+{ 
+  //My code
+}
+```
+
