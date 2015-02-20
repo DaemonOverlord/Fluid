@@ -14,14 +14,13 @@ use to log in
 ```c#
 using Fluid;
 
+//Authentication examples
 IAuth eeAuth = new SimpleAuth("myEmail", "myEEPass");
-
 IAuth kongAuth = new KongregateAuth("myKongUsername", "myKongPass");
-
 IAuth armorAuth = new ArmorgamesAuth("myArmorUsername", "myArmorPass");
 
+//Create client
 FluidClient client = new FluidClient(myAuth);
-
 bool loginSucess = client.LogIn();
 
 ```
