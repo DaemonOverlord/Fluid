@@ -64,7 +64,7 @@ See the documentation for more interactions.
 
 ######Joining the lobby
 
-With fluid, one of it's features is the ability to join the lobby also.
+With fluid, one of it's features is the ability to join the lobby.
 To join the lobby you can use very simliar syntax as joining a world.
 
 ```c#
@@ -74,4 +74,4 @@ LobbyConnection myLobbyCon = client.JoinLobby();
 ```
 
 Note that the lobby's functionalities differ per type of connection, specifically guest connections.
-
+After you've joined the lobby you can fetch player profiles, spend energy, interact with friends and more.
