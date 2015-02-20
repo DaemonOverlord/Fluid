@@ -27,7 +27,7 @@ bool loginSucess = client.LogIn();
 ```
 
 ######Joining a world
-To join a world, all you need is a client thats logged in. You can use a world id or world url.
+To join a world, all you need is a client that's logged in. You can use a world id or world url.
 
 ```c#
 
