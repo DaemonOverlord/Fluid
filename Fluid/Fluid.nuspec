@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>ThyChief</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/ThyChief/Fluid/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ThyChief/Fluid</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>fluid everybodyedits</tags>
+  </metadata>
+</package>

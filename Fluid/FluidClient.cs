@@ -3,6 +3,7 @@ using Fluid.Blocks;
 using PlayerIOClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Fluid
@@ -345,7 +346,15 @@ namespace Fluid
 
                 if (!m_PlayerDatabase.Connected)
                 {
-                    m_PlayerDatabase.Connect(m_Toolbelt);
+                    //Check if database exists
+                    if (File.Exists("gDat.db"))
+                    {
+                        m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt));
+                    }
+                    else
+                    {
+                        m_Log.Add(FluidLogCategory.Fail, "Database could not be loaded. You can download the latest database from https://github.com/ThyChief/Fluid");
+                    }
                 }
 
                 
