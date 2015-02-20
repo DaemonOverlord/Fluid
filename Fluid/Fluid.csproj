@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B2712C6-95BC-4B30-9A8C-0581FA3385D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fluid</RootNamespace>
+    <AssemblyName>Fluid</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Base">
+      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.2.76195\PcapDotNet.Binaries.1.0.2.76195.x64\PcapDotNet.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Core">
+      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.2.76195\PcapDotNet.Binaries.1.0.2.76195.x64\PcapDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Core.Extensions">
+      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.2.76195\PcapDotNet.Binaries.1.0.2.76195.x64\PcapDotNet.Core.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Packets">
+      <HintPath>..\..\..\..\..\Desktop\PcapDotNet.Binaries.1.0.2.76195\PcapDotNet.Binaries.1.0.2.76195.x64\PcapDotNet.Packets.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayerIOClient">
+      <HintPath>..\packages\PlayerIOClient-Signed.2.3.6.0\lib\PlayerIOClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.94.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Auth\ArmorgamesAuth.cs" />
+    <Compile Include="Auth\ArmorgamesFlashvars.cs" />
+    <Compile Include="Auth\FacebookAuth.cs" />
+    <Compile Include="Auth\GuestAuth.cs" />
+    <Compile Include="Auth\IAuth.cs" />
+    <Compile Include="Auth\Implementation\MousebreakerLogin.cs" />
+    <Compile Include="Auth\KongregateAuth.cs" />
+    <Compile Include="Auth\KongregatePlayerObject.cs" />
+    <Compile Include="Auth\KongregateSession.cs" />
+    <Compile Include="Auth\MousebreakerApiData.cs" />
+    <Compile Include="Auth\MousebreakerAuth.cs" />
+    <Compile Include="Auth\SimpleAuth.cs" />
+    <Compile Include="BlockRequest.cs" />
+    <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Blocks\BlockID.cs" />
+    <Compile Include="Blocks\CoinBlock.cs" />
+    <Compile Include="Blocks\DeathBlock.cs" />
+    <Compile Include="Blocks\Key.cs" />
+    <Compile Include="Blocks\LabelBlock.cs" />
+    <Compile Include="Blocks\Layer.cs" />
+    <Compile Include="Blocks\MusicBlock.cs" />
+    <Compile Include="Blocks\Portal.cs" />
+    <Compile Include="Blocks\PurpleBlock.cs" />
+    <Compile Include="Blocks\RotatableBlock.cs" />
+    <Compile Include="Blocks\Rotation.cs" />
+    <Compile Include="Blocks\TextBlock.cs" />
+    <Compile Include="Blocks\WorldPortal.cs" />
+    <Compile Include="ChatManager.cs" />
+    <Compile Include="ChatMessage.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="ConnectionValue.cs" />
+    <Compile Include="Events\DisconnectEvent.cs" />
+    <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\PhysicsUpdateEvent.cs" />
+    <Compile Include="FaceID.cs" />
+    <Compile Include="Friend.cs" />
+    <Compile Include="FluidClient.cs" />
+    <Compile Include="FluidColor.cs" />
+    <Compile Include="FluidConnectionBase.cs" />
+    <Compile Include="FluidEventHandler.cs" />
+    <Compile Include="LobbyConnection.cs" />
+    <Compile Include="FluidLog.cs" />
+    <Compile Include="FluidLogCategory.cs" />
+    <Compile Include="FluidLogMessage.cs" />
+    <Compile Include="FluidParser.cs" />
+    <Compile Include="FluidPlayerDatabase.cs" />
+    <Compile Include="FluidPoint.cs" />
+    <Compile Include="SecureConnection.cs" />
+    <Compile Include="FluidShopInfo.cs" />
+    <Compile Include="FluidToolbelt.cs" />
+    <Compile Include="FluidWire.cs" />
+    <Compile Include="WorldConnection.cs" />
+    <Compile Include="Handlers\AccessHandler.cs" />
+    <Compile Include="Handlers\AddHandler.cs" />
+    <Compile Include="Handlers\AllowPotionsHandler.cs" />
+    <Compile Include="Handlers\ArmorgamesAuthHandler.cs" />
+    <Compile Include="Handlers\BackgroundColorHandler.cs" />
+    <Compile Include="Handlers\BlockHandler.cs" />
+    <Compile Include="Handlers\ClearHandler.cs" />
+    <Compile Include="Handlers\CoinHandler.cs" />
+    <Compile Include="Handlers\ConnectionCompleteHandler.cs" />
+    <Compile Include="Handlers\CrownHandler.cs" />
+    <Compile Include="Handlers\DoorGateBlockHandler.cs" />
+    <Compile Include="Handlers\FaceHandler.cs" />
+    <Compile Include="Handlers\GetBlockedHandler.cs" />
+    <Compile Include="Handlers\GetFriendsHandler.cs" />
+    <Compile Include="Handlers\GetInvitesHandler.cs" />
+    <Compile Include="Handlers\GetPendingHandler.cs" />
+    <Compile Include="Handlers\GetPlayerObjectHandler.cs" />
+    <Compile Include="Handlers\GetProfileHandler.cs" />
+    <Compile Include="Handlers\GetProfileVisibilityHandler.cs" />
+    <Compile Include="Handlers\GetShopHandler.cs" />
+    <Compile Include="Handlers\GodHandler.cs" />
+    <Compile Include="Handlers\GuardianHandler.cs" />
+    <Compile Include="Handlers\HideHandler.cs" />
+    <Compile Include="Handlers\IMessageHandler.cs" />
+    <Compile Include="Handlers\InfoHandler.cs" />
+    <Compile Include="Handlers\InitHandler.cs" />
+    <Compile Include="Handlers\KillHandler.cs" />
+    <Compile Include="Handlers\LabelBlockHandler.cs" />
+    <Compile Include="Handlers\LeftHandler.cs" />
+    <Compile Include="Handlers\LevelupHandler.cs" />
+    <Compile Include="Handlers\LoadLevelHandler.cs" />
+    <Compile Include="Handlers\LobbyPropertiesHandler.cs" />
+    <Compile Include="Handlers\LostAccessHandler.cs" />
+    <Compile Include="Handlers\ModHandler.cs" />
+    <Compile Include="Handlers\MovementHandler.cs" />
+    <Compile Include="Handlers\MusicBlockHandler.cs" />
+    <Compile Include="Handlers\OldSayHandler.cs" />
+    <Compile Include="Handlers\PlayerIOMessageHandler.cs" />
+    <Compile Include="Handlers\PortalBlockHandler.cs" />
+    <Compile Include="Handlers\PotionHandler.cs" />
+    <Compile Include="Handlers\QuickChatHandler.cs" />
+    <Compile Include="Handlers\RotatableBlockHandler.cs" />
+    <Compile Include="Handlers\SavedHandler.cs" />
+    <Compile Include="Handlers\SayHandler.cs" />
+    <Compile Include="Handlers\ShowHandler.cs" />
+    <Compile Include="Handlers\SilverCrownHandler.cs" />
+    <Compile Include="Handlers\TeleHandler.cs" />
+    <Compile Include="Handlers\TeleportHandler.cs" />
+    <Compile Include="Handlers\TextBlockHandler.cs" />
+    <Compile Include="Handlers\UpdateMetaHandler.cs" />
+    <Compile Include="Handlers\UpgradeHandler.cs" />
+    <Compile Include="Handlers\WootHandler.cs" />
+    <Compile Include="Handlers\WootUpHandler.cs" />
+    <Compile Include="Handlers\WorldPortalBlockHandler.cs" />
+    <Compile Include="KeyManager.cs" />
+    <Compile Include="KeyPress.cs" />
+    <Compile Include="KeyTrigger.cs" />
+    <Compile Include="LobbyProperties.cs" />
+    <Compile Include="Physics\PhysicsEngine.cs" />
+    <Compile Include="Physics\Vector.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerManager.cs" />
+    <Compile Include="PlayerObject.cs" />
+    <Compile Include="PlayerType.cs" />
+    <Compile Include="Potion.cs" />
+    <Compile Include="PotionManager.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileVisibility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomType.cs" />
+    <Compile Include="ServerEvents\AccessEvent.cs" />
+    <Compile Include="ServerEvents\AddEvent.cs" />
+    <Compile Include="ServerEvents\AllowPotionEvent.cs" />
+    <Compile Include="ServerEvents\AuthEvent.cs" />
+    <Compile Include="ServerEvents\BackgroundColorChangedEvent.cs" />
+    <Compile Include="ServerEvents\BlockEvent.cs" />
+    <Compile Include="ServerEvents\ClearEvent.cs" />
+    <Compile Include="ServerEvents\CoinBlockEvent.cs" />
+    <Compile Include="ServerEvents\CoinEvent.cs" />
+    <Compile Include="ServerEvents\ConnectionCompleteEvent.cs" />
+    <Compile Include="ServerEvents\CrownEvent.cs" />
+    <Compile Include="ServerEvents\DeathBlockEvent.cs" />
+    <Compile Include="ServerEvents\DeleteFriendEvent.cs" />
+    <Compile Include="ServerEvents\FaceEvent.cs" />
+    <Compile Include="ServerEvents\GetBlockedEvent.cs" />
+    <Compile Include="ServerEvents\GetFriendsEvent.cs" />
+    <Compile Include="ServerEvents\GetInvitesEvent.cs" />
+    <Compile Include="ServerEvents\GetLobbyPropertiesEvent.cs" />
+    <Compile Include="ServerEvents\GetPendingEvent.cs" />
+    <Compile Include="ServerEvents\GetProfileEvent.cs" />
+    <Compile Include="ServerEvents\GetProfileVisibilityEvent.cs" />
+    <Compile Include="ServerEvents\GetShopEvent.cs" />
+    <Compile Include="ServerEvents\GodEvent.cs" />
+    <Compile Include="ServerEvents\GuardianModeEvent.cs" />
+    <Compile Include="ServerEvents\HideEvent.cs" />
+    <Compile Include="ServerEvents\InfoEvent.cs" />
+    <Compile Include="ServerEvents\InitEvent.cs" />
+    <Compile Include="ServerEvents\IServerEvent.cs" />
+    <Compile Include="ServerEvents\KillEvent.cs" />
+    <Compile Include="ServerEvents\LabelBlockEvent.cs" />
+    <Compile Include="ServerEvents\LeftEvent.cs" />
+    <Compile Include="ServerEvents\LevelupEvent.cs" />
+    <Compile Include="ServerEvents\LoadLevelEvent.cs" />
+    <Compile Include="ServerEvents\LostAccessEvent.cs" />
+    <Compile Include="ServerEvents\MessageReceivedEvent.cs" />
+    <Compile Include="ServerEvents\ModModeEvent.cs" />
+    <Compile Include="ServerEvents\MovementEvent.cs" />
+    <Compile Include="ServerEvents\MusicBlockEvent.cs" />
+    <Compile Include="ServerEvents\OldSayEvent.cs" />
+    <Compile Include="ServerEvents\PlayerIOMessage.cs" />
+    <Compile Include="ServerEvents\PlayerObjectEvent.cs" />
+    <Compile Include="ServerEvents\PortalBlockEvent.cs" />
+    <Compile Include="ServerEvents\PotionEvent.cs" />
+    <Compile Include="ServerEvents\PurpleBlockEvent.cs" />
+    <Compile Include="ServerEvents\QuickChatEvent.cs" />
+    <Compile Include="ServerEvents\ResetEvent.cs" />
+    <Compile Include="ServerEvents\RotatableBlockEvent.cs" />
+    <Compile Include="ServerEvents\SavedEvent.cs" />
+    <Compile Include="ServerEvents\SayEvent.cs" />
+    <Compile Include="ServerEvents\ShowEvent.cs" />
+    <Compile Include="ServerEvents\SilverCrownEvent.cs" />
+    <Compile Include="ServerEvents\TeleportEvent.cs" />
+    <Compile Include="ServerEvents\TextBlockEvent.cs" />
+    <Compile Include="ServerEvents\UpdateMetaEvent.cs" />
+    <Compile Include="ServerEvents\UpgradeEvent.cs" />
+    <Compile Include="ServerEvents\WootEvent.cs" />
+    <Compile Include="ServerEvents\WootUpEvent.cs" />
+    <Compile Include="ServerEvents\WorldPortalBlockEvent.cs" />
+    <Compile Include="Shop.cs" />
+    <Compile Include="ShopItem.cs" />
+    <Compile Include="Storage\JsonStorageProvider.cs" />
+    <Compile Include="Storage\StorageProvider.cs" />
+    <Compile Include="UnsafeAction.cs" />
+    <Compile Include="UploadManager.cs" />
+    <Compile Include="VaultShopItem.cs" />
+    <Compile Include="Web\PlayerIORequest.cs" />
+    <Compile Include="Web\PlayerIORequestSniffedHandler.cs" />
+    <Compile Include="World.cs" />
+    <Compile Include="WorldPlayer.cs" />
+    <Compile Include="WorldReference.cs" />
+    <Compile Include="WorldType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
