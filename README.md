@@ -11,7 +11,7 @@ PM> Install-Package Fluid
 To use fluid you'll need to login to everybody edits. There are multiple ways of authentication you can
 use to log in
 
-```cshsarp
+```c#
 using Fluid;
 
 IAuth eeAuth = new SimpleAuth("myEmail", "myEEPass");
