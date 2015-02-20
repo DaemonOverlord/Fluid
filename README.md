@@ -16,6 +16,7 @@ use to log in
 using Fluid;
 
 //Authentication examples
+IAuth guestAuth = new GuestAuth();
 IAuth eeAuth = new SimpleAuth("myEmail", "myEEPass");
 IAuth kongAuth = new KongregateAuth("myKongUsername", "myKongPass");
 IAuth armorAuth = new ArmorgamesAuth("myArmorUsername", "myArmorPass");
@@ -43,7 +44,7 @@ After you've joined a world, you can now monitor the world's events
 myWorldCon.AddServerEVentHandler<CrownEvent>(OnCrown);
 ```
 
-After you've added your own event handlers you can now create the methods
+And add your own code for each event! It's that simple.
 
 ```c#
 public static void OnCrown(CrownEvent e)
@@ -51,4 +52,26 @@ public static void OnCrown(CrownEvent e)
   //My code
 }
 ```
+
+######Interacting with the world
+At any point in time if you want to update your world you can use the WorldConnection to send events.
+
+```c#
+worldCon.SetTitle("Hello everybodyedits!");
+```
+
+See the documentation for more interactions.
+
+######Joining the lobby
+
+With fluid, one of it's features is the ability to join the lobby also.
+To join the lobby you can use very simliar syntax as joining a world.
+
+```c#
+
+//Use logged in client
+LobbyConnection myLobbyCon = client.JoinLobby();
+```
+
+Note that the lobby's functionalities differ per type of connection, specifically guest connections.
 
