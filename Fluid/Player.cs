@@ -24,7 +24,7 @@
         /// </summary>
         private void FetchConnectionId()
         {
-            if (m_Client != null)
+            if (m_Client != null && m_Client.PlayerDatabase.Connected)
             {
                 ConnectionId = m_Client.PlayerDatabase.GetConnectionId(Username);
             }

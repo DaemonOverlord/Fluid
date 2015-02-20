@@ -41,6 +41,15 @@ C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\System.Data.SQLite.
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\EntityFramework.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PlayerIOClient.xml
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\System.Data.SQLite.xml
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.csprojResolveAssemblyReference.cache
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.dll
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.pdb
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Base.dll
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Core.dll
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Core.Extensions.dll
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Packets.dll
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Base.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Base.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Core.pdb
@@ -49,8 +58,4 @@ C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Core.Ext
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Core.Extensions.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Packets.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PcapDotNet.Packets.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\PlayerIOClient.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\System.Data.SQLite.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.csprojResolveAssemblyReference.cache
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.dll
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\obj\Debug\Fluid.pdb
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid\bin\Debug\Fluid.XML

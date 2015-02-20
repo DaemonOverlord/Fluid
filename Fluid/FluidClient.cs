@@ -163,10 +163,13 @@ namespace Fluid
         /// <returns>The player if successful; otherwise null</returns>
         public Player GetPlayerByConnectionId(string connectionId)
         {
-            string username = PlayerDatabase.GetUsername(connectionId);
-            if (username != null)
+            if (m_PlayerDatabase.Connected)
             {
-                return new Player(this, username, connectionId);
+                string username = PlayerDatabase.GetUsername(connectionId);
+                if (username != null)
+                {
+                    return new Player(this, username, connectionId);
+                }
             }
 
             return null;
@@ -364,8 +367,11 @@ namespace Fluid
                     PlayerObject pObject = LoadMyPlayerObject();
                     if (pObject != null)
                     {
-                        PlayerDatabase.Add(pObject.Username, ConnectionUserId);
-                        m_Player = new Player(this, pObject.Username, ConnectionUserId);
+                        if (m_PlayerDatabase.Connected)
+                        {
+                            PlayerDatabase.Add(pObject.Username, ConnectionUserId);
+                            m_Player = new Player(this, pObject.Username, ConnectionUserId);
+                        }
                     }
                 }
 
