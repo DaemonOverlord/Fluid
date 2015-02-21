@@ -338,6 +338,64 @@ namespace Fluid
             return await Task.Run<VaultShopItem[]>(() => LoadPlayerItems());
         }
 
+        internal string FindDatabase()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+
+            DirectoryInfo parentDir = Directory.GetParent(currentDirectory);
+
+            int roots = 0;
+            while (roots < 2)
+            {
+                if (parentDir.Parent == null)
+                {
+                    return null;
+                }
+
+                parentDir = parentDir.Parent;
+                roots++;
+            }
+
+            string[] dirs = Directory.GetDirectories(parentDir.FullName);
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                string dirName = Path.GetFileName(dirs[i]);
+                if (string.Compare(dirName, "packages", false) == 0)
+                {
+                    //Found packages folder
+                    string[] packages = Directory.GetDirectories(dirs[i]);
+                    for (int j = 0; j < packages.Length; j++)
+                    {
+                        //Found fluid package
+                        string packageName = Path.GetFileName(packages[j]);
+                        if (packageName.Contains("Fluid"))
+                        {
+                            string[] fluidDirs = Directory.GetDirectories(packages[j]);
+                            for (int k = 0; k < fluidDirs.Length; k++)
+                            {
+                                string fluidDirName = Path.GetFileName(fluidDirs[k]);
+                                if (string.Compare(fluidDirName, "build", false) == 0)
+                                {
+                                    //Found fluid build folder
+                                    string[] buildFiles = Directory.GetFiles(fluidDirs[k]);
+                                    for (int l = 0; l < buildFiles.Length; l++)
+                                    {
+                                        string buildFileExt = Path.GetExtension(buildFiles[l]);
+                                        if (string.Compare(buildFileExt, ".db", false) == 0)
+                                        {
+                                            return buildFiles[l];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Log's in to the game
         /// </summary>
@@ -373,11 +431,23 @@ namespace Fluid
                     //Check if database exists
                     if (File.Exists("gDat.db"))
                     {
-                        m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt));
+                        m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt, "gDat.db"));
                     }
                     else
                     {
-                        m_Log.Add(FluidLogCategory.Fail, "Database could not be loaded. You can download the latest database from https://github.com/ThyChief/Fluid");
+                        m_Log.Add(FluidLogCategory.Message, "Database not in filepath, attempting to locate database in nuget package.");
+
+                        //Try and locate from nuget build
+                        string nugetPath = FindDatabase();
+                        if (nugetPath != null)
+                        {
+                            m_Log.Add(FluidLogCategory.Message, "Found database.");
+                            m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt, nugetPath));      
+                        }
+                        else
+                        {
+                            m_Log.Add(FluidLogCategory.Fail, "Database could not be loaded. You can download the latest database from https://github.com/ThyChief/Fluid");
+                        }
                     }
                 }
 
@@ -641,7 +711,7 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Joins a world
+        /// Creates a world connection
         /// </summary>
         /// <param name="worldUrlOrId">A full room url or just a world id</param>
         /// <returns>The connection established; otherwise null</returns>

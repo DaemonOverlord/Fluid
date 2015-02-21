@@ -918,9 +918,13 @@ namespace Fluid.Physics
                     {
                         if (CanJumpThrough(tileId))
                         {
-                            RotatableBlock rotatableBlock = (RotatableBlock)block;
+                            uint rot = 0;
+                            if (block is RotatableBlock)
+                            {
+                                RotatableBlock rotatableBlock = (RotatableBlock)block;
+                                rot = (uint)rotatableBlock.Rotation;
+                            }
 
-                            uint rot = (uint)rotatableBlock.Rotation;
                             if (tileId == BlockID.OneWayCyan || tileId == BlockID.OneWayPink || tileId == BlockID.OneWayRed || tileId == BlockID.OneWayYellow)
                             {
                                 if ((p.SpeedY < 0 || a <= p.m_overlapy) && rot == 1)

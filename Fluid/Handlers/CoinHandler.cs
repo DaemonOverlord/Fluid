@@ -26,7 +26,7 @@ namespace Fluid.Handlers
             WorldConnection worldCon = (WorldConnection)connectionBase;
             WorldPlayer player = worldCon.Players.GetPlayer(userId);
 
-            if (player != null)
+            if (player != null && !handled)
             {
                 player.GoldCoins = message.GetInt(1);
                 player.BlueCoins = message.GetInt(2);

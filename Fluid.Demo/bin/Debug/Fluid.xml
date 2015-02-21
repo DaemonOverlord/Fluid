@@ -1106,7 +1106,7 @@
         </member>
         <member name="M:Fluid.FluidClient.GetWorldConnection(System.String)">
             <summary>
-            Joins a world
+            Creates a world connection
             </summary>
             <param name="worldUrlOrId">A full room url or just a world id</param>
             <returns>The connection established; otherwise null</returns>
@@ -1809,11 +1809,12 @@
             <param name="username">The username</param>
             <returns>The connection id if found; otherwise null</returns>
         </member>
-        <member name="M:Fluid.FluidPlayerDatabase.Connect(Fluid.FluidToolbelt)">
+        <member name="M:Fluid.FluidPlayerDatabase.Connect(Fluid.FluidToolbelt,System.String)">
             <summary>
             Connects to the player id database
             </summary>
             <param name="toolBelt">The Fluid toolbelt</param>
+            <param name="path"></param>
         </member>
         <member name="M:Fluid.FluidPlayerDatabase.#ctor(Fluid.FluidClient,Fluid.FluidLog)">
             <summary>

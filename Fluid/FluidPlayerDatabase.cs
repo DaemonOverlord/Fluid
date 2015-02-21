@@ -15,7 +15,18 @@ namespace Fluid
         /// <summary>
         /// Gets whether the connection is established
         /// </summary>
-        public bool Connected { get { return m_dbConnection.State == ConnectionState.Open; } }
+        public bool Connected 
+        { 
+            get 
+            {
+                if (m_dbConnection == null)
+                {
+                    return false;
+                }
+
+                return m_dbConnection.State == ConnectionState.Open; 
+            } 
+        }
 
         /// <summary>
         /// Checks if the database connection is open
@@ -152,7 +163,8 @@ namespace Fluid
         /// Connects to the player id database
         /// </summary>
         /// <param name="toolBelt">The Fluid toolbelt</param>
-        public void Connect(FluidToolbelt toolBelt)
+        /// <param name="path"></param>
+        public void Connect(FluidToolbelt toolBelt, string path)
         {
             if (toolBelt == null)
             {
@@ -164,6 +176,7 @@ namespace Fluid
                 return;
             }
 
+            this.m_dbConnection = new SQLiteConnection(string.Format("Data Source={0}", path));
             if (!toolBelt.RunSafe(delegate() { m_dbConnection.Open(); }) && m_Logger != null)
             {
                 m_Logger.Add(FluidLogCategory.Fail, "Fluid could not load local database, please make sure the local database is in the same directory as Fluid.dll");
@@ -178,8 +191,7 @@ namespace Fluid
         public FluidPlayerDatabase(FluidClient client, FluidLog logger)
         {
             this.m_Client = client;
-            this.m_Logger = logger;
-            this.m_dbConnection = new SQLiteConnection("Data Source=gDat.db");
+            this.m_Logger = logger;         
         }
     }
 }

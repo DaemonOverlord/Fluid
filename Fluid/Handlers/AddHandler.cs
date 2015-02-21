@@ -29,7 +29,7 @@ namespace Fluid.Handlers
             player.X = message.GetInt(3);
             player.Y = message.GetInt(4);
             player.InGodMode = message.GetBoolean(5);
-            //player.InGodMode = message.GetBoolean(6);
+            player.IsModerator = message.GetBoolean(6);
             player.HasChat = message.GetBoolean(7);
             player.GoldCoins = message.GetInt(8);
             player.BlueCoins = message.GetInt(9);

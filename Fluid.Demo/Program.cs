@@ -14,16 +14,23 @@ namespace Fluid.Demo
     {
         static void Main(string[] args)
         {
-            IAuth auth = new GuestAuth();
-
-            FluidClient client = new FluidClient(auth);
+            Fluid.FluidClient client = new Fluid.FluidClient(new GuestAuth());
 
             if (client.LogIn())
             {
-
+                WorldConnection worldCon = client.GetWorldConnection("PWQxrrGEEib0I");
+                worldCon.AddServerEventHandler<BlockEvent>(OnBlock);
+                worldCon.Join();
+                Console.ReadKey();
             }
+        }
 
-            return;
+        private static void OnBlock(BlockEvent eventMessage)
+        {
+            if (!eventMessage.Block.Placer.IsConnectedPlayer)
+            {
+                eventMessage.Block.ID++;
+            }
         }
     }
 }

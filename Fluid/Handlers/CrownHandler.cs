@@ -37,13 +37,16 @@ namespace Fluid.Handlers
                 worldCon.CrownHolder = player;
             }
 
-            CrownEvent crownEvent = new CrownEvent()
+            if (player != null)
             {
-                Raw = message,
-                Player = player
-            };
+                CrownEvent crownEvent = new CrownEvent()
+                {
+                    Raw = message,
+                    Player = player
+                };
 
-            connectionBase.RaiseServerEvent<CrownEvent>(crownEvent);
+                connectionBase.RaiseServerEvent<CrownEvent>(crownEvent);
+            }
         }
     }
 }
