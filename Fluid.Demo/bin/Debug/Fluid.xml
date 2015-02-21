@@ -464,6 +464,7 @@
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
+            <param name="hexColor">The hexadecimal color string</param>
         </member>
         <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.WorldConnection,Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
             <summary>
@@ -1096,23 +1097,16 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Fluid.FluidClient.GetWorldConnection(System.String)">
+        <member name="M:Fluid.FluidClient.CreateWorldConnection(System.String)">
             <summary>
             Establishes a world connection
             </summary>
             <param name="worldId">The world id</param>
             <returns>The world connection</returns>
         </member>
-        <member name="M:Fluid.FluidClient.JoinWorld(System.String)">
+        <member name="M:Fluid.FluidClient.GetWorldConnection(System.String)">
             <summary>
-            Joins a world with players already in it
-            </summary>
-            <param name="worldUrlOrId">A full room url or just a world id</param>
-            <returns>The connection established; otherwise null</returns>
-        </member>
-        <member name="M:Fluid.FluidClient.JoinWorldIfExists(System.String)">
-            <summary>
-            Joins the world
+            Joins a world
             </summary>
             <param name="worldUrlOrId">A full room url or just a world id</param>
             <returns>The connection established; otherwise null</returns>
@@ -1493,7 +1487,7 @@
             <summary>
             Use's gems on a shop item
             </summary>
-            <param name="shopItemId">The item</param>
+            <param name="item">The item</param>
             <returns>Whether gems were spent</returns>
         </member>
         <member name="M:Fluid.LobbyConnection.UseGems(System.String)">
@@ -1825,6 +1819,7 @@
             <summary>
             Creates a new Fluid player database
             </summary>
+            <param name="client">The client</param>
             <param name="logger">The Fluid logger</param>
         </member>
         <member name="P:Fluid.FluidPlayerDatabase.Connected">
@@ -3390,7 +3385,7 @@
             <summary>
             Trys to remove a player
             </summary>
-            <param name="player">The player's id</param>
+            <param name="id">The player's id</param>
             <returns>True if removed; otherwise false</returns>
         </member>
         <member name="M:Fluid.PlayerManager.Remove(System.String)">
@@ -4852,7 +4847,7 @@
             <summary>
             Deserialize's the world data
             </summary>
-            <param name="worldData">The world data as a database array</param>
+            <param name="worldObject">The world data as a database array</param>
         </member>
         <member name="M:Fluid.World.Deserialize(PlayerIOClient.Message)">
             <summary>
@@ -4875,12 +4870,14 @@
             <summary>
             Creates a new world from database data
             </summary>
-            <param name="worldData">The world data</param>
+            <param name="client">The client</param>
+            <param name="worldObject">The world data</param>
         </member>
         <member name="M:Fluid.World.#ctor(Fluid.FluidClient,PlayerIOClient.Message)">
             <summary>
             Creates a new world from a init message
             </summary>
+            <param name="client">The client</param>
             <param name="initMessage">The init message</param>
         </member>
         <member name="P:Fluid.World.Item(System.Int32,System.Int32,Fluid.Blocks.Layer)">

@@ -35,6 +35,7 @@
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
+        /// <param name="hexColor">The hexadecimal color string</param>
         public LabelBlock(WorldConnection worldCon, BlockID blockId, int x, int y, string text, string hexColor)
             : base(worldCon, blockId, x, y, text)
         {

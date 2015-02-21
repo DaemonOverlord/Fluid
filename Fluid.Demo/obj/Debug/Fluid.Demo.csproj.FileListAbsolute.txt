@@ -22,8 +22,6 @@ c:\Users\austin green\documents\visual studio 2012\Projects\Fluid\Fluid.Demo\obj
 c:\Users\austin green\documents\visual studio 2012\Projects\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.exe
 c:\Users\austin green\documents\visual studio 2012\Projects\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.exe.config
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.exe
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.exe
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.dll
@@ -34,14 +32,16 @@ C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Pac
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Base.dll
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.pdb
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PlayerIOClient.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\System.Data.SQLite.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.csprojResolveAssemblyReference.cache
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Core.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Core.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Packets.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Packets.xml
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Base.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Base.xml
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.xml
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.csprojResolveAssemblyReference.cache
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.exe
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.pdb

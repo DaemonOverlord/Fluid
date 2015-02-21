@@ -173,6 +173,7 @@ namespace Fluid
         /// <summary>
         /// Creates a new Fluid player database
         /// </summary>
+        /// <param name="client">The client</param>
         /// <param name="logger">The Fluid logger</param>
         public FluidPlayerDatabase(FluidClient client, FluidLog logger)
         {

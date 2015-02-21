@@ -179,7 +179,7 @@ namespace Fluid
         /// <summary>
         /// Use's gems on a shop item
         /// </summary>
-        /// <param name="shopItemId">The item</param>
+        /// <param name="item">The item</param>
         /// <returns>Whether gems were spent</returns>
         public bool UseGems(VaultShopItem item)
         {

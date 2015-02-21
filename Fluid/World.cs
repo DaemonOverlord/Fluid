@@ -405,7 +405,7 @@ namespace Fluid
         /// <summary>
         /// Deserialize's the world data
         /// </summary>
-        /// <param name="worldData">The world data as a database array</param>
+        /// <param name="worldObject">The world data as a database array</param>
         private void Deserialize(DatabaseObject worldObject)
         {
             Owner = m_Client.GetPlayerByConnectionId(GetValue<string>(worldObject, "owner"));
@@ -790,7 +790,8 @@ namespace Fluid
         /// <summary>
         /// Creates a new world from database data
         /// </summary>
-        /// <param name="worldData">The world data</param>
+        /// <param name="client">The client</param>
+        /// <param name="worldObject">The world data</param>
         internal World(FluidClient client, DatabaseObject worldObject)
         {
             IsDatabaseWorld = true;
@@ -802,6 +803,7 @@ namespace Fluid
         /// <summary>
         /// Creates a new world from a init message
         /// </summary>
+        /// <param name="client">The client</param>
         /// <param name="initMessage">The init message</param>
         internal World(FluidClient client, Message initMessage)
         {

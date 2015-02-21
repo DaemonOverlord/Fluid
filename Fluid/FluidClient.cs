@@ -625,7 +625,7 @@ namespace Fluid
         /// </summary>
         /// <param name="worldId">The world id</param>
         /// <returns>The world connection</returns>
-        internal Connection GetWorldConnection(string worldId)
+        internal Connection CreateWorldConnection(string worldId)
         {
             int currentVersion = GetGameVersion();
             if (currentVersion == -1)
@@ -641,11 +641,11 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Joins a world with players already in it
+        /// Joins a world
         /// </summary>
         /// <param name="worldUrlOrId">A full room url or just a world id</param>
         /// <returns>The connection established; otherwise null</returns>
-        public WorldConnection JoinWorld(string worldUrlOrId)
+        public WorldConnection GetWorldConnection(string worldUrlOrId)
         {
             string worldId = null;
             if (m_Parser.Parse(worldUrlOrId, out worldId))
@@ -666,38 +666,7 @@ namespace Fluid
                 if (connection != null)
                 {
                     c.SetConnection(connection);
-                    c.Join();
-
                     return c;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Joins the world
-        /// </summary>
-        /// <param name="worldUrlOrId">A full room url or just a world id</param>
-        /// <returns>The connection established; otherwise null</returns>
-        public WorldConnection JoinWorldIfExists(string worldUrlOrId)
-        {
-            string worldId = null;
-            if (m_Parser.Parse(worldUrlOrId, out worldId))
-            {
-                WorldConnection c = new WorldConnection(this, worldId);
-                Connection connection = m_Toolbelt.RunSafe<Connection>(() => m_Client.Multiplayer.JoinRoom(worldId, null));
-
-                if (connection != null)
-                {
-                    c.SetConnection(connection);
-                    c.Join();
-
-                    return c;
-                }
-                else
-                {
-                    m_Log.Add(FluidLogCategory.Suggestion, "Only use join world if you are sure the world has players in it. To join a world that is empty, use JoinWorldIfExists(worldUrlOrId)");
                 }
             }
 

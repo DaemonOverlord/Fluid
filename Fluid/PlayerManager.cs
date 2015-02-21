@@ -27,7 +27,7 @@ namespace Fluid
         /// <summary>
         /// Trys to remove a player
         /// </summary>
-        /// <param name="player">The player's id</param>
+        /// <param name="id">The player's id</param>
         /// <returns>True if removed; otherwise false</returns>
         public bool Remove(int id)
         {

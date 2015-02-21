@@ -70,7 +70,7 @@ namespace Fluid
         /// <summary>
         /// Joins the world
         /// </summary>
-        internal void Join()
+        public void Join()
         {
             this.SendMessage("init");
             Physics.Start();
@@ -560,7 +560,7 @@ namespace Fluid
         /// </summary>
         internal override void Reconnect()
         {
-            Connection connection = m_Client.GetWorldConnection(WorldID);
+            Connection connection = m_Client.CreateWorldConnection(WorldID);
             if (connection != null)
             {
                 base.SetConnection(connection);
