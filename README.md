@@ -75,3 +75,17 @@ LobbyConnection myLobbyCon = client.JoinLobby();
 
 Note that the lobby's functionalities differ per type of connection, specifically guest connections.
 After you've joined the lobby you can fetch player profiles, spend energy, interact with friends and more.
+
+#####Debugging feautures
+
+Fluid provides a variety of ways to optimize your code. The best way to view these messages from the log is setting an output to the fluid logger. There are a variety of ways you can do this, but one of the most simple being when using a console application.
+
+```c#
+client.Log.Output = Console.Out;
+```
+
+You also have the option to set the output to a file.
+
+```c#
+client.Log.Output = File.CreateText("myLog.txt");
+```
