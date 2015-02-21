@@ -1700,7 +1700,7 @@
             Gets the log count
             </summary>
         </member>
-        <member name="P:Fluid.FluidLog.Ouput">
+        <member name="P:Fluid.FluidLog.Output">
             <summary>
             Gets or sets the log output
             </summary>

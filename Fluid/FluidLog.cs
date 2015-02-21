@@ -24,7 +24,7 @@ namespace Fluid
         /// <summary>
         /// Gets or sets the log output
         /// </summary>
-        public TextWriter Ouput
+        public TextWriter Output
         {
             get
             {
