@@ -20,7 +20,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             List<Friend> invites = new List<Friend>();
             for (uint i = 0; i < message.Count; i += 3)

@@ -20,7 +20,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The playerio message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             Layer layer = (Layer)message.GetInt(0);
             int x = message.GetInt(1);
@@ -45,7 +45,7 @@ namespace Fluid.Handlers
                     if (old.ID == BlockID.CoinGold ||
                         old.ID == BlockID.CoinBlue)
                     {
-                        worldCon.PhysicsEngine.RemoveCoin(old);
+                        worldCon.Physics.RemoveCoin(old);
                     }
                 }
 

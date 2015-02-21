@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fluid.Physics
 {
@@ -93,6 +94,11 @@ namespace Fluid.Physics
         /// Gets the physics portal multiplier
         /// </summary>
         public const double PortalMultiplier = 1.42;
+
+        /// <summary>
+        /// Gets or sets the tick mode
+        /// </summary>
+        public TickMode TickMode { get; set; }
 
         /// <summary>
         /// Gets the current world
@@ -256,7 +262,6 @@ namespace Fluid.Physics
 
                 if (!worldPlayer.m_hasLastPortal)
                 {
-                    //lastPortal = new Point(cx, cy);
                     worldPlayer.m_hasLastPortal = true;
 
                     Portal target = World.GetPortalByID(portal.Target);
@@ -301,7 +306,6 @@ namespace Fluid.Physics
 
                         worldPlayer.X = target.X * 16;
                         worldPlayer.Y = target.Y * 16;
-                        //lastPortal = portalPoint;
                     }
                 }
             }
@@ -1202,6 +1206,39 @@ namespace Fluid.Physics
         }
 
         /// <summary>
+        /// Performs a server update
+        /// </summary>
+        internal void ServerUpdate(WorldPlayer player)
+        {
+            if (TickMode == TickMode.RealTime)
+            {
+                TickRealtimeAsync(player);
+            }
+        }
+
+        /// <summary>
+        /// Ticks up to real time
+        /// </summary>
+        private void TickRealtimeAsync(WorldPlayer player)
+        {
+            Task.Run(delegate()
+            {
+                //Catch up to the server whom is five ticks ahead approximatly
+                for (int t = 0; t < 5; t++)
+                {
+                    this.Tick(player);
+
+                    PhysicsUpdateEvent updateEvent = new PhysicsUpdateEvent()
+                    {
+                        Player = player
+                    };
+
+                    m_WorldConnection.RaiseEventAsync<PhysicsUpdateEvent>(updateEvent);
+                }
+            });
+        }
+
+        /// <summary>
         /// Removes the coin from all players
         /// </summary>
         /// <param name="block">The gold or blue coin</param>
@@ -1260,6 +1297,8 @@ namespace Fluid.Physics
         public PhysicsEngine(WorldConnection worldConnection)
         {
             this.m_WorldConnection = worldConnection;
+
+            TickMode = TickMode.RealTime;
         }
     }
 }

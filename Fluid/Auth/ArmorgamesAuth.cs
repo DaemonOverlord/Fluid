@@ -68,7 +68,7 @@ namespace Fluid.Auth
         /// <summary>
         /// Log's in to everybody edits with the armorgames login cookie
         /// </summary>
-        /// <param name="cookie"></param>
+        /// <param name="loginCookie"></param>
         internal ArmorgamesFlashvars GetFlashvars(string loginCookie)
         {
             HttpWebRequest gameRequest = (HttpWebRequest)HttpWebRequest.Create("http://armorgames.com/play/11986/everybody-edits");

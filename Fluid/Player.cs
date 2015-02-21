@@ -33,7 +33,7 @@
         /// <summary>
         /// Gets the player's profile
         /// </summary>
-        private Profile GetProfile()
+        public Profile GetProfile()
         {
             return m_Client.LoadProfile(Username);
         }

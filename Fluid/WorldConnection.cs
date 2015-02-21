@@ -7,19 +7,25 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace Fluid
 {
-    public class WorldConnection : FluidConnectionBase
+    public class WorldConnection : ConnectionBase
     {
         private long? m_blockThrottle = null;
         private DateTime m_throttleTimestamp;
-        private UploadManager m_UploadManager;
+        private BlockUploadManager m_UploadManager;
 
         /// <summary>
         /// Gets whether the connection has building access to the world
         /// </summary>
         public bool HasAccess { get; internal set; }
+
+        /// <summary>
+        /// Gets the world id
+        /// </summary>
+        public string WorldID { get; internal set; }
 
         /// <summary>
         /// Gets the world
@@ -49,7 +55,7 @@ namespace Fluid
         /// <summary>
         /// Gets the physics engine
         /// </summary>
-        public PhysicsEngine PhysicsEngine { get; internal set; }
+        public PhysicsEngine Physics { get; internal set; }
 
         /// <summary>
         /// Gets the currently connected player
@@ -67,7 +73,7 @@ namespace Fluid
         internal void Join()
         {
             this.SendMessage("init");
-            PhysicsEngine.Start();
+            Physics.Start();
 
             WaitForServerEvent<InitEvent>();           
             this.SendMessage("init2");
@@ -164,6 +170,7 @@ namespace Fluid
         /// Sends a block to the world
         /// </summary>
         /// <param name="block">The block to send</param>
+        /// <param name="waitForManager">Should the block be queued to the manager</param>
         internal void SendBlock(Block block, bool waitForManager)
         {
             if (!block.IsBinded)
@@ -290,6 +297,15 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Sets the visibility of the world
+        /// </summary>
+        /// <param name="visibility">The visibility</param>
+        public void SetVisibility(bool visibility)
+        {
+            this.SendMessage("say", string.Format("/visible {0}", visibility));
+        }
+
+        /// <summary>
         /// Sets the world's background color
         /// </summary>
         /// <param name="color">The color</param>
@@ -318,6 +334,22 @@ namespace Fluid
         /// Kicks the player from the world
         /// </summary>
         /// <param name="player">The player</param>
+        public void KickPlayer(WorldPlayer player)
+        {
+            if (player == null)
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Check if your player is null before attempting to use it.");
+                return;
+            }
+
+            this.SendMessage("say", string.Format("/kick {0}", player.Username));
+        }
+
+        /// <summary>
+        /// Kicks the player from the world
+        /// </summary>
+        /// <param name="player">The player</param>
+        /// <param name="reason">The reason shown the player why he/she was kicked</param>
         public void KickPlayer(WorldPlayer player, string reason)
         {
             if (player == null)
@@ -379,10 +411,49 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Sets a unique list of potions on
+        /// </summary>
+        /// <param name="potions">The unique list of potions</param>
+        public void SetPotionsOn(params Potion[] potions)
+        {
+            int[] potionIds = new int[potions.Length];
+            for (int i = 0; i < potions.Length; i++)
+            {
+                potionIds[i] = (int)potions[i];
+            }
+
+            this.SendMessage("say", string.Format("/potionson {0}", string.Join(" ", potionIds)));
+        }
+
+        /// <summary>
+        /// Sets a unique list of potions off
+        /// </summary>
+        /// <param name="potions">The unique list of potions</param>
+        public void SetPotionsOff(params Potion[] potions)
+        {
+            int[] potionIds = new int[potions.Length];
+            for (int i = 0; i < potions.Length; i++)
+            {
+                potionIds[i] = (int)potions[i];
+            }
+
+            this.SendMessage("say", string.Format("/potionsoff {0}", string.Join(" ", potionIds)));
+        }
+
+        /// <summary>
         /// Says a message in the chat
         /// </summary>
         /// <param name="message">The message</param>
         public void Say(string message)
+        {
+            this.Chat.Say(message);
+        }
+
+        /// <summary>
+        /// Sends the chat message to the server
+        /// </summary>
+        /// <param name="message">The message</param>
+        internal void SayInternal(string message)
         {
             this.SendMessage("say", message);
         }
@@ -465,7 +536,7 @@ namespace Fluid
                 return;
             }
 
-            this.SendMessage("say", string.Format("/teleport {0} {1} {2}", player.Username, location.X, location.Y));
+            this.SendMessage("say", string.Format("/teleport {0} {1} {2}", player.Username, (int)location.X, (int)location.Y));
         }
 
         /// <summary>
@@ -485,13 +556,28 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Reestablishes a connection to the world
+        /// </summary>
+        internal override void Reconnect()
+        {
+            Connection connection = m_Client.GetWorldConnection(WorldID);
+            if (connection != null)
+            {
+                base.SetConnection(connection);
+                this.Join();
+            }
+
+            base.Reconnect();
+        }
+
+        /// <summary>
         /// Shutdown immediate active resources
         /// </summary>
         internal override void Shutdown()
         {
-            if (PhysicsEngine != null)
+            if (Physics != null)
             {
-                PhysicsEngine.Stop();
+                Physics.Stop();
             }
 
             base.Shutdown();
@@ -501,15 +587,17 @@ namespace Fluid
         /// Creates a new Fluid connection
         /// </summary>
         /// <param name="client">The Fluid client</param>
-        /// <param name="connection">The playerio connection</param>
-        public WorldConnection(FluidClient client) : base(client)
+        /// <param name="worldId">The world id</param>
+        public WorldConnection(FluidClient client, string worldId) : base(client)
         {
-            Chat = new ChatManager();
+            WorldID = worldId;
+
+            Chat = new ChatManager(this);
             Players = new PlayerManager();
             Keys = new KeyManager();
             Potions = new PotionManager();
-            PhysicsEngine = new PhysicsEngine(this);
-            m_UploadManager = new UploadManager(this);
+            Physics = new PhysicsEngine(this);
+            m_UploadManager = new BlockUploadManager(this);
 
             base.AddMessageHandler(new InitHandler());
             base.AddMessageHandler(new AddHandler());

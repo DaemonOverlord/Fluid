@@ -3,7 +3,7 @@ using PlayerIOClient;
 
 namespace Fluid
 {
-    public class SecureConnection : FluidConnectionBase
+    public class SecureConnection : ConnectionBase
     {
         /// <summary>
         /// Sends a authentication request

@@ -20,7 +20,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             bool success = false;
 
@@ -75,7 +75,13 @@ namespace Fluid.Handlers
 
             shop.ShopItems = shopItemsData;
 
-            GetShopEvent getShopMessage = new GetShopEvent(shop) { Success = success };
+            GetShopEvent getShopMessage = new GetShopEvent()
+            { 
+                Raw = message, 
+                Shop = shop, 
+                Success = success 
+            };
+
             connectionBase.RaiseServerEvent<GetShopEvent>(getShopMessage);
         }
     }

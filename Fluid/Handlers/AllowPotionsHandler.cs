@@ -20,11 +20,36 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The playerio message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             bool allowed = message.GetBoolean(0);
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
+
+            if (worldCon != null)
+            {
+                //Update each player's potions
+                foreach (KeyValuePair<int, WorldPlayer> playerEntry in worldCon.Players.GetDictionary())
+                {
+                    foreach (KeyValuePair<Potion, PotionState> potionEntry in playerEntry.Value.Potions)
+                    {
+                        if (allowed)
+                        {
+                            if (potionEntry.Value == PotionState.Suspended)
+                            {
+                                playerEntry.Value.SetPotion(potionEntry.Key, PotionState.Active);
+                            }
+                        }
+                        else
+                        {
+                            if (potionEntry.Value == PotionState.Active)
+                            {
+                                playerEntry.Value.SetPotion(potionEntry.Key, PotionState.Suspended);
+                            }
+                        }
+                    }
+                }
+            }
 
             List<Potion> potions = new List<Potion>();
             for (uint i = 1; i < message.Count; i++)

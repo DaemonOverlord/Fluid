@@ -20,7 +20,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The playerio message</param>
         /// <pparam name="handled">Whether the message was already handled</pparam>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             Profile profile = new Profile();
             profile.ProfileVisible = string.Compare(message.GetString(0), "public", true) == 0;

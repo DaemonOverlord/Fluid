@@ -119,7 +119,7 @@
     <Compile Include="Friend.cs" />
     <Compile Include="FluidClient.cs" />
     <Compile Include="FluidColor.cs" />
-    <Compile Include="FluidConnectionBase.cs" />
+    <Compile Include="ConnectionBase.cs" />
     <Compile Include="FluidEventHandler.cs" />
     <Compile Include="LobbyConnection.cs" />
     <Compile Include="FluidLog.cs" />
@@ -128,6 +128,8 @@
     <Compile Include="FluidParser.cs" />
     <Compile Include="FluidPlayerDatabase.cs" />
     <Compile Include="FluidPoint.cs" />
+    <Compile Include="Physics\TickMode.cs" />
+    <Compile Include="PotionState.cs" />
     <Compile Include="SecureConnection.cs" />
     <Compile Include="FluidShopInfo.cs" />
     <Compile Include="FluidToolbelt.cs" />
@@ -266,7 +268,7 @@
     <Compile Include="Storage\JsonStorageProvider.cs" />
     <Compile Include="Storage\StorageProvider.cs" />
     <Compile Include="UnsafeAction.cs" />
-    <Compile Include="UploadManager.cs" />
+    <Compile Include="BlockUploadManager.cs" />
     <Compile Include="VaultShopItem.cs" />
     <Compile Include="Web\PlayerIORequest.cs" />
     <Compile Include="Web\PlayerIORequestSniffedHandler.cs" />

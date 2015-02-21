@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Fluid
 {
-    internal class UploadManager
+    internal class BlockUploadManager
     {
         private List<BlockRequest> m_Queue;
         private WorldConnection m_WorldConnection;
@@ -150,7 +150,7 @@ namespace Fluid
         /// Creates a new block manager
         /// </summary>
         /// <param name="worldCon"></param>
-        internal UploadManager(WorldConnection worldCon)
+        internal BlockUploadManager(WorldConnection worldCon)
         {
             m_Queue = new List<BlockRequest>();
             m_WorldConnection = worldCon;

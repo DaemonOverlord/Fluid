@@ -15,6 +15,6 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The message</param>
         /// <param name="handled">Whether the message was handled by the user</param>
-        void Process(FluidConnectionBase connectionBase, Message message, bool handled);
+        void Process(ConnectionBase connectionBase, Message message, bool handled);
     }
 }

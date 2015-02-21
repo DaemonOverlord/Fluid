@@ -46,7 +46,14 @@ namespace Fluid
                 SQLiteCommand command = m_dbConnection.CreateCommand();
                 command.CommandText = commandText;
 
-                return command.ExecuteScalar();
+                try
+                {
+                    return command.ExecuteScalar();
+                }
+                catch
+                {
+                    m_Logger.Add(FluidLogCategory.Fail, "Corrupt player database. Failed to interact with database.");
+                }
             }
 
             return null;
@@ -62,7 +69,15 @@ namespace Fluid
             {
                 SQLiteCommand command = m_dbConnection.CreateCommand();
                 command.CommandText = commandText;
-                command.ExecuteNonQuery();
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch
+                {
+                    m_Logger.Add(FluidLogCategory.Fail, "Corrupt player database. Failed to interact with database.");
+                }            
             }
         }
 

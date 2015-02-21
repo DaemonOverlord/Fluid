@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fluid
 {
     public class ChatManager
     {
+        private WorldConnection m_Connection;
         private List<ChatMessage> m_ChatHistory;
 
         /// <summary>
@@ -40,6 +44,68 @@ namespace Fluid
         {
             m_ChatHistory.Add(chatMessage);
         }
+        
+        /// <summary>
+        /// Splits a message up into segments by length
+        /// </summary>
+        /// <param name="message">The message</param>
+        /// <param name="length">Segment length</param>
+        /// <returns>The message segments</returns>
+        internal List<string> SplitMessage(string message, int length)
+        {
+            List<string> messages = new List<string>();
+
+            StringBuilder currentMessage = new StringBuilder();
+            int currentMessageIndex = 0;
+
+            char[] array = message.ToCharArray();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (currentMessageIndex < length)
+                {
+                    currentMessage.Append(array[i]);
+                    currentMessageIndex++;
+                }
+                else
+                {
+                    messages.Add(currentMessage.ToString());
+                    currentMessage.Clear();
+                    currentMessageIndex = 0;
+                }
+            }
+
+            if (currentMessage.Length > 0)
+            {
+                messages.Add(currentMessage.ToString());
+            }
+
+            return messages;
+        }
+
+        /// <summary>
+        /// Says a message
+        /// </summary>
+        /// <param name="message">The message to say</param>
+        public void Say(string message)
+        {
+            if (message.StartsWith("/"))
+            {
+                m_Connection.SayInternal(message);
+                return;
+            }
+
+            List<string> messageSegments = SplitMessage(message, 80);
+            Task chatTask = Task.Run(delegate()
+            {
+                for (int i = 0; i < messageSegments.Count; i++)
+                {
+                    m_Connection.SayInternal(messageSegments[i]);
+                    Thread.Sleep(700);
+                }
+            });
+
+            Task.WaitAll(chatTask);
+        }
 
         /// <summary>
         /// Gets the chat debug message
@@ -52,8 +118,9 @@ namespace Fluid
         /// <summary>
         /// Creates a new chat manager
         /// </summary>
-        public ChatManager()
+        public ChatManager(WorldConnection m_Connection)
         {
+            this.m_Connection = m_Connection;
             m_ChatHistory = new List<ChatMessage>();
         }
     }

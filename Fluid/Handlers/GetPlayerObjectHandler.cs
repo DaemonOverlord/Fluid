@@ -21,7 +21,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The Fluid connection base</param>
         /// <param name="message">The message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             PlayerObject pom = new PlayerObject();
 

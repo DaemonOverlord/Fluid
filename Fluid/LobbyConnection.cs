@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace Fluid
 {
-    public class LobbyConnection : FluidConnectionBase
+    public class LobbyConnection : ConnectionBase
     {
         /// <summary>
         /// Gets the lobby connection event timeout
         /// </summary>
-        public const int TIMEOUT = 2000;
+        public int Timeout { get; set; }
 
         /// <summary>
         /// Gets the message of the day
@@ -32,7 +32,7 @@ namespace Fluid
         public LobbyProperties GetLobbyProperties()
         {
             RequestLobbyProperties();
-            GetLobbyPropertiesEvent lobbyPropertiesEvent = base.WaitForServerEvent<GetLobbyPropertiesEvent>(TIMEOUT);
+            GetLobbyPropertiesEvent lobbyPropertiesEvent = base.WaitForServerEvent<GetLobbyPropertiesEvent>(Timeout);
             if (lobbyPropertiesEvent == null)
             {
                 return null;
@@ -55,7 +55,7 @@ namespace Fluid
         public PlayerObject GetPlayerObject()
         {
             RequestPlayerObject();
-            PlayerObjectEvent playerObjectEvent = base.WaitForServerEvent<PlayerObjectEvent>(TIMEOUT);
+            PlayerObjectEvent playerObjectEvent = base.WaitForServerEvent<PlayerObjectEvent>(Timeout);
             if (playerObjectEvent == null)
             {
                 return null;
@@ -81,7 +81,7 @@ namespace Fluid
         public Profile GetProfile(string username)
         {
             RequestProfile(username);
-            GetProfileEvent getProfileEvent = WaitForServerEvent<GetProfileEvent>(TIMEOUT);
+            GetProfileEvent getProfileEvent = WaitForServerEvent<GetProfileEvent>(Timeout);
             if (getProfileEvent == null)
             {
                 return null;
@@ -149,7 +149,7 @@ namespace Fluid
         public bool UseEnergy(string shopItemId)
         {
             RequestUseEnergy(shopItemId);
-            GetShopEvent shopUpdate = WaitForServerEvent<GetShopEvent>(TIMEOUT);
+            GetShopEvent shopUpdate = WaitForServerEvent<GetShopEvent>(Timeout);
             if (shopUpdate == null)
             {
                 return false;
@@ -194,7 +194,7 @@ namespace Fluid
         public bool UseGems(string shopItemId)
         {
             RequestUseGems(shopItemId);
-            GetShopEvent shopUpdate = WaitForServerEvent<GetShopEvent>(TIMEOUT);
+            GetShopEvent shopUpdate = WaitForServerEvent<GetShopEvent>(Timeout);
             if (shopUpdate == null)
             {
                 return false;
@@ -218,7 +218,7 @@ namespace Fluid
         public List<Friend> GetBlocked()
         {
             RequestBlocked();
-            GetBlockedEvent blockedEvent = WaitForServerEvent<GetBlockedEvent>(TIMEOUT);
+            GetBlockedEvent blockedEvent = WaitForServerEvent<GetBlockedEvent>(Timeout);
             if (blockedEvent == null)
             {
                 return null;
@@ -242,7 +242,7 @@ namespace Fluid
         public List<Friend> GetPending()
         {
             RequestPending();
-            GetPendingEvent pendingEvent = WaitForServerEvent<GetPendingEvent>(TIMEOUT);
+            GetPendingEvent pendingEvent = WaitForServerEvent<GetPendingEvent>(Timeout);
             if (pendingEvent == null)
             {
                 return null;
@@ -266,7 +266,7 @@ namespace Fluid
         public List<Friend> GetFriends()
         {
             RequestFriends();
-            GetFriendsEvent friendsEvent = WaitForServerEvent<GetFriendsEvent>(TIMEOUT);
+            GetFriendsEvent friendsEvent = WaitForServerEvent<GetFriendsEvent>(Timeout);
             if (friendsEvent == null)
             {
                 return null;
@@ -290,7 +290,7 @@ namespace Fluid
         public List<Friend> GetAllInvites()
         {
             RequestAllInvites();
-            GetInvitesEvent getInvitesEvent = WaitForServerEvent<GetInvitesEvent>(TIMEOUT);
+            GetInvitesEvent getInvitesEvent = WaitForServerEvent<GetInvitesEvent>(Timeout);
             if (getInvitesEvent == null)
             {
                 return null;
@@ -402,7 +402,7 @@ namespace Fluid
         public bool GetProfileVisibility()
         {
             RequestProfileVisibility();
-            GetProfileVisibilityEvent getProfileEvent = WaitForServerEvent<GetProfileVisibilityEvent>(TIMEOUT);
+            GetProfileVisibilityEvent getProfileEvent = WaitForServerEvent<GetProfileVisibilityEvent>(Timeout);
             if (getProfileEvent == null)
             {
                 return true;
@@ -426,7 +426,7 @@ namespace Fluid
         public bool ToggleProfileVisibility()
         {
             RequestToggleProfileVisibility();
-            GetProfileVisibilityEvent getProfileEvent = WaitForServerEvent<GetProfileVisibilityEvent>(TIMEOUT);
+            GetProfileVisibilityEvent getProfileEvent = WaitForServerEvent<GetProfileVisibilityEvent>(Timeout);
             if (getProfileEvent == null)
             {
                 return true;
@@ -448,7 +448,7 @@ namespace Fluid
         /// <summary>
         /// Sets the player's profile visibility
         /// </summary>
-        /// <param name="profileVisibility">The profile visibility</param>
+        /// <param name="requestedVisibility">The profile visibility</param>
         public void SetProfileVisibility(bool requestedVisibility)
         {
             bool currentVisibility = GetProfileVisibility();
@@ -459,12 +459,28 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Trys to reestablish the lobby connection
+        /// </summary>
+        internal override void Reconnect()
+        {
+            Connection connection = m_Client.GetLobbyConnection();
+
+            if (connection != null)
+            {
+                SetConnection(connection);
+            }
+
+            base.Reconnect();
+        }
+
+        /// <summary>
         /// Creates a new Fluid lobby connection
         /// </summary>
         /// <param name="client">The Fluid client</param>
-        /// <param name="connection">The playerio connection</param>
         public LobbyConnection(FluidClient client) : base(client)
         {
+            Timeout = 2500;
+
             base.AddMessageHandler(new ConnectionCompleteHandler());
             base.AddMessageHandler(new LobbyPropertiesHandler());
             base.AddMessageHandler(new GetProfileHandler());
@@ -474,7 +490,7 @@ namespace Fluid
             base.AddMessageHandler(new GetPendingHandler());
             base.AddMessageHandler(new GetBlockedHandler());
             base.AddMessageHandler(new GetInvitesHandler());
-            base.AddMessageHandler(new InfoHandler());
+            base.AddMessageHandler(new InfoHandler()); 
         }
     }
 }

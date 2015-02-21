@@ -26,7 +26,7 @@
             <summary>
             Log's in to everybody edits with the armorgames login cookie
             </summary>
-            <param name="cookie"></param>
+            <param name="loginCookie"></param>
         </member>
         <member name="M:Fluid.Auth.ArmorgamesAuth.LogIn(Fluid.Config)">
             <summary>
@@ -179,7 +179,7 @@
             </summary>
             <param name="authenticityToken">The authenticity token</param>
             <param name="kongSvid">The kongregate svid</param>
-            <param name="kongregateSession">The session token</param>
+            <param name="sessionToken">The session token</param>
         </member>
         <member name="P:Fluid.Auth.KongregateSession.AuthenticityToken">
             <summary>
@@ -249,7 +249,6 @@
             Creates a new block request
             </summary>
             <param name="block">The block to be uploaded</param>
-            <param name="timestamp">The timestamp</param>
         </member>
         <member name="P:Fluid.BlockRequest.Block">
             <summary>
@@ -698,12 +697,26 @@
             </summary>
             <param name="chatMessage"></param>
         </member>
+        <member name="M:Fluid.ChatManager.SplitMessage(System.String,System.Int32)">
+            <summary>
+            Splits a message up into segments by length
+            </summary>
+            <param name="message">The message</param>
+            <param name="length">Segment length</param>
+            <returns>The message segments</returns>
+        </member>
+        <member name="M:Fluid.ChatManager.Say(System.String)">
+            <summary>
+            Says a message
+            </summary>
+            <param name="message">The message to say</param>
+        </member>
         <member name="M:Fluid.ChatManager.ToString">
             <summary>
             Gets the chat debug message
             </summary>
         </member>
-        <member name="M:Fluid.ChatManager.#ctor">
+        <member name="M:Fluid.ChatManager.#ctor(Fluid.WorldConnection)">
             <summary>
             Creates a new chat manager
             </summary>
@@ -801,6 +814,11 @@
             Gets the suggested block throttle
             </summary>
         </member>
+        <member name="M:Fluid.Events.DisconnectEvent.Reconnect">
+            <summary>
+            Attempts to reestablish the connection
+            </summary>
+        </member>
         <member name="P:Fluid.Events.DisconnectEvent.Connection">
             <summary>
             Gets the world connection
@@ -809,6 +827,11 @@
         <member name="P:Fluid.Events.DisconnectEvent.Message">
             <summary>
             Gets the disconnection message from the server
+            </summary>
+        </member>
+        <member name="P:Fluid.Events.DisconnectEvent.TryReconnect">
+            <summary>
+            Gets if the connection should try and reconnect
             </summary>
         </member>
         <member name="P:Fluid.Events.PhysicsUpdateEvent.Player">
@@ -902,6 +925,12 @@
             <summary>
             Gets the connection type
             </summary>
+        </member>
+        <member name="M:Fluid.FluidClient.GetPlayersOnline">
+            <summary>
+            Gets the list of players online
+            </summary>
+            <returns>The list of players online</returns>
         </member>
         <member name="M:Fluid.FluidClient.GetPlayerByUsername(System.String)">
             <summary>
@@ -1055,11 +1084,24 @@
             Disposes all of the client's resources
             </summary>
         </member>
+        <member name="M:Fluid.FluidClient.GetLobbyConnection">
+            <summary>
+            Creates a lobby connection
+            </summary>
+            <returns>The lobby connection</returns>
+        </member>
         <member name="M:Fluid.FluidClient.JoinLobby">
             <summary>
             Joins the lobby
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Fluid.FluidClient.GetWorldConnection(System.String)">
+            <summary>
+            Establishes a world connection
+            </summary>
+            <param name="worldId">The world id</param>
+            <returns>The world connection</returns>
         </member>
         <member name="M:Fluid.FluidClient.JoinWorld(System.String)">
             <summary>
@@ -1196,73 +1238,78 @@
             Gets or sets the blue
             </summary>
         </member>
-        <member name="F:Fluid.FluidConnectionBase.m_MessageHandlers">
+        <member name="F:Fluid.ConnectionBase.m_Client">
+            <summary>
+            The fluid client
+            </summary>
+        </member>
+        <member name="F:Fluid.ConnectionBase.m_MessageHandlers">
             <summary>
             The list of core message processors
             </summary>
         </member>
-        <member name="F:Fluid.FluidConnectionBase.m_MessageAwaiters">
+        <member name="F:Fluid.ConnectionBase.m_MessageAwaiters">
             <summary>
             The list of core message awaiters
             </summary>
         </member>
-        <member name="F:Fluid.FluidConnectionBase.m_ServerEventHandlers">
+        <member name="F:Fluid.ConnectionBase.m_ServerEventHandlers">
             <summary>
             The list of server event handlers
             </summary>
         </member>
-        <member name="F:Fluid.FluidConnectionBase.m_EventHandlers">
+        <member name="F:Fluid.ConnectionBase.m_EventHandlers">
             <summary>
             The list of event handlers
             </summary>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.SendMessage(System.String,System.Object[])">
+        <member name="M:Fluid.ConnectionBase.SendMessage(System.String,System.Object[])">
             <summary>
             Sends a message
             </summary>
             <param name="type">The message type</param>
             <param name="parameters">The message parameters</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.SendMessage(PlayerIOClient.Message)">
+        <member name="M:Fluid.ConnectionBase.SendMessage(PlayerIOClient.Message)">
             <summary>
             Sends a message
             </summary>
             <param name="message">The message to send</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.Disconnect">
+        <member name="M:Fluid.ConnectionBase.Disconnect">
             <summary>
             Disconnects the connection
             </summary>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.RaiseEvent``1(``0)">
+        <member name="M:Fluid.ConnectionBase.RaiseEvent``1(``0)">
             <summary>
             Invokes a server event
             </summary>
             <typeparam name="T">The server event</typeparam>
             <param name="message">The message</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.RaiseEventAsync``1(``0)">
+        <member name="M:Fluid.ConnectionBase.RaiseEventAsync``1(``0)">
             <summary>
             Invokes a server event asyncronously
             </summary>
             <typeparam name="T">The server event</typeparam>
             <param name="message">The message</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.RaiseServerEvent``1(``0)">
+        <member name="M:Fluid.ConnectionBase.RaiseServerEvent``1(``0)">
             <summary>
             Invokes a event
             </summary>
             <typeparam name="T">The event</typeparam>
             <param name="message">The message</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.WaitForServerEvent``1">
+        <member name="M:Fluid.ConnectionBase.WaitForServerEvent``1">
             <summary>
             Waits for a message to be received
             </summary>
             <typeparam name="T">Message type</typeparam>
             <returns>The message type</returns>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.WaitForServerEvent``1(System.Int32)">
+        <member name="M:Fluid.ConnectionBase.WaitForServerEvent``1(System.Int32)">
             <summary>
             Waits for a message to be received
             </summary>
@@ -1270,82 +1317,86 @@
             <returns>The message type</returns>
             <param name="timeout">The timeout in milliseconds</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.AddServerEventHandler``1(Fluid.FluidEventHandler{``0})">
+        <member name="M:Fluid.ConnectionBase.AddServerEventHandler``1(Fluid.FluidEventHandler{``0})">
             <summary>
             Adds a Fluid server event handler
             </summary>
             <typeparam name="T">The server event type</typeparam>
             <param name="eventHandler">The Fluid event handler</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.AddEventHandler``1(System.EventHandler{``0})">
+        <member name="M:Fluid.ConnectionBase.AddEventHandler``1(System.EventHandler{``0})">
             <summary>
             Adds a regular event handler
             </summary>
             <typeparam name="T">The event type</typeparam>
             <param name="eventHandler">The event handler</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.RemoveServerEventHandler``1">
+        <member name="M:Fluid.ConnectionBase.RemoveServerEventHandler``1">
             <summary>
             Removes a Fluid event handler
             </summary>
             <typeparam name="T">Event type</typeparam>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.MessageProcessor(System.Object,PlayerIOClient.Message)">
+        <member name="M:Fluid.ConnectionBase.MessageProcessor(System.Object,PlayerIOClient.Message)">
             <summary>
             Processes a message received from the server
             </summary>
             <param name="sender">The sender</param>
             <param name="m">The playerio message</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.DisconnectProcessor(System.Object,System.String)">
+        <member name="M:Fluid.ConnectionBase.DisconnectProcessor(System.Object,System.String)">
             <summary>
             Processes a disconnection message received from the server
             </summary>
             <param name="sender">The sender</param>
             <param name="message">The disconnection reason</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.Shutdown">
+        <member name="M:Fluid.ConnectionBase.Shutdown">
             <summary>
             Shutdown immediate active resources
             </summary>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.AddMessageHandler(Fluid.Handlers.IMessageHandler)">
+        <member name="M:Fluid.ConnectionBase.Reconnect">
+            <summary>
+            Attempts to re establish the connection
+            </summary>
+        </member>
+        <member name="M:Fluid.ConnectionBase.AddMessageHandler(Fluid.Handlers.IMessageHandler)">
             <summary>
             Adds a message handler for the connection to use
             </summary>
-            <param name="type">The message type</param>
             <param name="messageHandler">The message handler</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.SetConnection(PlayerIOClient.Connection)">
+        <member name="M:Fluid.ConnectionBase.SetConnection(PlayerIOClient.Connection)">
             <summary>
             Sets the connection
             </summary>
             <param name="connection">The playerio connection</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.#ctor(Fluid.FluidClient)">
+        <member name="M:Fluid.ConnectionBase.#ctor(Fluid.FluidClient)">
             <summary>
             Creates a new Fluid connection base
             </summary>
             <param name="client">The Fluid client</param>
         </member>
-        <member name="M:Fluid.FluidConnectionBase.#ctor(Fluid.FluidClient,PlayerIOClient.Connection)">
+        <member name="M:Fluid.ConnectionBase.#ctor(Fluid.FluidClient,PlayerIOClient.Connection)">
             <summary>
             Creates a new Fluid connection base
             </summary>
             <param name="client">The Fluid client</param>
             <param name="connection">The playerio connection</param>
         </member>
-        <member name="E:Fluid.FluidConnectionBase.OnPlayerIOMessage">
+        <member name="E:Fluid.ConnectionBase.OnPlayerIOMessage">
             <summary>
             The event for incoming playerio messages
             </summary>
         </member>
-        <member name="P:Fluid.FluidConnectionBase.Connected">
+        <member name="P:Fluid.ConnectionBase.Connected">
             <summary>
             Gets whether the connection is alive
             </summary>
         </member>
-        <member name="P:Fluid.FluidConnectionBase.Client">
+        <member name="P:Fluid.ConnectionBase.Client">
             <summary>
             Gets the client used to establish the connection
             </summary>
@@ -1356,11 +1407,6 @@
             </summary>
             <typeparam name="T">The type of message</typeparam>
             <param name="eventMessage">The message</param>
-        </member>
-        <member name="F:Fluid.LobbyConnection.TIMEOUT">
-            <summary>
-            Gets the lobby connection event timeout
-            </summary>
         </member>
         <member name="M:Fluid.LobbyConnection.RequestLobbyProperties">
             <summary>
@@ -1587,14 +1633,23 @@
             <summary>
             Sets the player's profile visibility
             </summary>
-            <param name="profileVisibility">The profile visibility</param>
+            <param name="requestedVisibility">The profile visibility</param>
+        </member>
+        <member name="M:Fluid.LobbyConnection.Reconnect">
+            <summary>
+            Trys to reestablish the lobby connection
+            </summary>
         </member>
         <member name="M:Fluid.LobbyConnection.#ctor(Fluid.FluidClient)">
             <summary>
             Creates a new Fluid lobby connection
             </summary>
             <param name="client">The Fluid client</param>
-            <param name="connection">The playerio connection</param>
+        </member>
+        <member name="P:Fluid.LobbyConnection.Timeout">
+            <summary>
+            Gets the lobby connection event timeout
+            </summary>
         </member>
         <member name="P:Fluid.LobbyConnection.MessageOfTheDay">
             <summary>
@@ -1794,6 +1849,31 @@
             Gets the y component
             </summary>
         </member>
+        <member name="F:Fluid.Physics.TickMode.RealTime">
+            <summary>
+            Attempts to keep up with the actual realtime action of the world
+            </summary>
+        </member>
+        <member name="F:Fluid.Physics.TickMode.Local">
+            <summary>
+            Keeps at a local pace but behind the world's time
+            </summary>
+        </member>
+        <member name="F:Fluid.PotionState.Active">
+            <summary>
+            The potion is active
+            </summary>
+        </member>
+        <member name="F:Fluid.PotionState.Suspended">
+            <summary>
+            The potion is suspended due to the world changing their policy
+            </summary>
+        </member>
+        <member name="F:Fluid.PotionState.Inactive">
+            <summary>
+            The potion is inactive
+            </summary>
+        </member>
         <member name="M:Fluid.SecureConnection.SendAuth(System.String,System.String)">
             <summary>
             Sends a authentication request
@@ -1987,6 +2067,7 @@
             Sends a block to the world
             </summary>
             <param name="block">The block to send</param>
+            <param name="waitForManager">Should the block be queued to the manager</param>
         </member>
         <member name="M:Fluid.WorldConnection.CheckBlock(Fluid.Blocks.Block)">
             <summary>
@@ -2056,6 +2137,12 @@
             Sets if the world should allow potions
             </summary>
         </member>
+        <member name="M:Fluid.WorldConnection.SetVisibility(System.Boolean)">
+            <summary>
+            Sets the visibility of the world
+            </summary>
+            <param name="visibility">The visibility</param>
+        </member>
         <member name="M:Fluid.WorldConnection.SetBackgroundColor(Fluid.FluidColor)">
             <summary>
             Sets the world's background color
@@ -2072,11 +2159,18 @@
             Resets all players to the set spawn
             </summary>
         </member>
+        <member name="M:Fluid.WorldConnection.KickPlayer(Fluid.WorldPlayer)">
+            <summary>
+            Kicks the player from the world
+            </summary>
+            <param name="player">The player</param>
+        </member>
         <member name="M:Fluid.WorldConnection.KickPlayer(Fluid.WorldPlayer,System.String)">
             <summary>
             Kicks the player from the world
             </summary>
             <param name="player">The player</param>
+            <param name="reason">The reason shown the player why he/she was kicked</param>
         </member>
         <member name="M:Fluid.WorldConnection.TouchPlayer(Fluid.WorldPlayer,Fluid.Potion)">
             <summary>
@@ -2106,9 +2200,27 @@
             </summary>
             <param name="potion">The potion</param>
         </member>
+        <member name="M:Fluid.WorldConnection.SetPotionsOn(Fluid.Potion[])">
+            <summary>
+            Sets a unique list of potions on
+            </summary>
+            <param name="potions">The unique list of potions</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.SetPotionsOff(Fluid.Potion[])">
+            <summary>
+            Sets a unique list of potions off
+            </summary>
+            <param name="potions">The unique list of potions</param>
+        </member>
         <member name="M:Fluid.WorldConnection.Say(System.String)">
             <summary>
             Says a message in the chat
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.SayInternal(System.String)">
+            <summary>
+            Sends the chat message to the server
             </summary>
             <param name="message">The message</param>
         </member>
@@ -2161,21 +2273,31 @@
             <param name="player">The source player</param>
             <param name="target">The target player</param>
         </member>
+        <member name="M:Fluid.WorldConnection.Reconnect">
+            <summary>
+            Reestablishes a connection to the world
+            </summary>
+        </member>
         <member name="M:Fluid.WorldConnection.Shutdown">
             <summary>
             Shutdown immediate active resources
             </summary>
         </member>
-        <member name="M:Fluid.WorldConnection.#ctor(Fluid.FluidClient)">
+        <member name="M:Fluid.WorldConnection.#ctor(Fluid.FluidClient,System.String)">
             <summary>
             Creates a new Fluid connection
             </summary>
             <param name="client">The Fluid client</param>
-            <param name="connection">The playerio connection</param>
+            <param name="worldId">The world id</param>
         </member>
         <member name="P:Fluid.WorldConnection.HasAccess">
             <summary>
             Gets whether the connection has building access to the world
+            </summary>
+        </member>
+        <member name="P:Fluid.WorldConnection.WorldID">
+            <summary>
+            Gets the world id
             </summary>
         </member>
         <member name="P:Fluid.WorldConnection.World">
@@ -2203,7 +2325,7 @@
             Gets the potion manager
             </summary>
         </member>
-        <member name="P:Fluid.WorldConnection.PhysicsEngine">
+        <member name="P:Fluid.WorldConnection.Physics">
             <summary>
             Gets the physics engine
             </summary>
@@ -2218,7 +2340,7 @@
             Gets the player with the crown
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.IMessageHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.IMessageHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Handle the message
             </summary>
@@ -2231,7 +2353,7 @@
             Gets the types of message this handler this process
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.AccessHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.AccessHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2244,7 +2366,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.AddHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.AddHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2257,7 +2379,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.AllowPotionsHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.AllowPotionsHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2270,7 +2392,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.ArmorgamesAuthHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.ArmorgamesAuthHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2283,7 +2405,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.BackgroundColorHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.BackgroundColorHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2296,7 +2418,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.BlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.BlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2309,7 +2431,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.ClearHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.ClearHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2322,7 +2444,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.CoinHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.CoinHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2335,7 +2457,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.ConnectionCompleteHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.ConnectionCompleteHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2348,7 +2470,7 @@
             Gets the list of handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.CrownHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.CrownHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2361,7 +2483,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.DoorGateBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.DoorGateBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2374,7 +2496,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.FaceHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.FaceHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2387,7 +2509,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetBlockedHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetBlockedHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2400,7 +2522,7 @@
             Gets the handle types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetFriendsHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetFriendsHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2413,7 +2535,7 @@
             Gets the handle types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetInvitesHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetInvitesHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2426,7 +2548,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetPendingHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetPendingHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2439,7 +2561,7 @@
             Gets the handle types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetPlayerObjectHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetPlayerObjectHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the player object message
             </summary>
@@ -2452,7 +2574,7 @@
             Gets the player object handle types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetProfileHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetProfileHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2465,7 +2587,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetProfileVisibilityHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetProfileVisibilityHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2478,7 +2600,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GetShopHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GetShopHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the shop message
             </summary>
@@ -2491,7 +2613,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GodHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GodHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2504,7 +2626,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.GuardianHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.GuardianHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2517,7 +2639,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.HideHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.HideHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2530,7 +2652,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.InfoHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.InfoHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2543,7 +2665,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.InitHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.InitHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2556,7 +2678,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.KillHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.KillHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2569,7 +2691,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LabelBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LabelBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2582,7 +2704,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LeftHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LeftHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2595,7 +2717,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LevelupHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LevelupHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2608,7 +2730,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LoadLevelHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LoadLevelHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2621,7 +2743,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LobbyPropertiesHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LobbyPropertiesHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the lobby properties
             </summary>
@@ -2634,7 +2756,7 @@
             Gets the lobby properties handle types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.LostAccessHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.LostAccessHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2647,7 +2769,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.ModHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.ModHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2660,7 +2782,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.MovementHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.MovementHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2673,7 +2795,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.MusicBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.MusicBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2686,7 +2808,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.OldSayHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.OldSayHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2705,7 +2827,7 @@
             </summary>
             <param name="message">The playerio message</param>
         </member>
-        <member name="M:Fluid.Handlers.PortalBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.PortalBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2718,7 +2840,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.PotionHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.PotionHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2731,7 +2853,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.QuickChatHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.QuickChatHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2744,7 +2866,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.RotatableBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.RotatableBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2757,7 +2879,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.SavedHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.SavedHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2770,7 +2892,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.SayHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.SayHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2783,7 +2905,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.ShowHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.ShowHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2796,7 +2918,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.SilverCrownHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.SilverCrownHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2809,7 +2931,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.TeleHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.TeleHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2822,7 +2944,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.TeleportHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.TeleportHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2835,7 +2957,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.TextBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.TextBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2848,7 +2970,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.UpdateMetaHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.UpdateMetaHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2861,7 +2983,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.UpgradeHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.UpgradeHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2874,7 +2996,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.WootHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.WootHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2887,7 +3009,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.WootUpHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.WootUpHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -2900,7 +3022,7 @@
             Gets the handled types
             </summary>
         </member>
-        <member name="M:Fluid.Handlers.WorldPortalBlockHandler.Process(Fluid.FluidConnectionBase,PlayerIOClient.Message,System.Boolean)">
+        <member name="M:Fluid.Handlers.WorldPortalBlockHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
             <summary>
             Processes the message
             </summary>
@@ -3147,6 +3269,16 @@
             </summary>
             <param name="p">The player</param>
         </member>
+        <member name="M:Fluid.Physics.PhysicsEngine.ServerUpdate(Fluid.WorldPlayer)">
+            <summary>
+            Performs a server update
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.PhysicsEngine.TickRealtimeAsync(Fluid.WorldPlayer)">
+            <summary>
+            Ticks up to real time
+            </summary>
+        </member>
         <member name="M:Fluid.Physics.PhysicsEngine.RemoveCoin(Fluid.Blocks.Block)">
             <summary>
             Removes the coin from all players
@@ -3168,6 +3300,11 @@
             Creates a new physics engine
             </summary>
             <param name="worldConnection">The world connection</param>
+        </member>
+        <member name="P:Fluid.Physics.PhysicsEngine.TickMode">
+            <summary>
+            Gets or sets the tick mode
+            </summary>
         </member>
         <member name="P:Fluid.Physics.PhysicsEngine.World">
             <summary>
@@ -3893,12 +4030,6 @@
             Gets if the profile is visible
             </summary>
         </member>
-        <member name="M:Fluid.ServerEvents.GetShopEvent.#ctor(Fluid.Shop)">
-            <summary>
-            Gets the shop
-            </summary>
-            <param name="shop">The shop</param>
-        </member>
         <member name="P:Fluid.ServerEvents.GetShopEvent.Success">
             <summary>
             Gets if the request was successful
@@ -4548,36 +4679,36 @@
             Safe Action Delegate
             </summary>
         </member>
-        <member name="M:Fluid.UploadManager.IsQueueEmpty">
+        <member name="M:Fluid.BlockUploadManager.IsQueueEmpty">
             <summary>
             Gets if the queue is empty
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Fluid.UploadManager.IsUploadThreadDead">
+        <member name="M:Fluid.BlockUploadManager.IsUploadThreadDead">
             <summary>
             Gets if the upload thread is dead
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Fluid.UploadManager.RemoveExpected">
+        <member name="M:Fluid.BlockUploadManager.RemoveExpected">
             <summary>
             Removes the expected block
             </summary>
         </member>
-        <member name="M:Fluid.UploadManager.Confirm(Fluid.Blocks.Block)">
+        <member name="M:Fluid.BlockUploadManager.Confirm(Fluid.Blocks.Block)">
             <summary>
             Confirms a block was sent
             </summary>
             <param name="block">The block received from the server</param>
         </member>
-        <member name="M:Fluid.UploadManager.QueueBlock(Fluid.Blocks.Block)">
+        <member name="M:Fluid.BlockUploadManager.QueueBlock(Fluid.Blocks.Block)">
             <summary>
             Adds the block to the end of the list
             </summary>
             <param name="block">The block to be queued</param>
         </member>
-        <member name="M:Fluid.UploadManager.#ctor(Fluid.WorldConnection)">
+        <member name="M:Fluid.BlockUploadManager.#ctor(Fluid.WorldConnection)">
             <summary>
             Creates a new block manager
             </summary>
@@ -4858,6 +4989,55 @@
             </summary>
             <returns>The block location</returns>
         </member>
+        <member name="M:Fluid.WorldPlayer.Kick">
+            <summary>
+            Trys to kick the player from the room
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldPlayer.Kick(System.String)">
+            <summary>
+            Trys to kick the player from the room
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldPlayer.PrivateMessage(System.String)">
+            <summary>
+            Sends the player a private message
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:Fluid.WorldPlayer.Teleport(Fluid.Physics.Vector)">
+            <summary>
+            Teleports the player to a location
+            </summary>
+            <param name="location">The location</param>
+        </member>
+        <member name="M:Fluid.WorldPlayer.Teleport(Fluid.WorldPlayer)">
+            <summary>
+            Teleports the player to another player
+            </summary>
+            <param name="player">The player</param>
+        </member>
+        <member name="M:Fluid.WorldPlayer.Kill">
+            <summary>
+            Kills the player
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldPlayer.GiveEdit">
+            <summary>
+            Gives edit to the player
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldPlayer.RemoveEdit">
+            <summary>
+            Removes edit from the player
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldPlayer.TouchWithPotion(Fluid.Potion)">
+            <summary>
+            Touchs the player with a potion
+            </summary>
+            <param name="potion">The potion type</param>
+        </member>
         <member name="M:Fluid.WorldPlayer.Respawn">
             <summary>
             Respawns the player
@@ -4873,12 +5053,12 @@
             Kills the player internally
             </summary>
         </member>
-        <member name="M:Fluid.WorldPlayer.SetPotion(Fluid.Potion,System.Boolean)">
+        <member name="M:Fluid.WorldPlayer.SetPotion(Fluid.Potion,Fluid.PotionState)">
             <summary>
-            Sets a potion activity
+            Sets a potion state
             </summary>
             <param name="potion">The potion</param>
-            <param name="active">The activity</param>
+            <param name="state">The state</param>
         </member>
         <member name="M:Fluid.WorldPlayer.SetLocationInternal(Fluid.Physics.Vector)">
             <summary>
@@ -4890,7 +5070,7 @@
             <summary>
             Creates a new 
             </summary>
-            <param name="client">The Fluid client</param>
+            <param name="connection">The world connection</param>
             <param name="username">The username</param>
             <param name="id">The id</param>
         </member>

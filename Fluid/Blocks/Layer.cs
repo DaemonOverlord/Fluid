@@ -1,6 +1,6 @@
 ﻿namespace Fluid.Blocks
 {
-    public enum Layer
+    public enum Layer : int
     {
         /// <summary>
         /// The foreground layer

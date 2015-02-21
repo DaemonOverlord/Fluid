@@ -40,7 +40,6 @@ namespace Fluid
         /// Creates a new block request
         /// </summary>
         /// <param name="block">The block to be uploaded</param>
-        /// <param name="timestamp">The timestamp</param>
         public BlockRequest(Block block)
         {
             Block = block;

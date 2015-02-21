@@ -2,6 +2,7 @@
 using Fluid.Physics;
 using PlayerIOClient;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Fluid
@@ -129,7 +130,7 @@ namespace Fluid
         /// <summary>
         /// Gets the player's active potions
         /// </summary>
-        public Dictionary<Potion, bool> Potions { get; internal set; }
+        public ConcurrentDictionary<Potion, PotionState> Potions { get; internal set; }
 
         /// <summary>
         /// Gets the x coordinate
@@ -242,7 +243,7 @@ namespace Fluid
         {
             if (Potions.ContainsKey(potion))
             {
-                return Potions[potion];
+                return Potions[potion] == PotionState.Active;
             }
 
             return false;
@@ -280,6 +281,109 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Trys to kick the player from the room
+        /// </summary>
+        public void Kick()
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.KickPlayer(this);
+            }
+        }
+
+        /// <summary>
+        /// Trys to kick the player from the room
+        /// </summary>
+        public void Kick(string reason)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.KickPlayer(this, reason);
+            }
+        }
+
+        /// <summary>
+        /// Sends the player a private message
+        /// </summary>
+        /// <param name="message">The message</param>
+        public void PrivateMessage(string message)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.PrivateMessage(this, message);
+            }
+        }
+
+        /// <summary>
+        /// Teleports the player to a location
+        /// </summary>
+        /// <param name="location">The location</param>
+        public void Teleport(Vector location)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.TeleportPlayer(this, location);
+            }
+        }
+
+        /// <summary>
+        /// Teleports the player to another player
+        /// </summary>
+        /// <param name="player">The player</param>
+        public void Teleport(WorldPlayer player)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.TeleportPlayer(this, player);
+            }
+        }
+
+        /// <summary>
+        /// Kills the player
+        /// </summary>
+        public void Kill()
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.KillPlayer(this);
+            }
+        }
+
+        /// <summary>
+        /// Gives edit to the player
+        /// </summary>
+        public void GiveEdit()
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.GiveEdit(this);
+            }
+        }
+
+        /// <summary>
+        /// Removes edit from the player
+        /// </summary>
+        public void RemoveEdit()
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.RemoveEdit(this);
+            }
+        }
+
+        /// <summary>
+        /// Touchs the player with a potion
+        /// </summary>
+        /// <param name="potion">The potion type</param>
+        public void TouchWithPotion(Potion potion)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.TouchPlayer(this, potion);
+            }
+        }
+
+        /// <summary>
         /// Respawns the player
         /// </summary>
         internal void Respawn()
@@ -312,13 +416,13 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Sets a potion activity
+        /// Sets a potion state
         /// </summary>
         /// <param name="potion">The potion</param>
-        /// <param name="active">The activity</param>
-        internal void SetPotion(Potion potion, bool active)
+        /// <param name="state">The state</param>
+        internal void SetPotion(Potion potion, PotionState state)
         {
-            Potions[potion] = active;
+            Potions[potion] = state;
         }
 
         /// <summary>
@@ -334,7 +438,7 @@ namespace Fluid
         /// <summary>
         /// Creates a new 
         /// </summary>
-        /// <param name="client">The Fluid client</param>
+        /// <param name="connection">The world connection</param>
         /// <param name="username">The username</param>
         /// <param name="id">The id</param>
         public WorldPlayer(WorldConnection connection, string username, int id) : base(connection.Client, username)
@@ -344,12 +448,12 @@ namespace Fluid
     
             CollectedGoldCoins = new List<Block>();
             CollectedBlueCoins = new List<Block>();
-            Potions = new Dictionary<Potion, bool>();
+            Potions = new ConcurrentDictionary<Potion, PotionState>();
 
             Potion[] potiontypes = (Potion[])Enum.GetValues(typeof(Potion));
             for (int i = 0; i < potiontypes.Length; i++)
             {
-                Potions.Add(potiontypes[i], false);
+                Potions.TryAdd(potiontypes[i], PotionState.Inactive);
             }
         }
     }

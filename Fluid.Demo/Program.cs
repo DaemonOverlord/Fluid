@@ -1,4 +1,6 @@
 ﻿using Fluid.Auth;
+using Fluid.Events;
+using Fluid.ServerEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Fluid.Demo
 
             if (client.LogIn())
             {
-                
+
             }
 
             return;

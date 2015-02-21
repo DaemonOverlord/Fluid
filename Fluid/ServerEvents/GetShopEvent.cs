@@ -19,14 +19,5 @@ namespace Fluid.ServerEvents
         /// Gets the raw message
         /// </summary>
         public Message Raw { get; set; }
-
-        /// <summary>
-        /// Gets the shop
-        /// </summary>
-        /// <param name="shop">The shop</param>
-        internal GetShopEvent(Shop shop)
-        {
-            Shop = shop;
-        }
     }
 }

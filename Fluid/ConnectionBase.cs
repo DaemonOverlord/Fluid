@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace Fluid
 {
-    public abstract class FluidConnectionBase
+    public abstract class ConnectionBase
     {
-        protected FluidClient m_Client;
+
         private Connection m_Connection;
+
+        /// <summary>
+        /// The fluid client
+        /// </summary>
+        protected FluidClient m_Client;
 
         /// <summary>
         /// The list of core message processors
@@ -250,6 +255,16 @@ namespace Fluid
             };
 
             RaiseEvent<DisconnectEvent>(disconnectEvent);
+
+            if (disconnectEvent.TryReconnect)
+            {
+                this.Reconnect();
+            }
+
+            if (m_Connection == null)
+            {
+                this.Shutdown();
+            }
         }
 
         /// <summary>
@@ -260,9 +275,16 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Attempts to re establish the connection
+        /// </summary>
+        internal virtual void Reconnect()
+        {
+            
+        }
+
+        /// <summary>
         /// Adds a message handler for the connection to use
         /// </summary>
-        /// <param name="type">The message type</param>
         /// <param name="messageHandler">The message handler</param>
         protected void AddMessageHandler(IMessageHandler messageHandler)
         {
@@ -290,7 +312,7 @@ namespace Fluid
         /// Creates a new Fluid connection base
         /// </summary>
         /// <param name="client">The Fluid client</param>
-        protected FluidConnectionBase(FluidClient client)
+        protected ConnectionBase(FluidClient client)
         {
             this.m_Client = client;
 
@@ -305,7 +327,7 @@ namespace Fluid
         /// </summary>
         /// <param name="client">The Fluid client</param>
         /// <param name="connection">The playerio connection</param>
-        protected FluidConnectionBase(FluidClient client, Connection connection) : this(client)
+        protected ConnectionBase(FluidClient client, Connection connection) : this(client)
         {
             SetConnection(connection);
         }

@@ -141,6 +141,27 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the list of players online
+        /// </summary>
+        /// <returns>The list of players online</returns>
+        public List<Player> GetPlayersOnline()
+        {
+            List<Player> online = new List<Player>();
+            RoomInfo[] roomInfo = m_Client.Multiplayer.ListRooms("Lobby188", null, 0, 0);
+
+            for (int i = 0; i < roomInfo.Length; i++)
+            {
+                Player player = GetPlayerByConnectionId(roomInfo[i].Id);
+                if (player != null)
+                {
+                    online.Add(player);
+                }
+            }
+
+            return online;
+        }
+
+        /// <summary>
         /// Gets a player from everybody edits
         /// </summary>
         /// <param name="username">Their username</param>
@@ -562,10 +583,10 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Joins the lobby
+        /// Creates a lobby connection
         /// </summary>
-        /// <returns></returns>
-        public LobbyConnection JoinLobby()
+        /// <returns>The lobby connection</returns>
+        internal Connection GetLobbyConnection()
         {
             int currentVersion = GetGameVersion();
             if (currentVersion == -1)
@@ -579,8 +600,17 @@ namespace Fluid
             string lobbyRoom = string.Format(lobbyRoomFormat, currentVersion);
 
             LobbyConnection lobbyCon = new LobbyConnection(this);
-            Connection connection = m_Client.Multiplayer.CreateJoinRoom(ConnectionUserId, lobbyRoom, true, null, null);
+            return m_Client.Multiplayer.CreateJoinRoom(ConnectionUserId, lobbyRoom, true, null, null);
+        }
 
+        /// <summary>
+        /// Joins the lobby
+        /// </summary>
+        /// <returns></returns>
+        public LobbyConnection JoinLobby()
+        {
+            LobbyConnection lobbyCon = new LobbyConnection(this);
+            Connection connection = GetLobbyConnection();
             if (connection != null)
             {
                 lobbyCon.SetConnection(connection);
@@ -588,6 +618,26 @@ namespace Fluid
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Establishes a world connection
+        /// </summary>
+        /// <param name="worldId">The world id</param>
+        /// <returns>The world connection</returns>
+        internal Connection GetWorldConnection(string worldId)
+        {
+            int currentVersion = GetGameVersion();
+            if (currentVersion == -1)
+            {
+                //Logged message will be from .GetGameVersion() if failed.
+                return null;
+            }
+
+            bool isBetaRoom = m_Parser.IsBeta(worldId);
+            string roomType = (isBetaRoom) ? string.Format(m_Config.BetaRoom, currentVersion) : string.Format(m_Config.NormalRoom, currentVersion);
+
+            return m_Toolbelt.RunSafe<Connection>(() => m_Client.Multiplayer.CreateJoinRoom(worldId, roomType, true, null, null));
         }
 
         /// <summary>
@@ -610,7 +660,7 @@ namespace Fluid
                 bool isBetaRoom = m_Parser.IsBeta(worldId);
                 string roomType = (isBetaRoom) ? string.Format(m_Config.BetaRoom, currentVersion) : string.Format(m_Config.NormalRoom, currentVersion);
 
-                WorldConnection c = new WorldConnection(this);
+                WorldConnection c = new WorldConnection(this, worldId);
                 Connection connection = m_Toolbelt.RunSafe<Connection>(() => m_Client.Multiplayer.CreateJoinRoom(worldId, roomType, true, null, null));
 
                 if (connection != null)
@@ -635,7 +685,7 @@ namespace Fluid
             string worldId = null;
             if (m_Parser.Parse(worldUrlOrId, out worldId))
             {
-                WorldConnection c = new WorldConnection(this);
+                WorldConnection c = new WorldConnection(this, worldId);
                 Connection connection = m_Toolbelt.RunSafe<Connection>(() => m_Client.Multiplayer.JoinRoom(worldId, null));
 
                 if (connection != null)

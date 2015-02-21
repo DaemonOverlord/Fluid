@@ -20,7 +20,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The playerio message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             int userId = message.GetInt(0);
             double x = message.GetDouble(1);
@@ -47,6 +47,8 @@ namespace Fluid.Handlers
                 player.Horizontal = horizontal;
                 player.Vertical = vertical;
                 player.SpaceDown = spacedown;
+
+                worldCon.Physics.ServerUpdate(player);
             }
 
             MovementEvent movementEvent = new MovementEvent()

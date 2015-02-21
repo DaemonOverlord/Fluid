@@ -19,7 +19,7 @@ namespace Fluid.Handlers
         /// <param name="connectionBase">The connection baes</param>
         /// <param name="message">The playerio message</param>
         /// <param name="handled">Whether the message was already handled</param>
-        public void Process(FluidConnectionBase connectionBase, Message message, bool handled)
+        public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             int userId = message.GetInt(0);
             int potionId = message.GetInt(1);
@@ -32,7 +32,7 @@ namespace Fluid.Handlers
 
             if (!handled && player != null)
             {
-                player.SetPotion(potion, isActive);
+                player.SetPotion(potion, isActive ? PotionState.Active : PotionState.Inactive);
             }
 
             PotionEvent potionEvent = new PotionEvent()

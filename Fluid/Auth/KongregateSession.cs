@@ -35,7 +35,7 @@
         /// </summary>
         /// <param name="authenticityToken">The authenticity token</param>
         /// <param name="kongSvid">The kongregate svid</param>
-        /// <param name="kongregateSession">The session token</param>
+        /// <param name="sessionToken">The session token</param>
         public KongregateSession(string authenticityToken, string kongSvid, string sessionToken)
         {
             AuthenticityToken = authenticityToken;
