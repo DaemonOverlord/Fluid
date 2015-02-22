@@ -7,6 +7,9 @@ If you're using visual studio, you can install via nuget.
 PM> Install-Package Fluid
 ```
 
+### Table of Contents
+**[Getting-started](#getting-started)**
+
 ###Getting started
 ######Logging in
 To use fluid you'll need to login to everybody edits. There are multiple ways of authentication you can
