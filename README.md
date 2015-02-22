@@ -8,7 +8,7 @@ PM> Install-Package Fluid
 ```
 
 ### Table of Contents
-**[Getting-started](#getting-started)**
+**[Getting started](#getting-started)**
 
 ###Getting started
 ######Logging in
