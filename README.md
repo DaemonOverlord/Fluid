@@ -9,6 +9,7 @@ PM> Install-Package Fluid
 
 ## Table of Contents
 **[Getting started](#getting-started)**
+
 **[All about events](#all-about-events)**
 
 ###Getting started
@@ -143,15 +144,15 @@ private static void BlockOrPortal(object sender, IServerEvent e)
     //Depending on what you've grouped you can grab the event information
     //By testing e for the event
     
-    Block block = null;
+    Fluid.Blocks.Block block = null;
     if (e is BlockEvent)
     {
         BlockEvent blockEvent = (BlockEvent)e;
         block = blockEvent.Block;
     }
-    else if (e is PortalEvent)
+    else if (e is PortalBlockEvent)
     {
-        PortalEvent portalEvent = (PortalEvent)e;
+        PortalBlockEvent portalEvent = (PortalBlockEvent)e;
         block = portalEvent.Portal;
     }
     
