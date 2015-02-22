@@ -9,7 +9,6 @@ PM> Install-Package Fluid
 
 ## Table of Contents
 **[Getting started](#getting-started)**
-
 **[All about events](#all-about-events)**
 
 ###Getting started
