@@ -7,8 +7,9 @@ If you're using visual studio, you can install via nuget.
 PM> Install-Package Fluid
 ```
 
-### Table of Contents
+## Table of Contents
 **[Getting started](#getting-started)**
+**[All about events](#all-about-events)**
 
 ###Getting started
 ######Logging in
@@ -35,7 +36,7 @@ To join a world, all you need is a client that's logged in. You can use a world 
 ```c#
 
 //Use logged in client
-WorldConnection myWorldCon = client.JoinWorld("PWtGKa64_JbkI");
+WorldConnection myWorldCon = client.GetWorldConnection("PWtGKa64_JbkI").Join();
 
 ```
 
@@ -73,7 +74,7 @@ To join the lobby you can use very simliar syntax as joining a world.
 ```c#
 
 //Use logged in client
-LobbyConnection myLobbyCon = client.JoinLobby();
+LobbyConnection myLobbyCon = client.GetLobbyConnection().Join();
 ```
 
 Note that the lobby's functionalities differ per type of connection, specifically guest connections.
@@ -91,4 +92,69 @@ You also have the option to set the output to a file.
 
 ```c#
 client.Log.Output = File.CreateText("myLog.txt");
+```
+
+###All about events
+
+Fluid provides a multiplitude of ways to handle events in worlds. In fluid there are two types of events, Events, and ServerEvents. ServerEvents represent any event that was received directly and contains a PlayerIO.Message. Events on the other hand are either custom events to help utilize fluid or events without PlayerIO.Message's. It is very important that you add your events before you call Join() for any of your connections. 
+
+Also, note that events are stored in the namespaces Fluid.Events and Fluid.ServerEvents so adding these at the top of your code file might be easier for you to find your events quicker.
+
+```c#
+using Fluid.Events;
+using Fluid.ServerEvents;
+```
+
+Now that we've referenced the event namespaces we can create the handlers.
+
+```c#
+//Adding a disconnection event handler
+con.AddEventHandler<DisconnectEvent>(OnDisconnect);
+
+//As a shortcut to creating the method, in visual studio right click on "OnDisconnect" and Generate->Method Stub.
+private static void OnDisconnect(object sender, DisconnectEvent e)
+{
+    //My disconnection handling
+}
+```
+
+Server events are very simliar in syntax to create also.
+
+```c#
+//Adding a block server event handler
+con.AddServerEventHandler<BlockEvent>(OnBlock);
+
+//Same tip can be used as metioned in the above example to create the method quicker.
+private static void OnBlock(BlockEvent eventMessage)
+{
+    //Your block handling code
+}
+```
+
+Server events are great, but sometimes it might be easier for you to handle similiar events in one handler. The syntax is just as similiar in the previous examples.
+
+```c#
+//Adding a block and portal event to one handler
+//You can add as many events to one handler as you want
+con.AddServerEventHandlers(BlockOrPortal, typeof(BlockEvent), typeof(PortalBlockEvent));
+
+private static void BlockOrPortal(object sender, IServerEvent e)
+{
+    //Depending on what you've grouped you can grab the event information
+    //By testing e for the event
+    
+    Block block = null;
+    if (e is BlockEvent)
+    {
+        BlockEvent blockEvent = (BlockEvent)e;
+        block = blockEvent.Block;
+    }
+    else if (e is PortalEvent)
+    {
+        PortalEvent portalEvent = (PortalEvent)e;
+        block = portalEvent.Portal;
+    }
+    
+    //My handler code
+}
 ```
