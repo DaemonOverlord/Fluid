@@ -21,6 +21,150 @@ namespace Fluid
         public byte B { get; set; }
 
         /// <summary>
+        /// Gets the brightness of the color
+        /// </summary>
+        /// <returns>The brightness of the color</returns>
+        public float GetBrightness()
+        {
+            float num = (float)this.R / 255f;
+            float num2 = (float)this.G / 255f;
+            float num3 = (float)this.B / 255f;
+            float num4 = num;
+            float num5 = num;
+            if (num2 > num4)
+            {
+                num4 = num2;
+            }
+            if (num3 > num4)
+            {
+                num4 = num3;
+            }
+            if (num2 < num5)
+            {
+                num5 = num2;
+            }
+            if (num3 < num5)
+            {
+                num5 = num3;
+            }
+            return (num4 + num5) / 2f;
+        }
+
+        /// <summary>
+        /// Gets the hue of the color
+        /// </summary>
+        /// <returns>The hue of the color</returns>
+        public float GetHue()
+        {
+            if (this.R == this.G && this.G == this.B)
+            {
+                return 0f;
+            }
+            float num = (float)this.R / 255f;
+            float num2 = (float)this.G / 255f;
+            float num3 = (float)this.B / 255f;
+            float num4 = 0f;
+            float num5 = num;
+            float num6 = num;
+            if (num2 > num5)
+            {
+                num5 = num2;
+            }
+            if (num3 > num5)
+            {
+                num5 = num3;
+            }
+            if (num2 < num6)
+            {
+                num6 = num2;
+            }
+            if (num3 < num6)
+            {
+                num6 = num3;
+            }
+            float num7 = num5 - num6;
+            if (num == num5)
+            {
+                num4 = (num2 - num3) / num7;
+            }
+            else
+            {
+                if (num2 == num5)
+                {
+                    num4 = 2f + (num3 - num) / num7;
+                }
+                else
+                {
+                    if (num3 == num5)
+                    {
+                        num4 = 4f + (num - num2) / num7;
+                    }
+                }
+            }
+            num4 *= 60f;
+            if (num4 < 0f)
+            {
+                num4 += 360f;
+            }
+            return num4;
+        }
+
+        /// <summary>
+        /// Gets the saturation of the color
+        /// </summary>
+        /// <returns>The saturation of the color</returns>
+        public float GetSaturation()
+        {
+            float num = (float)this.R / 255f;
+            float num2 = (float)this.G / 255f;
+            float num3 = (float)this.B / 255f;
+            float result = 0f;
+            float num4 = num;
+            float num5 = num;
+            if (num2 > num4)
+            {
+                num4 = num2;
+            }
+            if (num3 > num4)
+            {
+                num4 = num3;
+            }
+            if (num2 < num5)
+            {
+                num5 = num2;
+            }
+            if (num3 < num5)
+            {
+                num5 = num3;
+            }
+            if (num4 != num5)
+            {
+                float num6 = (num4 + num5) / 2f;
+                if ((double)num6 <= 0.5)
+                {
+                    result = (num4 - num5) / (num4 + num5);
+                }
+                else
+                {
+                    result = (num4 - num5) / (2f - num4 - num5);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Linearly interpolates fits the color with another color
+        /// </summary>
+        /// <param name="color">The color</param>
+        /// <param name="amount">The amount; a rate or time between 0 and 1</param>
+        public void Lerp(FluidColor color, double amount)
+        {
+            R = (byte)(R + (R - color.R) * amount);
+            G = (byte)(G + (G - color.G) * amount);
+            B = (byte)(B + (B - color.B) * amount);
+        }
+
+        /// <summary>
         /// Gets a hex color segment
         /// </summary>
         /// <param name="b">The byte</param>

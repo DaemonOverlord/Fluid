@@ -30,6 +30,11 @@ namespace Fluid
         protected Dictionary<Type, MessageReceivedEvent> m_MessageAwaiters;
 
         /// <summary>
+        /// The list of group server event handlers
+        /// </summary>
+        protected Dictionary<Type, EventHandler<IServerEvent>> m_GroupServerEventHandlers;
+
+        /// <summary>
         /// The list of server event handlers
         /// </summary>
         protected Dictionary<Type, Delegate> m_ServerEventHandlers;
@@ -47,7 +52,18 @@ namespace Fluid
         /// <summary>
         /// Gets whether the connection is alive
         /// </summary>
-        public bool Connected { get { return m_Connection.Connected; } }
+        public bool Connected
+        {
+            get
+            {
+                if (m_Connection == null)
+                {
+                    return false;
+                }
+
+                return m_Connection.Connected;
+            }
+        }
 
         /// <summary>
         /// Gets the client used to establish the connection
@@ -105,10 +121,11 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Invokes a server event asyncronously
+        /// Invokes a server event asynchronously
         /// </summary>
-        /// <typeparam name="T">The server event</typeparam>
+        /// <typeparam name="T">The event type</typeparam>
         /// <param name="message">The message</param>
+        /// <returns>The asynchronous task</returns>
         public Task RaiseEventAsync<T>(T message) where T : IEvent
         {
             Type messageType = typeof(T);
@@ -138,6 +155,28 @@ namespace Fluid
             {
                 m_ServerEventHandlers[messageType].DynamicInvoke(message);
             }
+
+            if (m_GroupServerEventHandlers.ContainsKey(messageType))
+            {
+                m_GroupServerEventHandlers[messageType].Invoke(this, message);
+            }
+        }
+
+        /// <summary>
+        /// Invokes a event asynchronously
+        /// </summary>
+        /// <typeparam name="T">The server event type</typeparam>
+        /// <param name="message">The message</param>
+        /// <returns>The asynchronous task</returns>
+        public Task RaiseServerEventAsync<T>(T message) where T : IServerEvent
+        {
+            Type messageType = typeof(T);
+            if (m_ServerEventHandlers.ContainsKey(messageType))
+            {
+                return Task.Run(() => m_ServerEventHandlers[messageType].DynamicInvoke(this, message));
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -170,14 +209,45 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Adds a group of server event handlers
+        /// </summary>
+        /// <param name="handler">The server event handler</param>
+        /// <param name="types">The types of handlers to group</param>
+        public void AddServerEventHandlers(EventHandler<IServerEvent> handler, params Type[] types)
+        {
+            if (Connected)
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Add the server event handlers before you join to prevent the possibility of missing messages.");
+            }
+
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (!m_GroupServerEventHandlers.ContainsKey(types[i]))
+                {
+                    m_GroupServerEventHandlers.Add(types[i], handler);
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds a Fluid server event handler
         /// </summary>
         /// <typeparam name="T">The server event type</typeparam>
         /// <param name="eventHandler">The Fluid event handler</param>
         public void AddServerEventHandler<T>(FluidEventHandler<T> eventHandler) where T : IServerEvent
         {
-            Delegate dynamicHandler = eventHandler;
-            m_ServerEventHandlers.Add(typeof(T), dynamicHandler);
+            if (Connected)
+            {
+                string typeName = typeof(T).Name;
+                m_Client.Log.Add(FluidLogCategory.Suggestion, string.Format("Add the server event handler for {0} before you join to prevent the possibility of missing messages.", typeName));
+            }
+
+            Type type = typeof(T);
+            if (!m_ServerEventHandlers.ContainsKey(type))
+            {
+                Delegate dynamicHandler = eventHandler;
+                m_ServerEventHandlers.Add(type, dynamicHandler);
+            }
         }
 
         /// <summary>
@@ -187,21 +257,46 @@ namespace Fluid
         /// <param name="eventHandler">The event handler</param>
         public void AddEventHandler<T>(EventHandler<T> eventHandler) where T : IEvent
         {
+            if (Connected)
+            {
+                string typeName = typeof(T).Name;
+                m_Client.Log.Add(FluidLogCategory.Suggestion, string.Format("Add the event handler for {0} before you join to prevent the possibility of missing messages.", typeName));
+            }
+
             Delegate dynamicHandler = eventHandler;
             m_EventHandlers.Add(typeof(T), dynamicHandler);
         }
-        
+
         /// <summary>
-        /// Removes a Fluid event handler
+        /// Removes a event handler
         /// </summary>
         /// <typeparam name="T">Event type</typeparam>
-        public void RemoveServerEventHandler<T>()
+        /// <returns>True if successful; otherwise false</returns>
+        public bool RemoveEventHandler<T>() where T : IEvent
+        {
+            Type type = typeof(T);
+            if (m_EventHandlers.ContainsKey(type))
+            {
+                m_EventHandlers.Remove(type);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Removes a fluid server event handler
+        /// </summary>
+        /// <typeparam name="T">ServerEvent type</typeparam>
+        /// <returns>True if successful; otherwise false</returns>
+        public bool RemoveServerEventHandler<T>() where T : IServerEvent
         {
             Type type = typeof(T);
             if (m_ServerEventHandlers.ContainsKey(type))
             {
-                m_ServerEventHandlers.Remove(type);
+                return m_ServerEventHandlers.Remove(type);
             }
+
+            return false;
         }
 
         /// <summary>
@@ -320,6 +415,7 @@ namespace Fluid
             this.m_MessageAwaiters = new Dictionary<Type, MessageReceivedEvent>();
             this.m_EventHandlers = new Dictionary<Type, Delegate>();
             this.m_ServerEventHandlers = new Dictionary<Type, Delegate>();
+            this.m_GroupServerEventHandlers = new Dictionary<Type, EventHandler<IServerEvent>>();
         }
 
         /// <summary>

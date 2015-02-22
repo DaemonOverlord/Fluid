@@ -22,6 +22,22 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the last log message; null if no messages have been logged
+        /// </summary>
+        public FluidLogMessage Last
+        {
+            get
+            {
+                if (m_Log.Count == 0)
+                {
+                    return null;
+                }
+
+                return m_Log[m_Log.Count - 1];
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the log output
         /// </summary>
         public TextWriter Output

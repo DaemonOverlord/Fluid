@@ -19,6 +19,21 @@ namespace Fluid
         public string MessageOfTheDay { get; internal set; }
 
         /// <summary>
+        /// Joins the lobby
+        /// </summary>
+        /// <returns>Returns the lobby connection for code chaining</returns>
+        public LobbyConnection Join()
+        {
+            Connection lobbyCon = m_Client.JoinLobby();
+            if (lobbyCon != null)
+            {
+                this.SetConnection(lobbyCon);
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Requests lobby properties from the server
         /// </summary>
         public void RequestLobbyProperties()
@@ -463,7 +478,7 @@ namespace Fluid
         /// </summary>
         internal override void Reconnect()
         {
-            Connection connection = m_Client.GetLobbyConnection();
+            Connection connection = m_Client.JoinLobby();
 
             if (connection != null)
             {

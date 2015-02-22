@@ -244,11 +244,12 @@
             Sets the last request time to now
             </summary>
         </member>
-        <member name="M:Fluid.BlockRequest.#ctor(Fluid.Blocks.Block)">
+        <member name="M:Fluid.BlockRequest.#ctor(Fluid.Blocks.Block,System.Int32)">
             <summary>
             Creates a new block request
             </summary>
             <param name="block">The block to be uploaded</param>
+            <param name="blockThrottle">The speed of the block to be uploaded at</param>
         </member>
         <member name="P:Fluid.BlockRequest.Block">
             <summary>
@@ -258,6 +259,11 @@
         <member name="P:Fluid.BlockRequest.Timestamp">
             <summary>
             Gets the request timestamp
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockRequest.BlockThrottle">
+            <summary>
+            Gets the block throttle
             </summary>
         </member>
         <member name="M:Fluid.Blocks.Block.Bind(Fluid.WorldConnection)">
@@ -933,6 +939,12 @@
             </summary>
             <returns>The list of players online</returns>
         </member>
+        <member name="M:Fluid.FluidClient.GetPlayersOnlineAsync">
+            <summary>
+            Gets the players online asynchronously
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Fluid.FluidClient.GetPlayerByUsername(System.String)">
             <summary>
             Gets a player from everybody edits
@@ -992,6 +1004,12 @@
             <summary>
             Loads all shop items owned asynchronously
             </summary>
+        </member>
+        <member name="M:Fluid.FluidClient.FindDatabase">
+            <summary>
+            Attempts to locate the database
+            </summary>
+            <returns>The path of the database if found; otherwise null</returns>
         </member>
         <member name="M:Fluid.FluidClient.LogIn">
             <summary>
@@ -1080,18 +1098,13 @@
             </summary>
             <param name="potion">The potion type</param>
         </member>
-        <member name="M:Fluid.FluidClient.Dispose">
-            <summary>
-            Disposes all of the client's resources
-            </summary>
-        </member>
-        <member name="M:Fluid.FluidClient.GetLobbyConnection">
+        <member name="M:Fluid.FluidClient.JoinLobby">
             <summary>
             Creates a lobby connection
             </summary>
             <returns>The lobby connection</returns>
         </member>
-        <member name="M:Fluid.FluidClient.JoinLobby">
+        <member name="M:Fluid.FluidClient.GetLobbyConnection">
             <summary>
             Joins the lobby
             </summary>
@@ -1122,11 +1135,6 @@
             Creates a new game connection
             </summary>
             <param name="auth">The authentication</param>
-        </member>
-        <member name="M:Fluid.FluidClient.Finalize">
-            <summary>
-            Destroys the Fluid client
-            </summary>
         </member>
         <member name="P:Fluid.FluidClient.Auth">
             <summary>
@@ -1162,6 +1170,31 @@
             <summary>
             Gets the connection user id
             </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.GetBrightness">
+            <summary>
+            Gets the brightness of the color
+            </summary>
+            <returns>The brightness of the color</returns>
+        </member>
+        <member name="M:Fluid.FluidColor.GetHue">
+            <summary>
+            Gets the hue of the color
+            </summary>
+            <returns>The hue of the color</returns>
+        </member>
+        <member name="M:Fluid.FluidColor.GetSaturation">
+            <summary>
+            Gets the saturation of the color
+            </summary>
+            <returns>The saturation of the color</returns>
+        </member>
+        <member name="M:Fluid.FluidColor.Lerp(Fluid.FluidColor,System.Double)">
+            <summary>
+            Linearly interpolates fits the color with another color
+            </summary>
+            <param name="color">The color</param>
+            <param name="amount">The amount; a rate or time between 0 and 1</param>
         </member>
         <member name="M:Fluid.FluidColor.GetHtmlSegment(System.Byte)">
             <summary>
@@ -1247,6 +1280,11 @@
             The list of core message awaiters
             </summary>
         </member>
+        <member name="F:Fluid.ConnectionBase.m_GroupServerEventHandlers">
+            <summary>
+            The list of group server event handlers
+            </summary>
+        </member>
         <member name="F:Fluid.ConnectionBase.m_ServerEventHandlers">
             <summary>
             The list of server event handlers
@@ -1284,10 +1322,11 @@
         </member>
         <member name="M:Fluid.ConnectionBase.RaiseEventAsync``1(``0)">
             <summary>
-            Invokes a server event asyncronously
+            Invokes a server event asynchronously
             </summary>
-            <typeparam name="T">The server event</typeparam>
+            <typeparam name="T">The event type</typeparam>
             <param name="message">The message</param>
+            <returns>The asynchronous task</returns>
         </member>
         <member name="M:Fluid.ConnectionBase.RaiseServerEvent``1(``0)">
             <summary>
@@ -1295,6 +1334,14 @@
             </summary>
             <typeparam name="T">The event</typeparam>
             <param name="message">The message</param>
+        </member>
+        <member name="M:Fluid.ConnectionBase.RaiseServerEventAsync``1(``0)">
+            <summary>
+            Invokes a event asynchronously
+            </summary>
+            <typeparam name="T">The server event type</typeparam>
+            <param name="message">The message</param>
+            <returns>The asynchronous task</returns>
         </member>
         <member name="M:Fluid.ConnectionBase.WaitForServerEvent``1">
             <summary>
@@ -1311,6 +1358,13 @@
             <returns>The message type</returns>
             <param name="timeout">The timeout in milliseconds</param>
         </member>
+        <member name="M:Fluid.ConnectionBase.AddServerEventHandlers(System.EventHandler{Fluid.ServerEvents.IServerEvent},System.Type[])">
+            <summary>
+            Adds a group of server event handlers
+            </summary>
+            <param name="handler">The server event handler</param>
+            <param name="types">The types of handlers to group</param>
+        </member>
         <member name="M:Fluid.ConnectionBase.AddServerEventHandler``1(Fluid.FluidEventHandler{``0})">
             <summary>
             Adds a Fluid server event handler
@@ -1325,11 +1379,19 @@
             <typeparam name="T">The event type</typeparam>
             <param name="eventHandler">The event handler</param>
         </member>
-        <member name="M:Fluid.ConnectionBase.RemoveServerEventHandler``1">
+        <member name="M:Fluid.ConnectionBase.RemoveEventHandler``1">
             <summary>
-            Removes a Fluid event handler
+            Removes a event handler
             </summary>
             <typeparam name="T">Event type</typeparam>
+            <returns>True if successful; otherwise false</returns>
+        </member>
+        <member name="M:Fluid.ConnectionBase.RemoveServerEventHandler``1">
+            <summary>
+            Removes a fluid server event handler
+            </summary>
+            <typeparam name="T">ServerEvent type</typeparam>
+            <returns>True if successful; otherwise false</returns>
         </member>
         <member name="M:Fluid.ConnectionBase.MessageProcessor(System.Object,PlayerIOClient.Message)">
             <summary>
@@ -1401,6 +1463,12 @@
             </summary>
             <typeparam name="T">The type of message</typeparam>
             <param name="eventMessage">The message</param>
+        </member>
+        <member name="M:Fluid.LobbyConnection.Join">
+            <summary>
+            Joins the lobby
+            </summary>
+            <returns>Returns the lobby connection for code chaining</returns>
         </member>
         <member name="M:Fluid.LobbyConnection.RequestLobbyProperties">
             <summary>
@@ -1692,6 +1760,11 @@
         <member name="P:Fluid.FluidLog.Count">
             <summary>
             Gets the log count
+            </summary>
+        </member>
+        <member name="P:Fluid.FluidLog.Last">
+            <summary>
+            Gets the last log message; null if no messages have been logged
             </summary>
         </member>
         <member name="P:Fluid.FluidLog.Output">
@@ -2022,6 +2095,7 @@
             <summary>
             Joins the world
             </summary>
+            <returns>The connection for chaining your code if necessary</returns>
         </member>
         <member name="M:Fluid.WorldConnection.CheckThrottle">
             <summary>
@@ -2034,15 +2108,6 @@
             </summary>
             <param name="key">The key to activate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(System.Int32,Fluid.Blocks.Layer,System.Int32,System.Int32)">
-            <summary>
-            Sends a block to the world
-            </summary>
-            <param name="id">The block id</param>
-            <param name="layer">The layer</param>
-            <param name="x">The x coordinate</param>
-            <param name="y">The y coordinate</param>
-        </member>
         <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,Fluid.Blocks.Layer,System.Int32,System.Int32)">
             <summary>
             Sends a block to the world
@@ -2052,13 +2117,37 @@
             <param name="x">The x coordinate</param>
             <param name="y">The y coordinate</param>
         </member>
+        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,Fluid.Blocks.Layer,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sends a block to the world
+            </summary>
+            <param name="id">The block id</param>
+            <param name="layer">The layer</param>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        </member>
         <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.Block)">
             <summary>
             Sends a block to the world
             </summary>
             <param name="block">The block to send</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.Block,System.Boolean)">
+        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.Block,System.Int32)">
+            <summary>
+            Sends the block at a specific speed
+            </summary>
+            <param name="block">The block to send</param>
+            <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.QueueBlock(Fluid.Blocks.Block,System.Int32)">
+            <summary>
+            Queues the block to be uploaded
+            </summary>
+            <param name="block">The block</param>
+            <param name="blockThrottle">The speed to upload the block</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.UploadBlockRequest(Fluid.BlockRequest)">
             <summary>
             Sends a block to the world
             </summary>
@@ -2139,6 +2228,14 @@
             </summary>
             <param name="visibility">The visibility</param>
         </member>
+        <member name="M:Fluid.WorldConnection.SetBackgroundColor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Sets the background color
+            </summary>
+            <param name="r">The red color value</param>
+            <param name="g">The green color value</param>
+            <param name="b">The blue color value</param>
+        </member>
         <member name="M:Fluid.WorldConnection.SetBackgroundColor(Fluid.FluidColor)">
             <summary>
             Sets the world's background color
@@ -2198,13 +2295,13 @@
         </member>
         <member name="M:Fluid.WorldConnection.SetPotionsOn(Fluid.Potion[])">
             <summary>
-            Sets a unique list of potions on
+            Sets a unique list of potions on, if no potions are passed in, all potions will be turned on
             </summary>
             <param name="potions">The unique list of potions</param>
         </member>
         <member name="M:Fluid.WorldConnection.SetPotionsOff(Fluid.Potion[])">
             <summary>
-            Sets a unique list of potions off
+            Sets a unique list of potions off, if no potions are passed in, all potions will be turned off
             </summary>
             <param name="potions">The unique list of potions</param>
         </member>
@@ -3635,6 +3732,76 @@
             A mousebreaker player
             </summary>
         </member>
+        <member name="F:Fluid.Potion.RedAura">
+            <summary>
+            The potion of red aura
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.BlueAura">
+            <summary>
+            The potion of blue aura
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.YellowAura">
+            <summary>
+            The potion of yellow aura
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Jump">
+            <summary>
+            The potion of jump
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.GreenAura">
+            <summary>
+            The potion of green aura
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Fire">
+            <summary>
+            The potion of fire
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Curse">
+            <summary>
+            The curse potion
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Protection">
+            <summary>
+            The potion of protection
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Zombie">
+            <summary>
+            The zombie potion
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Respawn">
+            <summary>
+            The respawn potion
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Levitation">
+            <summary>
+            The potion of levitation
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Flaunt">
+            <summary>
+            The potion of flaunting
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Solitude">
+            <summary>
+            The potion of solitude
+            </summary>
+        </member>
+        <member name="F:Fluid.Potion.Speed">
+            <summary>
+            The potion of speed
+            </summary>
+        </member>
         <member name="M:Fluid.PotionManager.IsEnabled(Fluid.Potion)">
             <summary>
             Gets whether the world has the potion enabled
@@ -4698,11 +4865,12 @@
             </summary>
             <param name="block">The block received from the server</param>
         </member>
-        <member name="M:Fluid.BlockUploadManager.QueueBlock(Fluid.Blocks.Block)">
+        <member name="M:Fluid.BlockUploadManager.QueueBlock(Fluid.Blocks.Block,System.Int32)">
             <summary>
             Adds the block to the end of the list
             </summary>
             <param name="block">The block to be queued</param>
+            <param name="blockThrottle">The speed of the block to be uploaded at</param>
         </member>
         <member name="M:Fluid.BlockUploadManager.#ctor(Fluid.WorldConnection)">
             <summary>
@@ -4775,6 +4943,12 @@
             <param name="y">The Y coordinate</param>
             <param name="layer">The layer</param>
             <returns>The block at the location; null if the location is invalid</returns>
+        </member>
+        <member name="M:Fluid.World.GetBlocks">
+            <summary>
+            Gets all the worlds blocks
+            </summary>
+            <returns>The world's array of blocks</returns>
         </member>
         <member name="M:Fluid.World.SetBlock(Fluid.Blocks.Block)">
             <summary>

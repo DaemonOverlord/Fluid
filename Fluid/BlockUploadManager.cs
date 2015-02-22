@@ -49,7 +49,7 @@ namespace Fluid
                 }
 
                 send.Request();
-                m_WorldConnection.SendBlock(send.Block, false);
+                m_WorldConnection.UploadBlockRequest(send);
             }
         }
 
@@ -135,9 +135,10 @@ namespace Fluid
         /// Adds the block to the end of the list
         /// </summary>
         /// <param name="block">The block to be queued</param>
-        internal void QueueBlock(Block block)
+        /// <param name="blockThrottle">The speed of the block to be uploaded at</param>
+        internal void QueueBlock(Block block, int blockThrottle)
         {
-            BlockRequest request = new BlockRequest(block);
+            BlockRequest request = new BlockRequest(block, blockThrottle);
             m_Queue.Add(request);
 
             if (IsUploadThreadDead())

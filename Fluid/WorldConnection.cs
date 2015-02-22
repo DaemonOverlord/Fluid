@@ -70,13 +70,23 @@ namespace Fluid
         /// <summary>
         /// Joins the world
         /// </summary>
-        public void Join()
+        /// <returns>The connection for chaining your code if necessary</returns>
+        public WorldConnection Join()
         {
-            this.SendMessage("init");
-            Physics.Start();
+            Connection connection = m_Client.CreateWorldConnection(WorldID);
 
-            WaitForServerEvent<InitEvent>();           
-            this.SendMessage("init2");
+            if (connection != null)
+            {
+                this.SetConnection(connection);
+
+                this.SendMessage("init");
+                Physics.Start();
+
+                WaitForServerEvent<InitEvent>();
+                this.SendMessage("init2");
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -140,9 +150,9 @@ namespace Fluid
         /// <param name="layer">The layer</param>
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
-        public void SendBlock(int id, Layer layer, int x, int y)
+        public void SendBlock(BlockID id, Layer layer, int x, int y)
         {
-            this.SendBlock((BlockID)id, layer, x, y);
+            this.SendBlock(new Block(this, id, layer, x, y));
         }
 
         /// <summary>
@@ -152,9 +162,10 @@ namespace Fluid
         /// <param name="layer">The layer</param>
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
-        public void SendBlock(BlockID id, Layer layer, int x, int y)
+        /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        public void SendBlock(BlockID id, Layer layer, int x, int y, int blockThrottle)
         {
-            this.SendBlock(new Block(this, id, layer, x, y));
+            this.SendBlock(new Block(this, id, layer, x, y), blockThrottle);
         }
 
         /// <summary>
@@ -163,7 +174,33 @@ namespace Fluid
         /// <param name="block">The block to send</param>
         public void SendBlock(Block block)
         {
-            this.SendBlock(block, true);
+            CheckThrottle();
+            this.QueueBlock(block, (int)m_blockThrottle.Value);           
+        }
+
+        /// <summary>
+        /// Sends the block at a specific speed
+        /// </summary>
+        /// <param name="block">The block to send</param>
+        /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        public void SendBlock(Block block, int blockThrottle)
+        {
+            this.QueueBlock(block, blockThrottle);
+        }
+
+        /// <summary>
+        /// Queues the block to be uploaded
+        /// </summary>
+        /// <param name="block">The block</param>
+        /// <param name="blockThrottle">The speed to upload the block</param>
+        internal void QueueBlock(Block block, int blockThrottle)
+        {
+            if (!block.IsBinded)
+            {
+                block.Bind(this);
+            }
+
+            m_UploadManager.QueueBlock(block, blockThrottle);
         }
 
         /// <summary>
@@ -171,24 +208,14 @@ namespace Fluid
         /// </summary>
         /// <param name="block">The block to send</param>
         /// <param name="waitForManager">Should the block be queued to the manager</param>
-        internal void SendBlock(Block block, bool waitForManager)
+        internal void UploadBlockRequest(BlockRequest blockRequest)
         {
-            if (!block.IsBinded)
-            {
-                block.Bind(this);
-            }
+            Block block = blockRequest.Block;
 
-            CheckThrottle();
-            long blockThrottle = m_blockThrottle.Value;
-
-            if (waitForManager)
-            {
-                m_UploadManager.QueueBlock(block);
-            }
-            else
+            if (block != null)
             {
                 block.Upload();
-                Thread.Sleep((int)blockThrottle);
+                Thread.Sleep(blockRequest.BlockThrottle);
             }
         }
 
@@ -306,6 +333,17 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Sets the background color
+        /// </summary>
+        /// <param name="r">The red color value</param>
+        /// <param name="g">The green color value</param>
+        /// <param name="b">The blue color value</param>
+        public void SetBackgroundColor(byte r, byte g, byte b)
+        {
+            this.SetBackgroundColor(new FluidColor(r, b, b));
+        }
+
+        /// <summary>
         /// Sets the world's background color
         /// </summary>
         /// <param name="color">The color</param>
@@ -411,33 +449,47 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Sets a unique list of potions on
+        /// Sets a unique list of potions on, if no potions are passed in, all potions will be turned on
         /// </summary>
         /// <param name="potions">The unique list of potions</param>
         public void SetPotionsOn(params Potion[] potions)
         {
-            int[] potionIds = new int[potions.Length];
-            for (int i = 0; i < potions.Length; i++)
+            if (potions.Length == 0)
             {
-                potionIds[i] = (int)potions[i];
+                this.SetPotionsOn((Potion[])Enum.GetValues(typeof(Potion)));
             }
+            else
+            {
+                int[] potionIds = new int[potions.Length];
+                for (int i = 0; i < potions.Length; i++)
+                {
+                    potionIds[i] = (int)potions[i];
+                }
 
-            this.SendMessage("say", string.Format("/potionson {0}", string.Join(" ", potionIds)));
+                this.SendMessage("say", string.Format("/potionson {0}", string.Join(" ", potionIds)));
+            }
         }
 
         /// <summary>
-        /// Sets a unique list of potions off
+        /// Sets a unique list of potions off, if no potions are passed in, all potions will be turned off
         /// </summary>
         /// <param name="potions">The unique list of potions</param>
         public void SetPotionsOff(params Potion[] potions)
         {
-            int[] potionIds = new int[potions.Length];
-            for (int i = 0; i < potions.Length; i++)
+            if (potions.Length == 0)
             {
-                potionIds[i] = (int)potions[i];
+                this.SetPotionsOff((Potion[])Enum.GetValues(typeof(Potion)));
             }
+            else
+            {
+                int[] potionIds = new int[potions.Length];
+                for (int i = 0; i < potions.Length; i++)
+                {
+                    potionIds[i] = (int)potions[i];
+                }
 
-            this.SendMessage("say", string.Format("/potionsoff {0}", string.Join(" ", potionIds)));
+                this.SendMessage("say", string.Format("/potionsoff {0}", string.Join(" ", potionIds)));
+            }
         }
 
         /// <summary>

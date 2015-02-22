@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fluid
 {
-    public sealed class FluidClient : IDisposable
+    public sealed class FluidClient
     {
         private bool m_Disposed = false;
 
@@ -162,6 +162,15 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the players online asynchronously
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Player>> GetPlayersOnlineAsync()
+        {
+            return await Task.Run<List<Player>>(() => GetPlayersOnline());
+        }
+
+        /// <summary>
         /// Gets a player from everybody edits
         /// </summary>
         /// <param name="username">Their username</param>
@@ -236,7 +245,7 @@ namespace Fluid
         /// <param name="username">The username</param>
         public Profile LoadProfile(string username)
         {
-            LobbyConnection lobbyConnection = JoinLobby();
+            LobbyConnection lobbyConnection = GetLobbyConnection().Join();
             if (lobbyConnection != null)
             {
                 Profile profile = lobbyConnection.GetProfile(username);
@@ -262,7 +271,7 @@ namespace Fluid
         /// </summary>
         public PlayerObject LoadMyPlayerObject()
         {
-            LobbyConnection lobbyConnection = JoinLobby();
+            LobbyConnection lobbyConnection = GetLobbyConnection().Join();
             if (lobbyConnection != null)
             {
                 PlayerObject playerObject = lobbyConnection.GetPlayerObject();
@@ -338,6 +347,10 @@ namespace Fluid
             return await Task.Run<VaultShopItem[]>(() => LoadPlayerItems());
         }
 
+        /// <summary>
+        /// Attempts to locate the database
+        /// </summary>
+        /// <returns>The path of the database if found; otherwise null</returns>
         internal string FindDatabase()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -636,27 +649,10 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Disposes all of the client's resources
-        /// </summary>
-        public void Dispose()
-        {
-            if (!m_Disposed)
-            {
-                if (m_Client != null)
-                {
-                    this.LogOut();
-                }
-
-                //No need to dispose of playerdatabase
-                m_Disposed = true;
-            }
-        }
-
-        /// <summary>
         /// Creates a lobby connection
         /// </summary>
         /// <returns>The lobby connection</returns>
-        internal Connection GetLobbyConnection()
+        internal Connection JoinLobby()
         {
             int currentVersion = GetGameVersion();
             if (currentVersion == -1)
@@ -677,17 +673,9 @@ namespace Fluid
         /// Joins the lobby
         /// </summary>
         /// <returns></returns>
-        public LobbyConnection JoinLobby()
+        public LobbyConnection GetLobbyConnection()
         {
-            LobbyConnection lobbyCon = new LobbyConnection(this);
-            Connection connection = GetLobbyConnection();
-            if (connection != null)
-            {
-                lobbyCon.SetConnection(connection);
-                return lobbyCon;
-            }
-
-            return null;
+            return new LobbyConnection(this);
         }
 
         /// <summary>
@@ -720,24 +708,7 @@ namespace Fluid
             string worldId = null;
             if (m_Parser.Parse(worldUrlOrId, out worldId))
             {
-                int currentVersion = GetGameVersion();
-                if (currentVersion == -1)
-                {
-                    //Logged message will be from .GetGameVersion() if failed.
-                    return null;
-                }
-
-                bool isBetaRoom = m_Parser.IsBeta(worldId);
-                string roomType = (isBetaRoom) ? string.Format(m_Config.BetaRoom, currentVersion) : string.Format(m_Config.NormalRoom, currentVersion);
-
-                WorldConnection c = new WorldConnection(this, worldId);
-                Connection connection = m_Toolbelt.RunSafe<Connection>(() => m_Client.Multiplayer.CreateJoinRoom(worldId, roomType, true, null, null));
-
-                if (connection != null)
-                {
-                    c.SetConnection(connection);
-                    return c;
-                }
+                return new WorldConnection(this, worldId);
             }
 
             return null;
@@ -795,17 +766,6 @@ namespace Fluid
             m_Toolbelt = new FluidToolbelt();
             m_ShopInfo = new FluidShopInfo();
             m_PlayerDatabase = new FluidPlayerDatabase(this, m_Log);
-        }
-
-        /// <summary>
-        /// Destroys the Fluid client
-        /// </summary>
-        ~FluidClient()
-        {
-            if (!m_Disposed)
-            {
-                this.Dispose();
-            }
         }
     }
 }

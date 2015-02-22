@@ -16,6 +16,11 @@ namespace Fluid
         public DateTime? Timestamp { get; set; }
 
         /// <summary>
+        /// Gets the block throttle
+        /// </summary>
+        public int BlockThrottle { get; set; }
+
+        /// <summary>
         /// Gets the last time a request was sent
         /// </summary>
         public int GetTimePassed()
@@ -40,9 +45,11 @@ namespace Fluid
         /// Creates a new block request
         /// </summary>
         /// <param name="block">The block to be uploaded</param>
-        public BlockRequest(Block block)
+        /// <param name="blockThrottle">The speed of the block to be uploaded at</param>
+        public BlockRequest(Block block, int blockThrottle)
         {
             Block = block;
+            BlockThrottle = blockThrottle;
         }
     }
 }

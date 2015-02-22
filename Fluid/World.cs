@@ -24,7 +24,6 @@ namespace Fluid
         public Block this[int x, int y, Layer layer]
         {
             get { return this.GetBlockAt(x, y, layer); }
-            set { /* set the specified index to value here */ }
         }
 
         /// <summary>
@@ -160,6 +159,15 @@ namespace Fluid
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets all the worlds blocks
+        /// </summary>
+        /// <returns>The world's array of blocks</returns>
+        public Block[, ,] GetBlocks()
+        {
+            return this.m_WorldData;
         }
 
         /// <summary>
