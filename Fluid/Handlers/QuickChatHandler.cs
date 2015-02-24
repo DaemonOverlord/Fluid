@@ -24,6 +24,41 @@ namespace Fluid.Handlers
             int userId = message.GetInt(0);
             string text = message.GetString(1);
 
+            QuickChatMessage quickChatMesssage = QuickChatMessage.Unknown;
+            switch (text)
+            {
+                case "Hi.":
+                    quickChatMesssage = QuickChatMessage.Hi;
+                    break;
+                case "Goodbye.":
+                    quickChatMesssage = QuickChatMessage.Bye;
+                    break;
+                case "Help me!":
+                    quickChatMesssage = QuickChatMessage.Help;
+                    break;
+                case "Thank you.":
+                    quickChatMesssage = QuickChatMessage.Thanks;
+                    break;
+                case "Follow me.":
+                    quickChatMesssage = QuickChatMessage.Come;
+                    break;
+                case "Stop!":
+                    quickChatMesssage = QuickChatMessage.Stop;
+                    break;
+                case "Yes.":
+                    quickChatMesssage = QuickChatMessage.Yes;
+                    break;
+                case "No.":
+                    quickChatMesssage = QuickChatMessage.No;
+                    break;
+                case "Right.":
+                    quickChatMesssage = QuickChatMessage.Right;
+                    break;
+                case "Left.":
+                    quickChatMesssage = QuickChatMessage.Left;
+                    break;
+            }
+
             WorldConnection worldCon = (WorldConnection)connectionBase;
             WorldPlayer player = worldCon.Players.GetPlayer(userId);
 
@@ -31,7 +66,8 @@ namespace Fluid.Handlers
             QuickChatEvent quickChatEvent = new QuickChatEvent()
             {
                 Raw = message,
-                ChatMessage = chatMessage
+                ChatMessage = chatMessage,
+                QuickChatMessage = quickChatMesssage
             };
 
             connectionBase.RaiseServerEvent<QuickChatEvent>(quickChatEvent);

@@ -49,15 +49,15 @@
         }
 
         /// <summary>
-        /// Tests if a death block is equal to an object
+        /// Tests if a death block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is DeathBlock)
+            if (b is DeathBlock)
             {
-                DeathBlock dB = (DeathBlock)obj;
+                DeathBlock dB = (DeathBlock)b;
                 return dB.X == X && dB.Y == Y && dB.Layer == Layer && dB.ID == ID && dB.RequiredDeaths == RequiredDeaths;
             }
 

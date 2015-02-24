@@ -1,9 +1,4 @@
 ﻿using PlayerIOClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fluid.ServerEvents
 {
@@ -18,5 +13,10 @@ namespace Fluid.ServerEvents
         /// Gets the player
         /// </summary>
         public WorldPlayer Player { get; internal set; }
+
+        /// <summary>
+        /// Gets the input of the player
+        /// </summary>
+        public Input Input { get; internal set; }
     }
 }

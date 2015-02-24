@@ -63,15 +63,15 @@
         }
 
         /// <summary>
-        /// Tests if a portal block is equal to an object
+        /// Tests if a portal block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is Portal)
+            if (b is Portal)
             {
-                Portal p = (Portal)obj;
+                Portal p = (Portal)b;
                 return p.X == X && p.Y == Y && p.Layer == Layer && p.ID == ID && p.Rotation == Rotation && p.SourceID == SourceID && p.Target == Target;
             }
 

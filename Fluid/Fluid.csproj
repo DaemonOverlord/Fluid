@@ -121,6 +121,7 @@
     <Compile Include="FluidColor.cs" />
     <Compile Include="ConnectionBase.cs" />
     <Compile Include="FluidEventHandler.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="LobbyConnection.cs" />
     <Compile Include="FluidLog.cs" />
     <Compile Include="FluidLogCategory.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="FluidPoint.cs" />
     <Compile Include="Physics\TickMode.cs" />
     <Compile Include="PotionState.cs" />
+    <Compile Include="QuickChatMessage.cs" />
     <Compile Include="SecureConnection.cs" />
     <Compile Include="FluidShopInfo.cs" />
     <Compile Include="FluidToolbelt.cs" />

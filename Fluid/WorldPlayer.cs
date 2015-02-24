@@ -133,6 +133,11 @@ namespace Fluid
         public ConcurrentDictionary<Potion, PotionState> Potions { get; internal set; }
 
         /// <summary>
+        /// Gets the last input of the player
+        /// </summary>
+        public Input LastInput { get; internal set; }
+
+        /// <summary>
         /// Gets the x coordinate
         /// </summary>
         public double X { get; set; }
@@ -455,6 +460,8 @@ namespace Fluid
             {
                 Potions.TryAdd(potiontypes[i], PotionState.Inactive);
             }
+
+            LastInput = 0;
         }
     }
 }

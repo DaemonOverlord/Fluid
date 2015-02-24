@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a purple block is equal to an object
+        /// Tests if a purple block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is PurpleBlock)
+            if (b is PurpleBlock)
             {
-                PurpleBlock pB = (PurpleBlock)obj;
+                PurpleBlock pB = (PurpleBlock)b;
                 return pB.X == X && pB.Y == Y && pB.Layer == Layer && pB.ID == ID && pB.SwitchID == SwitchID;
             }
 

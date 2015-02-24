@@ -234,6 +234,11 @@
             Gets or Sets the token
             </summary>
         </member>
+        <member name="M:Fluid.BlockRequest.SetMissed">
+            <summary>
+            Sets the block as missed
+            </summary>
+        </member>
         <member name="M:Fluid.BlockRequest.GetTimePassed">
             <summary>
             Gets the last time a request was sent
@@ -266,6 +271,11 @@
             Gets the block throttle
             </summary>
         </member>
+        <member name="P:Fluid.BlockRequest.Missed">
+            <summary>
+            Gets or sets whether the request was missed
+            </summary>
+        </member>
         <member name="M:Fluid.Blocks.Block.Bind(Fluid.WorldConnection)">
             <summary>
             Binds the block to a connection
@@ -277,11 +287,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.Block.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.Block.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Checks if two blocks are the same
             </summary>
-            <param name="obj">The object</param>
+            <param name="bl">The block</param>
         </member>
         <member name="M:Fluid.Blocks.Block.ToString">
             <summary>
@@ -361,11 +371,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.CoinBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.CoinBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a coin block is equal to an object
+            Tests if a coin block is equal to an block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.CoinBlock.Goal">
@@ -396,11 +406,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.DeathBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.DeathBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a death block is equal to an object
+            Tests if a death block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.DeathBlock.RequiredDeaths">
@@ -432,11 +442,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.TextBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.TextBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a text block is equal to an object
+            Tests if a text block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.TextBlock.Text">
@@ -466,6 +476,7 @@
             <summary>
             Creates a label block
             </summary>
+            <param name="worldCon">The world connection</param>
             <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
@@ -487,11 +498,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.LabelBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a label block is equal to an object
+            Tests if a label block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.LabelBlock.Color">
@@ -533,11 +544,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.MusicBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.MusicBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a music block is equal to an object
+            Tests if a music block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.MusicBlock.MusicID">
@@ -569,11 +580,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.RotatableBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.RotatableBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a rotatatable block is equal to an object
+            Tests if a rotatatable block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.RotatableBlock.Rotation">
@@ -609,11 +620,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.Portal.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.Portal.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a portal block is equal to an object
+            Tests if a portal block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.Portal.SourceID">
@@ -650,16 +661,36 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.PurpleBlock.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.PurpleBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a purple block is equal to an object
+            Tests if a purple block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.PurpleBlock.SwitchID">
             <summary>
             Gets or sets the switch ID
+            </summary>
+        </member>
+        <member name="F:Fluid.Blocks.Rotation.Down">
+            <summary>
+            Rotated downwards
+            </summary>
+        </member>
+        <member name="F:Fluid.Blocks.Rotation.Left">
+            <summary>
+            Rotated to the left direction
+            </summary>
+        </member>
+        <member name="F:Fluid.Blocks.Rotation.Up">
+            <summary>
+            Rotated upwards
+            </summary>
+        </member>
+        <member name="F:Fluid.Blocks.Rotation.Right">
+            <summary>
+            Rotated to the right direction
             </summary>
         </member>
         <member name="M:Fluid.Blocks.WorldPortal.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
@@ -686,11 +717,11 @@
             Uploads the block to the server
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.WorldPortal.Equals(System.Object)">
+        <member name="M:Fluid.Blocks.WorldPortal.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
-            Tests if a wolrd portal block is equal to an object
+            Tests if a wolrd portal block is equal to a block
             </summary>
-            <param name="obj">The object</param>
+            <param name="b">The block</param>
             <returns>True if equal in value</returns>
         </member>
         <member name="P:Fluid.Blocks.WorldPortal.TargetID">
@@ -712,7 +743,7 @@
             <param name="length">Segment length</param>
             <returns>The message segments</returns>
         </member>
-        <member name="M:Fluid.ChatManager.Say(System.String)">
+        <member name="M:Fluid.ChatManager.Say(System.String,System.String)">
             <summary>
             Says a message
             </summary>
@@ -1943,6 +1974,61 @@
             The potion is inactive
             </summary>
         </member>
+        <member name="F:Fluid.QuickChatMessage.Unknown">
+            <summary>
+            A unknown quick chat message
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Left">
+            <summary>
+            "Left."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Hi">
+            <summary>
+            "Hi."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Bye">
+            <summary>
+            "Goodbye."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Help">
+            <summary>
+            "Help me!"
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Thanks">
+            <summary>
+            "Thank you."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Come">
+            <summary>
+            "Follow me."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Stop">
+            <summary>
+            "Stop!"
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Yes">
+            <summary>
+            "Yes."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.No">
+            <summary>
+            "No."
+            </summary>
+        </member>
+        <member name="F:Fluid.QuickChatMessage.Right">
+            <summary>
+            "Right."
+            </summary>
+        </member>
         <member name="M:Fluid.SecureConnection.SendAuth(System.String,System.String)">
             <summary>
             Sends a authentication request
@@ -2151,8 +2237,7 @@
             <summary>
             Sends a block to the world
             </summary>
-            <param name="block">The block to send</param>
-            <param name="waitForManager">Should the block be queued to the manager</param>
+            <param name="blockRequest">The block to send</param>
         </member>
         <member name="M:Fluid.WorldConnection.CheckBlock(Fluid.Blocks.Block)">
             <summary>
@@ -2305,6 +2390,12 @@
             </summary>
             <param name="potions">The unique list of potions</param>
         </member>
+        <member name="M:Fluid.WorldConnection.QuickChat(Fluid.QuickChatMessage)">
+            <summary>
+            Sends a quick chat message
+            </summary>
+            <param name="quickChatMessage">The quick chat message</param>
+        </member>
         <member name="M:Fluid.WorldConnection.Say(System.String)">
             <summary>
             Says a message in the chat
@@ -2323,6 +2414,18 @@
             </summary>
             <param name="player">The player</param>
             <param name="message">The message</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.PrivateMessage(System.String,System.String)">
+            <summary>
+            Sends a private message to a player
+            </summary>
+            <param name="username">The player's username</param>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.KillAll">
+            <summary>
+            Kills all players
+            </summary>
         </member>
         <member name="M:Fluid.WorldConnection.KickGuests">
             <summary>
@@ -2365,6 +2468,39 @@
             </summary>
             <param name="player">The source player</param>
             <param name="target">The target player</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.MoveToLocation(Fluid.Physics.Vector)">
+            <summary>
+            Teleports to a location
+            </summary>
+            <param name="location">The world location</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.MoveToLocation(System.Double,System.Double)">
+            <summary>
+            Teleports to a location
+            </summary>
+            <param name="x">The world pixel x</param>
+            <param name="y">The world pixel y</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.SendMovement(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Sends movement
+            </summary>
+            <param name="x">The pixel location x</param>
+            <param name="y">The pixel location y</param>
+            <param name="speedX">The speed in the x direction</param>
+            <param name="speedY">The speed in the y direction</param>
+            <param name="modifierX">The current player modifier in the x direction</param>
+            <param name="modifierY">The current player modifier in the y direction</param>
+            <param name="horizontal">The player input in the horizontal direction</param>
+            <param name="vertical">The player input in the vertical direction</param>
+            <param name="holdingSpace">Whether the player is holding space</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.SendMovementInput(Fluid.Input)">
+            <summary>
+            Sends player input
+            </summary>
+            <param name="input">The input combination to send</param>
         </member>
         <member name="M:Fluid.WorldConnection.Reconnect">
             <summary>
@@ -2421,6 +2557,11 @@
         <member name="P:Fluid.WorldConnection.Physics">
             <summary>
             Gets the physics engine
+            </summary>
+        </member>
+        <member name="P:Fluid.WorldConnection.Uploader">
+            <summary>
+            Gets the block uploader
             </summary>
         </member>
         <member name="P:Fluid.WorldConnection.Me">
@@ -3500,12 +3641,13 @@
             <param name="id">The player's id</param>
             <returns>The player if found; otherwise null</returns>
         </member>
-        <member name="M:Fluid.PlayerManager.GetPlayer(System.String)">
+        <member name="M:Fluid.PlayerManager.GetPlayer(System.String,System.Boolean)">
             <summary>
             Gets a player
             </summary>
             <param name="username">The player's username</param>
             <returns>The player if found; otherwise null</returns>
+            <param name="includeConnectedPlayer">Whether to include the connected player in the search</param>
         </member>
         <member name="M:Fluid.PlayerManager.GetPlayer(System.Predicate{Fluid.WorldPlayer})">
             <summary>
@@ -3951,6 +4093,51 @@
             Gets the WootTotal
             </summary>
         </member>
+        <member name="F:Fluid.RoomType.Normal">
+            <summary>
+            The everybodyedits room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Beta">
+            <summary>
+            The beta everybodyedits room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Guardian">
+            <summary>
+            The guardian room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Tracking">
+            <summary>
+            The tracking room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Auth">
+            <summary>
+            The authentication room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Service">
+            <summary>
+            The service room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.GuestService">
+            <summary>
+            The guest service room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Tutorial">
+            <summary>
+            The tutorial room type
+            </summary>
+        </member>
+        <member name="F:Fluid.RoomType.Unknown">
+            <summary>
+            A unknown room type
+            </summary>
+        </member>
         <member name="T:Fluid.ServerEvents.IServerEvent">
             <summary>
             The message interface
@@ -4365,6 +4552,11 @@
             Gets the player
             </summary>
         </member>
+        <member name="P:Fluid.ServerEvents.MovementEvent.Input">
+            <summary>
+            Gets the input of the player
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.MusicBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4457,6 +4649,11 @@
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.QuickChatEvent.ChatMessage">
+            <summary>
+            Gets the quick chat message
+            </summary>
+        </member>
+        <member name="P:Fluid.ServerEvents.QuickChatEvent.QuickChatMessage">
             <summary>
             Gets the quick chat message
             </summary>
@@ -4842,6 +5039,17 @@
             Safe Action Delegate
             </summary>
         </member>
+        <member name="M:Fluid.BlockUploadManager.WaitForBlocks">
+            <summary>
+            Waits for the blocks to be sent
+            </summary>
+        </member>
+        <member name="M:Fluid.BlockUploadManager.GetNextInList">
+            <summary>
+            Gets the next in the list
+            </summary>
+            <returns>The next block that should be sent</returns>
+        </member>
         <member name="M:Fluid.BlockUploadManager.IsQueueEmpty">
             <summary>
             Gets if the queue is empty
@@ -4877,6 +5085,16 @@
             Creates a new block manager
             </summary>
             <param name="worldCon"></param>
+        </member>
+        <member name="P:Fluid.BlockUploadManager.BlocksQueued">
+            <summary>
+            Gets the amount of blocks queued
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockUploadManager.Uploading">
+            <summary>
+            Gets whether the uploader is uploading
+            </summary>
         </member>
         <member name="M:Fluid.Web.PlayerIORequest.DecodeBody(System.Text.Encoding)">
             <summary>
@@ -5339,6 +5557,11 @@
         <member name="P:Fluid.WorldPlayer.Potions">
             <summary>
             Gets the player's active potions
+            </summary>
+        </member>
+        <member name="P:Fluid.WorldPlayer.LastInput">
+            <summary>
+            Gets the last input of the player
             </summary>
         </member>
         <member name="P:Fluid.WorldPlayer.X">

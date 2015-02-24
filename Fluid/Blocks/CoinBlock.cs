@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a coin block is equal to an object
+        /// Tests if a coin block is equal to an block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is CoinBlock)
+            if (b is CoinBlock)
             {
-                CoinBlock cB = (CoinBlock)obj;
+                CoinBlock cB = (CoinBlock)b;
                 return cB.X == X && cB.Y == Y && cB.Layer == Layer && cB.ID == ID && cB.Goal == Goal;
             }
 

@@ -5,12 +5,95 @@ using System.Threading;
 
 namespace Fluid
 {
-    internal class BlockUploadManager
+    public class BlockUploadManager
     {
         private List<BlockRequest> m_Queue;
         private WorldConnection m_WorldConnection;
-
         private Thread m_uploadThread;
+        private ManualResetEvent m_ResetEvent;
+
+        /// <summary>
+        /// Gets the amount of blocks queued
+        /// </summary>
+        public int BlocksQueued
+        {
+            get
+            {
+                return m_Queue.Count;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the uploader is uploading
+        /// </summary>
+        public bool Uploading
+        {
+            get
+            {
+                if (m_uploadThread == null)
+                {
+                    return false;
+                }
+
+                return m_uploadThread.ThreadState == ThreadState.Running;
+            }
+        }
+
+        /// <summary>
+        /// Waits for the blocks to be sent
+        /// </summary>
+        public void WaitForBlocks()
+        {
+            if (m_ResetEvent != null)
+            {
+                m_ResetEvent.WaitOne();
+                m_ResetEvent.Dispose();
+                m_ResetEvent = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the next in the list
+        /// </summary>
+        /// <returns>The next block that should be sent</returns>
+        private BlockRequest GetNextInList()
+        {
+            long oldestRequestTime = 0;
+            BlockRequest oldestMissed = null;
+            for (int i = 0; i < m_Queue.Count; i++)
+            {
+                if (m_Queue[i].Missed)
+                {
+                    if (!m_Queue[i].Timestamp.HasValue)
+                    {
+                        return m_Queue[i];
+                    }
+
+                    long timePassed = m_Queue[i].GetTimePassed();
+                    if (timePassed >= oldestRequestTime)
+                    {
+                        oldestRequestTime = timePassed;
+                        oldestMissed = m_Queue[i];
+                    }
+                }
+            }
+
+            if (oldestMissed != null)
+            {
+                return oldestMissed;
+            }
+
+            //Check queue for the oldest unattempted send
+            for (int i = 0; i < m_Queue.Count; i++)
+            {
+                if (!m_Queue[i].Timestamp.HasValue)
+                {
+                    return m_Queue[i];
+                }
+            }
+
+            return null;
+        }
 
         private void UploadThread()
         {
@@ -18,38 +101,15 @@ namespace Fluid
             {
                 //Send the most tasked block
                 BlockRequest req = m_Queue[0];
-                BlockRequest send = null;
-
-                if (req.GetTimePassed() > 0 && req.GetTimePassed() < 50)
-                {
-                    BlockRequest first = null;
-                    for (int i = 0; i < m_Queue.Count; i++)
-                    {
-                        if (m_Queue[i].GetTimePassed() == 0)
-                        {
-                            first = m_Queue[i];
-                            break;
-                        }
-                    }
-
-                    if (first != null)
-                    {
-                        send = first;
-                    }
-                }
-                else if (req.GetTimePassed() > 500)
-                {
-                    m_Queue.RemoveAt(0);
-                    continue;
-                }
-
-                if (send == null)
-                {
-                    send = req;
-                }
+                BlockRequest send = GetNextInList();
 
                 send.Request();
                 m_WorldConnection.UploadBlockRequest(send);
+            }
+
+            if (m_ResetEvent != null)
+            {
+                m_ResetEvent.Set();
             }
         }
 
@@ -82,6 +142,8 @@ namespace Fluid
             m_uploadThread.Priority = ThreadPriority.AboveNormal;
             m_uploadThread.IsBackground = true;
             m_uploadThread.Start();
+
+            m_ResetEvent = new ManualResetEvent(false);
         }
 
         /// <summary>
@@ -120,6 +182,10 @@ namespace Fluid
                             {
                                 m_Queue.RemoveAt(i);
                                 i--;
+                            }
+                            else
+                            {
+                                m_Queue[i].SetMissed();
                             }
                         }
                     }

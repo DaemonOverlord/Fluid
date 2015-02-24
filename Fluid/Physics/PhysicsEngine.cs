@@ -167,7 +167,7 @@ namespace Fluid.Physics
         /// </summary>
         /// <param name="blockId">The block</param>
         /// <returns>True if climbable; otherwise false</returns>
-        private bool IsClimbable(BlockID blockId)
+        public bool IsClimbable(BlockID blockId)
         {
             switch (blockId)
             {
@@ -185,7 +185,7 @@ namespace Fluid.Physics
         /// Gets whether a block is solid
         /// </summary>
         /// <param name="blockId">The block id</param>
-        private bool IsSolid(BlockID blockId)
+        public bool IsSolid(BlockID blockId)
         {
             int id = (int)blockId;
             return (9 <= id && id <= 97) || (122 <= id && id <= 217) || (1001 <= id && id <= 1012);
@@ -196,7 +196,7 @@ namespace Fluid.Physics
         /// </summary>
         /// <param name="blockId">The block</param>
         /// <returns>True if you can jump through; otherwise false</returns>
-        private bool CanJumpThrough(BlockID blockId)
+        public bool CanJumpThrough(BlockID blockId)
         {
             switch (blockId)
             {
@@ -235,7 +235,7 @@ namespace Fluid.Physics
         /// Gets whether a number is approaching zero
         /// </summary>
         /// <param name="number">The number</param>
-        private bool ApproachingZero(double number)
+        internal bool ApproachingZero(double number)
         {
             return Math.Abs(number) < 0.00000001;
         }

@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a rotatatable block is equal to an object
+        /// Tests if a rotatatable block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is RotatableBlock)
+            if (b is RotatableBlock)
             {
-                RotatableBlock rB = (RotatableBlock)obj;
+                RotatableBlock rB = (RotatableBlock)b;
                 return rB.X == X && rB.Y == Y && rB.Layer == Layer && rB.ID == ID && rB.Rotation == Rotation;
             }
 

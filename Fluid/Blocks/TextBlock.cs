@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a text block is equal to an object
+        /// Tests if a text block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is TextBlock)
+            if (b is TextBlock)
             {
-                TextBlock tB = (TextBlock)obj;
+                TextBlock tB = (TextBlock)b;
                 return tB.X == X && tB.Y == Y && tB.Layer == Layer && tB.ID == ID && tB.Text == Text;
             }
 

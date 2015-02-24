@@ -72,16 +72,10 @@
         /// <summary>
         /// Checks if two blocks are the same
         /// </summary>
-        /// <param name="obj">The object</param>
-        public override bool Equals(object obj)
+        /// <param name="bl">The block</param>
+        public bool EqualsBlock(Block bl)
         {
-            if (obj is Block)
-            {
-                Block bl = (Block)obj;
-                return X == bl.X && Y == bl.Y && ID == bl.ID && Layer == bl.Layer;
-            }
-
-            return false;
+            return X == bl.X && Y == bl.Y && ID == bl.ID && Layer == bl.Layer;
         }
 
         /// <summary>

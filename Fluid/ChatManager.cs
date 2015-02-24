@@ -86,20 +86,14 @@ namespace Fluid
         /// Says a message
         /// </summary>
         /// <param name="message">The message to say</param>
-        public void Say(string message)
+        public void Say(string message, string prefix = "")
         {
-            if (message.StartsWith("/"))
-            {
-                m_Connection.SayInternal(message);
-                return;
-            }
-
-            List<string> messageSegments = SplitMessage(message, 80);
+            List<string> messageSegments = SplitMessage(message, 80 - prefix.Length);
             Task chatTask = Task.Run(delegate()
             {
                 for (int i = 0; i < messageSegments.Count; i++)
                 {
-                    m_Connection.SayInternal(messageSegments[i]);
+                    m_Connection.SayInternal(prefix + messageSegments[i]);
                     Thread.Sleep(700);
                 }
             });

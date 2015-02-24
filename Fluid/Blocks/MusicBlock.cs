@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a music block is equal to an object
+        /// Tests if a music block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is MusicBlock)
+            if (b is MusicBlock)
             {
-                MusicBlock mB = (MusicBlock)obj;
+                MusicBlock mB = (MusicBlock)b;
                 return mB.X == X && mB.Y == Y && mB.Layer == Layer && mB.ID == ID && mB.MusicID == MusicID;
             }
 

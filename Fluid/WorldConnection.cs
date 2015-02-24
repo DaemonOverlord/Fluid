@@ -58,6 +58,11 @@ namespace Fluid
         public PhysicsEngine Physics { get; internal set; }
 
         /// <summary>
+        /// Gets the block uploader
+        /// </summary>
+        public BlockUploadManager Uploader { get { return m_UploadManager; } }
+
+        /// <summary>
         /// Gets the currently connected player
         /// </summary>
         public WorldPlayer Me { get; internal set; }
@@ -200,14 +205,13 @@ namespace Fluid
                 block.Bind(this);
             }
 
-            m_UploadManager.QueueBlock(block, blockThrottle);
+            m_UploadManager.QueueBlock(block, (int)blockThrottle);
         }
 
         /// <summary>
         /// Sends a block to the world
         /// </summary>
-        /// <param name="block">The block to send</param>
-        /// <param name="waitForManager">Should the block be queued to the manager</param>
+        /// <param name="blockRequest">The block to send</param>
         internal void UploadBlockRequest(BlockRequest blockRequest)
         {
             Block block = blockRequest.Block;
@@ -493,6 +497,15 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Sends a quick chat message
+        /// </summary>
+        /// <param name="quickChatMessage">The quick chat message</param>
+        public void QuickChat(QuickChatMessage quickChatMessage)
+        {
+            this.SendMessage("autosay", (int)quickChatMessage);
+        }
+
+        /// <summary>
         /// Says a message in the chat
         /// </summary>
         /// <param name="message">The message</param>
@@ -519,11 +532,30 @@ namespace Fluid
         {
             if (player == null)
             {
-                m_Client.Log.Add(FluidLogCategory.Suggestion, "Check if your player is null before attempting to use it.");
+                //Player could be null from getting player from Players
                 return;
             }
 
-            this.SendMessage("say", string.Format("/pm {0} {1}", player.Username, message));
+            this.PrivateMessage(player.Username, message);
+        }
+
+        /// <summary>
+        /// Sends a private message to a player
+        /// </summary>
+        /// <param name="username">The player's username</param>
+        /// <param name="message">The message</param>
+        public void PrivateMessage(string username, string message)
+        {
+            //Include space at end
+            this.Chat.Say(message, string.Format("/pm {0} ", username));
+        }
+
+        /// <summary>
+        /// Kills all players
+        /// </summary>
+        public void KillAll()
+        {
+            this.SendMessage("say", "/killemall");
         }
 
         /// <summary>
@@ -605,6 +637,87 @@ namespace Fluid
             }
 
             this.TeleportPlayer(player, target.GetLocation());
+        }
+
+        /// <summary>
+        /// Teleports to a location
+        /// </summary>
+        /// <param name="location">The world location</param>
+        public void MoveToLocation(Vector location)
+        {
+            if (location == null)
+            {
+                return;
+            }
+
+            this.MoveToLocation(location.X, location.Y);
+        }
+
+        /// <summary>
+        /// Teleports to a location
+        /// </summary>
+        /// <param name="x">The world pixel x</param>
+        /// <param name="y">The world pixel y</param>
+        public void MoveToLocation(double x, double y)
+        {
+            this.SendMessage("m", x, y, 0, 0, 0, 0, 0, 0, World.Gravity, false);
+        }
+
+        /// <summary>
+        /// Sends movement
+        /// </summary>
+        /// <param name="x">The pixel location x</param>
+        /// <param name="y">The pixel location y</param>
+        /// <param name="speedX">The speed in the x direction</param>
+        /// <param name="speedY">The speed in the y direction</param>
+        /// <param name="modifierX">The current player modifier in the x direction</param>
+        /// <param name="modifierY">The current player modifier in the y direction</param>
+        /// <param name="horizontal">The player input in the horizontal direction</param>
+        /// <param name="vertical">The player input in the vertical direction</param>
+        /// <param name="holdingSpace">Whether the player is holding space</param>
+        public void SendMovement(double x, double y, double speedX, double speedY, double modifierX, double modifierY, int horizontal, int vertical, bool holdingSpace)
+        {
+            this.SendMessage("m",
+                x,
+                y,
+                speedX,
+                speedY,
+                modifierX,
+                modifierY,
+                horizontal,
+                vertical,
+                World.Gravity,
+                holdingSpace
+            );
+        }
+
+        /// <summary>
+        /// Sends player input
+        /// </summary>
+        /// <param name="input">The input combination to send</param>
+        public void SendMovementInput(Input input)
+        {
+            double speedX = 0, speedY = 0;
+            int horizontal = 0, vertical = 0;
+
+            WorldPlayer me = Me;
+            if ((input & Input.HoldSpace) != 0)
+            {
+                if (me.SpeedX == 0 && !Physics.ApproachingZero(me.m_morx) && !Physics.ApproachingZero(me.m_mox) && me.X % 16 == 0)
+                {
+                    speedX = (me.SpeedX - (me.m_morx * PhysicsEngine.JumpHeight));
+                }
+
+                if (me.SpeedY == 0 && !Physics.ApproachingZero(me.m_mory) && !Physics.ApproachingZero(me.m_moy) && me.Y % 16 == 0)
+                {
+                    speedY = (me.SpeedY - (me.m_mory * PhysicsEngine.JumpHeight));
+                }
+            }
+
+            horizontal = Convert.ToInt32((input & Input.HoldLeft) != 0) + Convert.ToInt32((input & Input.HoldRight) != 0);
+            vertical = Convert.ToInt32((input & Input.HoldUp) != 0) + Convert.ToInt32((input & Input.HoldDown) != 0);
+
+            SendMovement(me.X, me.Y, speedX, speedY, me.ModifierX, me.ModifierY, horizontal, vertical, false);
         }
 
         /// <summary>

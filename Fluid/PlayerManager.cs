@@ -46,6 +46,11 @@ namespace Fluid
             {
                 while (enumerator.MoveNext())
                 {
+                    if (enumerator.Current.Value.IsConnectedPlayer)
+                    {
+                        continue;
+                    }
+
                     if (string.Compare(enumerator.Current.Value.Username, username, true) == 0)
                     {
                         return this.Remove(enumerator.Current.Key);
@@ -77,12 +82,18 @@ namespace Fluid
         /// </summary>
         /// <param name="username">The player's username</param>
         /// <returns>The player if found; otherwise null</returns>
-        public WorldPlayer GetPlayer(string username)
+        /// <param name="includeConnectedPlayer">Whether to include the connected player in the search</param>
+        public WorldPlayer GetPlayer(string username, bool includeConnectedPlayer = false)
         {
             using (IEnumerator<KeyValuePair<int, WorldPlayer>> enumerator = m_Players.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
+                    if (enumerator.Current.Value.IsConnectedPlayer && !includeConnectedPlayer)
+                    {
+                        continue;
+                    }
+
                     if (string.Compare(enumerator.Current.Value.Username, username, true) == 0)
                     {
                         return enumerator.Current.Value;

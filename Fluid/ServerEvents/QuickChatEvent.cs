@@ -13,5 +13,10 @@ namespace Fluid.ServerEvents
         /// Gets the quick chat message
         /// </summary>
         public ChatMessage ChatMessage { get; internal set; }
+
+        /// <summary>
+        /// Gets the quick chat message
+        /// </summary>
+        public QuickChatMessage QuickChatMessage { get; internal set; }
     }
 }

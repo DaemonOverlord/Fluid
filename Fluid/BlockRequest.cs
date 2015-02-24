@@ -5,6 +5,8 @@ namespace Fluid
 {
     internal class BlockRequest
     {
+        private bool m_NullTimestamp = false;
+
         /// <summary>
         /// Gets the block
         /// </summary>
@@ -21,11 +23,26 @@ namespace Fluid
         public int BlockThrottle { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the request was missed
+        /// </summary>
+        public bool Missed { get; private set; }
+
+        /// <summary>
+        /// Sets the block as missed
+        /// </summary>
+        public void SetMissed()
+        {
+            Missed = true;
+            m_NullTimestamp = true;
+            Timestamp = null;
+        }
+
+        /// <summary>
         /// Gets the last time a request was sent
         /// </summary>
         public int GetTimePassed()
         {
-            if (!Timestamp.HasValue)
+            if (!Timestamp.HasValue || m_NullTimestamp)
             {
                 return 0;
             }
@@ -38,6 +55,7 @@ namespace Fluid
         /// </summary>
         public void Request()
         {
+            m_NullTimestamp = false;
             Timestamp = DateTime.Now;
         }
 

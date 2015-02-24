@@ -50,15 +50,15 @@
         }
 
         /// <summary>
-        /// Tests if a wolrd portal block is equal to an object
+        /// Tests if a wolrd portal block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is WorldPortal)
+            if (b is WorldPortal)
             {
-                WorldPortal wpB = (WorldPortal)obj;
+                WorldPortal wpB = (WorldPortal)b;
                 return wpB.X == X && wpB.Y == Y && wpB.Layer == Layer && wpB.ID == ID && wpB.TargetID == TargetID;
             }
 

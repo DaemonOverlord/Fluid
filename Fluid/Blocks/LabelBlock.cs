@@ -31,6 +31,7 @@
         /// <summary>
         /// Creates a label block
         /// </summary>
+        /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
@@ -78,15 +79,15 @@
         }
 
         /// <summary>
-        /// Tests if a label block is equal to an object
+        /// Tests if a label block is equal to a block
         /// </summary>
-        /// <param name="obj">The object</param>
+        /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public override bool Equals(object obj)
+        public bool EqualsBlock(Block b)
         {
-            if (obj is LabelBlock)
+            if (b is LabelBlock)
             {
-                LabelBlock lB = (LabelBlock)obj;
+                LabelBlock lB = (LabelBlock)b;
                 return lB.X == X && lB.Y == Y && lB.Layer == Layer && lB.ID == ID && lB.Color == Color;
             }
 

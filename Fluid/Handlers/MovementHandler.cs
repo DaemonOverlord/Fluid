@@ -38,6 +38,54 @@ namespace Fluid.Handlers
 
             if (!handled && player != null)
             {
+                Input playerInput = 0;
+
+                if (horizontal != player.Horizontal)
+                {
+                    if (horizontal < 0)
+                    {
+                        playerInput |= Input.HoldLeft;
+                    }
+                    else if (horizontal > 0)
+                    {
+                        playerInput |= Input.HoldRight;
+                    }
+                    else if (horizontal == 0)
+                    {
+                        if ((player.LastInput & Input.HoldLeft) != 0)
+                        {
+                            playerInput |= Input.ReleaseLeft;
+                        }
+                        else if ((player.LastInput & Input.HoldRight) != 0)
+                        {
+                            playerInput |= Input.ReleaseRight;
+                        }
+                    }
+                }
+
+                if (vertical != player.Vertical)
+                {
+                    if (vertical < 0)
+                    {
+                        playerInput |= Input.HoldUp;
+                    }
+                    else if (vertical > 0)
+                    {
+                        playerInput |= Input.HoldDown;
+                    }
+                    else if (vertical == 0)
+                    {
+                        if ((player.LastInput & Input.HoldUp) != 0)
+                        {
+                            playerInput |= Input.ReleaseUp;
+                        }
+                        else if ((player.LastInput & Input.HoldDown) != 0)
+                        {
+                            playerInput |= Input.ReleaseDown;
+                        }
+                    }
+                }
+
                 player.X = x;
                 player.Y = y;
                 player.SpeedX = speedX;
@@ -47,6 +95,7 @@ namespace Fluid.Handlers
                 player.Horizontal = horizontal;
                 player.Vertical = vertical;
                 player.SpaceDown = spacedown;
+                player.LastInput = playerInput;
 
                 worldCon.Physics.ServerUpdate(player);
             }
@@ -54,7 +103,8 @@ namespace Fluid.Handlers
             MovementEvent movementEvent = new MovementEvent()
             {
                 Raw = message,
-                Player = player
+                Player = player,
+                Input = player.LastInput
             };
 
             connectionBase.RaiseServerEvent<MovementEvent>(movementEvent);
