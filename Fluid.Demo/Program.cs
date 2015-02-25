@@ -1,14 +1,6 @@
 ﻿using Fluid.Auth;
-using Fluid.Blocks;
-using Fluid.Events;
-using Fluid.ServerEvents;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fluid.Demo
 {
@@ -22,6 +14,8 @@ namespace Fluid.Demo
 
             if (client.LogIn())
             {
+                List<WorldReference> worlds = client.GetLobbyRooms();
+
                 Console.WriteLine("Done.");
                 Console.ReadKey();
             }

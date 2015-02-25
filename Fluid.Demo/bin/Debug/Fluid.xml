@@ -969,6 +969,18 @@
             Gets the connection type
             </summary>
         </member>
+        <member name="M:Fluid.FluidClient.GetLobbyRooms">
+            <summary>
+            Gets a list of rooms in the lobby
+            </summary>
+            <returns>The list of rooms in the lobby</returns>
+        </member>
+        <member name="M:Fluid.FluidClient.GetLobbyRoomsAsync">
+            <summary>
+            Gets a list of rooms in the lobby asynchronously
+            </summary>
+            <returns>The async task</returns>
+        </member>
         <member name="M:Fluid.FluidClient.GetPlayersOnline">
             <summary>
             Gets the list of players online

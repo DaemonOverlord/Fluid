@@ -10,8 +10,6 @@ namespace Fluid
 {
     public sealed class FluidClient
     {
-        private bool m_Disposed = false;
-
         private Config m_Config;
         private FluidLog m_Log;
         private FluidParser m_Parser;
@@ -138,6 +136,45 @@ namespace Fluid
             }
 
             return PlayerType.Unknown; ;
+        }
+
+        /// <summary>
+        /// Gets a list of rooms in the lobby
+        /// </summary>
+        /// <returns>The list of rooms in the lobby</returns>
+        public List<WorldReference> GetLobbyRooms()
+        {
+            List<WorldReference> worlds = new List<WorldReference>();
+
+            int gameVersion = GetGameVersion();
+            if (gameVersion == -1)
+            {
+                return worlds;
+            }
+
+            string eeRoom = string.Format(m_Config.NormalRoom, gameVersion);
+            string betaRoom = string.Format(m_Config.BetaRoom, gameVersion);
+
+            RoomInfo[] rooms = m_Client.Multiplayer.ListRooms(null, null, 0, 0);
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                if (string.Compare(rooms[i].RoomType, eeRoom) == 0 ||
+                    string.Compare(rooms[i].RoomType, betaRoom) == 0)
+                {
+                    worlds.Add(new WorldReference(this, rooms[i].Id));
+                }
+            }
+
+            return worlds;
+        }
+
+        /// <summary>
+        /// Gets a list of rooms in the lobby asynchronously
+        /// </summary>
+        /// <returns>The async task</returns>
+        public async Task<List<WorldReference>> GetLobbyRoomsAsync()
+        {
+            return await Task.Run<List<WorldReference>>(() => GetLobbyRooms());
         }
 
         /// <summary>
@@ -296,11 +333,6 @@ namespace Fluid
         /// </summary>
         public VaultShopItem[] LoadPlayerItems()
         {
-            if (m_Disposed)
-            {
-                return null;
-            }
-
             m_Client.PayVault.Refresh();
             VaultItem[] vaultItems = m_Client.PayVault.Items;
             VaultShopItem[] shopItems = new VaultShopItem[vaultItems.Length];
@@ -533,11 +565,6 @@ namespace Fluid
         /// <returns></returns>
         public bool HasBlock(BlockID blockId)
         {
-            if (m_Disposed)
-            {
-                return false;
-            }
-
             int block = (int)blockId;
 
             int[] defaultBlocks = m_ShopInfo.GetDefaultBlocks();
@@ -576,11 +603,6 @@ namespace Fluid
         /// <returns></returns>
         public bool HasSmiley(FaceID smiley)
         {
-            if (m_Disposed)
-            {
-                return false;
-            }
-
             string smileyPack = m_ShopInfo.GetSmileyId(smiley);
             if (smileyPack == null)
             {
@@ -610,11 +632,6 @@ namespace Fluid
         /// <param name="potion">The potion type</param>
         public bool HasPotion(Potion potion)
         {
-            if (m_Disposed)
-            {
-                return false;
-            }
-
             string packName = GetPotionShopId(potion);
 
             m_Client.PayVault.Refresh();
@@ -627,11 +644,6 @@ namespace Fluid
         /// <param name="potion">The potion type</param>
         public int GetPotionCount(Potion potion)
         {
-            if (m_Disposed)
-            {
-                return 0;
-            }
-
             string packName = GetPotionShopId(potion);
 
             m_Client.PayVault.Refresh();
