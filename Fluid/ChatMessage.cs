@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets the chat message
         /// </summary>
-        public string Message { get; private set; }
+        public string Text { get; private set; }
 
         /// <summary>
         /// Gets the chat message debug message
@@ -19,21 +19,21 @@
         {
             if (Player == null)
             {
-                return Message;
+                return Text;
             }
 
-            return string.Format("{0}: {1}", Player.Username, Message);
+            return string.Format("{0}: {1}", Player.Username, Text);
         }
 
         /// <summary>
         /// Creates a new chat message
         /// </summary>
         /// <param name="player">The player</param>
-        /// <param name="message">The message</param>
-        public ChatMessage(Player player, string message)
+        /// <param name="text">The text</param>
+        public ChatMessage(Player player, string text)
         {
             Player = player;
-            Message = message;
+            Text = text;
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Fluid.Demo
 {
     class Program
     {
-        static WorldConnection con;
-
         static void Main(string[] args)
         {
             GuestAuth guestAuth = new GuestAuth();
