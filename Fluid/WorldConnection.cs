@@ -777,7 +777,6 @@ namespace Fluid
             base.AddMessageHandler(new BackgroundColorHandler());
             base.AddMessageHandler(new SayHandler());
             base.AddMessageHandler(new OldSayHandler());
-            base.AddMessageHandler(new LevelupHandler());
             base.AddMessageHandler(new UpdateMetaHandler());
             base.AddMessageHandler(new QuickChatHandler());
             base.AddMessageHandler(new ClearHandler());

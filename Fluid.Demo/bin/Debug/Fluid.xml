@@ -2814,7 +2814,7 @@
             </summary>
             <param name="connectionBase">The connection base</param>
             <param name="message">The playerio message</param>
-            <pparam name="handled">Whether the message was already handled</pparam>
+            <param name="handled">Whether the message was already handled</param>
         </member>
         <member name="P:Fluid.Handlers.GetProfileHandler.HandleTypes">
             <summary>
@@ -2947,19 +2947,6 @@
             <param name="handled">Whether the message was already handled</param>
         </member>
         <member name="P:Fluid.Handlers.LeftHandler.HandleTypes">
-            <summary>
-            Gets the handled types
-            </summary>
-        </member>
-        <member name="M:Fluid.Handlers.LevelupHandler.Process(Fluid.ConnectionBase,PlayerIOClient.Message,System.Boolean)">
-            <summary>
-            Processes the message
-            </summary>
-            <param name="connectionBase">The connection base</param>
-            <param name="message">The playerio message</param>
-            <param name="handled">Whether the message was already handled</param>
-        </member>
-        <member name="P:Fluid.Handlers.LevelupHandler.HandleTypes">
             <summary>
             Gets the handled types
             </summary>
@@ -3744,36 +3731,6 @@
             Gets the list of worlds the player owns
             </summary>
         </member>
-        <member name="P:Fluid.PlayerObject.Woot">
-            <summary>
-            Gets Woot
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.MagicLevel">
-            <summary>
-            Gets the player's magic level
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.LevelCapPrevious">
-            <summary>
-            Gets the previous level capacity
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.LevelCapNext">
-            <summary>
-            Gets the next level capacity
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.LevelTitle">
-            <summary>
-            Gets the player's level title
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.WootTotal">
-            <summary>
-            Gets the WootTotal
-            </summary>
-        </member>
         <member name="P:Fluid.PlayerObject.ChatBanned">
             <summary>
             Gets whether the player's chat is banned
@@ -3817,21 +3774,6 @@
         <member name="P:Fluid.PlayerObject.WootUp">
             <summary>
             Gets WootUp
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.WootDaily">
-            <summary>
-            Gets the player's woots daily
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.WootDecayTime">
-            <summary>
-            Gets the player's woot decay time
-            </summary>
-        </member>
-        <member name="P:Fluid.PlayerObject.WootDecay">
-            <summary>
-            Gets the WootDecay
             </summary>
         </member>
         <member name="P:Fluid.PlayerObject.MaxEnergy">
@@ -4061,36 +4003,6 @@
         <member name="P:Fluid.Profile.ProfileVisible">
             <summary>
             Gets if the player's profile is visible
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.Woot">
-            <summary>
-            Gets Woot
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.MagicLevel">
-            <summary>
-            Gets the player's magic level
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.LevelCapPrevious">
-            <summary>
-            Gets the previous level capacity
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.LevelCapNext">
-            <summary>
-            Gets the next level capacity
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.LevelTitle">
-            <summary>
-            Gets the player's level title
-            </summary>
-        </member>
-        <member name="P:Fluid.Profile.WootTotal">
-            <summary>
-            Gets the WootTotal
             </summary>
         </member>
         <member name="F:Fluid.RoomType.Normal">
@@ -5532,11 +5444,6 @@
         <member name="P:Fluid.WorldPlayer.IsFriendsWithYou">
             <summary>
             Gets whether the player is friends with you
-            </summary>
-        </member>
-        <member name="P:Fluid.WorldPlayer.MagicLevel">
-            <summary>
-            Gets the players magic level
             </summary>
         </member>
         <member name="P:Fluid.WorldPlayer.HasBuildersClub">

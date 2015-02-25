@@ -86,7 +86,7 @@ namespace Fluid
         /// <param name="message">The message to send</param>
         public void SendMessage(Message message)
         {
-            if (m_Connection.Connected)
+            if (Connected)
             {
                 m_Connection.Send(message);
             }

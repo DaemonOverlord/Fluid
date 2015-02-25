@@ -56,18 +56,8 @@ namespace Fluid.Handlers
             pom.ProfileVisible = message.GetBoolean(18);
             pom.Banned = message.GetBoolean(19);
             pom.HasAcceptedTerms = Convert.ToBoolean(message.GetInt(20));
-
             pom.WootUp = message.GetInt(21);
-            pom.Woot = message.GetInt(22);
-            pom.MagicLevel = message.GetInt(23);
-            pom.LevelCapPrevious = message.GetInt(24);
-            pom.LevelCapNext = message.GetInt(25);                
-            pom.LevelTitle = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(message.GetString(26).ToLowerInvariant());
-            pom.WootTotal = message.GetInt(27);
-            pom.WootDaily = message.GetInt(28);
-            pom.WootDecayTime = message.GetInt(29);
-            pom.WootDecay = message.GetInt(30);
-            pom.MaxEnergy = message.GetInt(31);
+            pom.MaxEnergy = message.GetInt(22);
 
             PlayerObjectEvent playerObjectEvent = new PlayerObjectEvent()
             {

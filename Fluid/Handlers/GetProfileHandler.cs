@@ -19,14 +19,13 @@ namespace Fluid.Handlers
         /// </summary>
         /// <param name="connectionBase">The connection base</param>
         /// <param name="message">The playerio message</param>
-        /// <pparam name="handled">Whether the message was already handled</pparam>
+        /// <param name="handled">Whether the message was already handled</param>
         public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
             Profile profile = new Profile();
             profile.ProfileVisible = string.Compare(message.GetString(0), "public", true) == 0;
             if (profile.ProfileVisible)
             {
-
                 profile.ConnectionId = message.GetString(1);
                 profile.Username = message.GetString(2);
                 profile.Smiley = (FaceID)message.GetInt(3);
@@ -49,13 +48,6 @@ namespace Fluid.Handlers
                 {
                     profile.OwnedWorlds[i] = new WorldReference(connectionBase.Client, worldList[i]);
                 }
-
-                profile.Woot = message.GetInt(15);
-                profile.MagicLevel = message.GetInt(16);
-                profile.LevelCapPrevious = message.GetInt(17);
-                profile.LevelCapNext = message.GetInt(18);
-                profile.LevelTitle = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(message.GetString(19).ToLowerInvariant());
-                profile.WootTotal = message.GetInt(20);
             }
 
             GetProfileEvent getProfileEvent = new GetProfileEvent()

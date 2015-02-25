@@ -108,11 +108,6 @@ namespace Fluid
         public bool IsFriendsWithYou { get; internal set; }
 
         /// <summary>
-        /// Gets the players magic level
-        /// </summary>
-        public int MagicLevel { get; internal set; }
-
-        /// <summary>
         /// Gets whether the player has builder's club
         /// </summary>
         public bool HasBuildersClub { get; internal set; }

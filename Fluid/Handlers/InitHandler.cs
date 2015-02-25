@@ -43,7 +43,6 @@ namespace Fluid.Handlers
                 connected.IsFriendsWithYou = false;
                 connected.IsGuardian = playerObject.IsGuardian;
                 connected.IsModerator = playerObject.IsModerator;
-                connected.MagicLevel = playerObject.MagicLevel;
             }
             else
             {
@@ -53,7 +52,6 @@ namespace Fluid.Handlers
                 connected.IsFriendsWithYou = false;
                 connected.IsGuardian = false;
                 connected.IsModerator = false;
-                connected.MagicLevel = 0;
             }
 
             connected.X = message.GetInt(7);

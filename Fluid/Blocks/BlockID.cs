@@ -26,30 +26,41 @@
         BasicDarkBlue = 10,
         BasicPurple = 11,
         BasicRed = 12,
+        BasicOrange = 1018,
         BasicYellow = 13,
         BasicGreen = 14,
         BasicLightBlue = 15,
         BasicBlack = 182,
+
         BgBasicGrey = 500,
         BgBasicDarkBlue = 501,
         BgBasicPurple = 502,
         BgBasicRed = 503,
+        BgBasicOrange = 644,
         BgBasicYellow = 504,
         BgBasicGreen = 505,
         BgBasicLightBlue = 506,
+        BgBasicBlack = 645,
 
+        BrickGrey = 1022,
         BrickSaturatedBrown = 16,
+        BrickDarkBlue = 1023,
         BrickDarkGreen = 17,
         BrickPurple = 18,
         BrickLightGreen = 19,
         BrickRed = 20,
         BrickPaleBrown = 21,
+        BrickBlack = 1024,
+
+        BgBrickGrey = 646,
         BgBrickSaturatedBrown = 507,
         BgBrickDarkGreen = 508,
+        BgBrickDarkBlue = 647,
         BgBrickPurple = 509,
         BgBrickLightGreen = 510,
         BgBrickRed = 511,
         BgBrickPaleBrown = 512,
+        BgBrickBlack = 648,
 
         Special1 = 22,
         Special2 = 32,
@@ -86,10 +97,13 @@
 
         BetaPink = 37,
         BetaGreen = 38,
+        BetaTurquoise = 1019,
         BetaBlue = 39,
         BetaRed = 40,
+        BetaOrange = 1020,
         BetaYellow = 41,
         BetaGrey = 42,
+        BetaBlack = 1021,
 
         Factory1 = 45,
         Factory2 = 46,
@@ -386,6 +400,8 @@
         CheckeredYellow = 190,
         CheckeredGreen = 191,
         CheckeredLightBlue = 192,
+        CheckeredOrange = 1025,
+        CheckeredBlack = 1026,
 
         JungleRuinsRoundedEdgeFace = 193,
         JungleRuinsOneWay = 194,
@@ -560,17 +576,21 @@
         BgCheckeredDarkBlue = 514,
         BgCheckeredPurple = 515,
         BgCheckeredRed = 516,
+        BgCheckeredOrange = 649,
         BgCheckeredYellow = 517,
         BgCheckeredGreen = 518,
         BgCheckeredLightBlue = 519,
+        BgCheckeredBlack = 650,
 
         BgDarkGrey = 520,
         BgDarkDarkBlue = 521,
         BgDarkPurple = 522,
         BgDarkRed = 523,
+        BgDarkOrange = 651,
         BgDarkYellow = 524,
         BgDarkGreen = 525,
         BgDarkLightBlue = 526,
+        BgDarkBlack = 652,
 
         BgPastelYellow = 527,
         BgPastelDarkerGreen = 528,
@@ -596,9 +616,11 @@
         BgNormalDarkBlue = 611,
         BgNormalPurple = 612,
         BgNormalRed = 613,
+        BgNormalOrange = 653,
         BgNormalYellow = 614,
         BgNormalGreen = 615,
         BgNormalLightBlue = 616,
+        BgNormalBlack = 654,
 
         BgJungleRuinsGrey = 617,
         BgJungleRuinsRed = 618,
@@ -633,6 +655,12 @@
         YellowGate = 1010,
 
         DeathDoor = 1011,
-        DeathGate = 1012
+        DeathGate = 1012,
+
+        MagicGreen = 1013,
+        MagicPurple = 1014,
+        MagicYellow = 1015,
+        MagicBlue = 1016,
+        MagicRed = 1017
     }
 }

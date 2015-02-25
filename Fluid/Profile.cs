@@ -73,36 +73,6 @@
         public bool ProfileVisible { get; internal set; }
 
         /// <summary>
-        /// Gets Woot
-        /// </summary>
-        public int Woot { get; internal set; }
-
-        /// <summary>
-        /// Gets the player's magic level
-        /// </summary>
-        public int MagicLevel { get; internal set; }
-
-        /// <summary>
-        /// Gets the previous level capacity
-        /// </summary>
-        public int LevelCapPrevious { get; internal set; }
-
-        /// <summary>
-        /// Gets the next level capacity
-        /// </summary>
-        public int LevelCapNext { get; internal set; }
-
-        /// <summary>
-        /// Gets the player's level title
-        /// </summary>
-        public string LevelTitle { get; internal set; }
-
-        /// <summary>
-        /// Gets the WootTotal
-        /// </summary>
-        public int WootTotal { get; internal set; }
-
-        /// <summary>
         /// Gets the profile debug message
         /// </summary>
         public override string ToString()

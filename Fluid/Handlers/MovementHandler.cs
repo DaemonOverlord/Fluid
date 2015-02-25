@@ -104,7 +104,7 @@ namespace Fluid.Handlers
             {
                 Raw = message,
                 Player = player,
-                Input = player.LastInput
+                Input = (player == null) ? Input.Nothing : player.LastInput
             };
 
             connectionBase.RaiseServerEvent<MovementEvent>(movementEvent);

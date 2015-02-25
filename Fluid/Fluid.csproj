@@ -166,7 +166,6 @@
     <Compile Include="Handlers\KillHandler.cs" />
     <Compile Include="Handlers\LabelBlockHandler.cs" />
     <Compile Include="Handlers\LeftHandler.cs" />
-    <Compile Include="Handlers\LevelupHandler.cs" />
     <Compile Include="Handlers\LoadLevelHandler.cs" />
     <Compile Include="Handlers\LobbyPropertiesHandler.cs" />
     <Compile Include="Handlers\LostAccessHandler.cs" />

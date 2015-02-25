@@ -23,7 +23,7 @@ namespace Fluid.Physics
         /// <summary>
         /// Gets the amount of switch id
         /// </summary>
-        public const int SwitchIDCount = 10;
+        public const int SwitchIDCount = 100;
 
         /// <summary>
         /// Gets the variable multiplier
@@ -188,7 +188,7 @@ namespace Fluid.Physics
         public bool IsSolid(BlockID blockId)
         {
             int id = (int)blockId;
-            return (9 <= id && id <= 97) || (122 <= id && id <= 217) || (1001 <= id && id <= 1012);
+            return (9 <= id && id <= 97) || (122 <= id && id <= 217) || (1001 <= id && id <= 1026);
         }
 
         /// <summary>

@@ -38,9 +38,7 @@ namespace Fluid.Handlers
             //No need to get purple information
 
             player.IsFriendsWithYou = message.GetBoolean(11);
-            player.MagicLevel = message.GetInt(12);
-            player.HasBuildersClub = message.GetBoolean(13);
-            player.IsGuardian = message.GetBoolean(14);
+            player.HasBuildersClub = message.GetBoolean(12);
 
             if (!handled)
             {
