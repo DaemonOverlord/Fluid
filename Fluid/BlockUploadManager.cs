@@ -86,7 +86,7 @@ namespace Fluid
             //Check queue for the oldest unattempted send
             for (int i = 0; i < m_Queue.Count; i++)
             {
-                if (!m_Queue[i].Timestamp.HasValue)
+                if (!m_Queue[i].HasBeenSent)
                 {
                     return m_Queue[i];
                 }
@@ -95,16 +95,30 @@ namespace Fluid
             return null;
         }
 
+        /// <summary>
+        /// The upload thread loop
+        /// </summary>
         private void UploadThread()
         {
-            while (m_Queue.Count > 0)
+            try
             {
-                //Send the most tasked block
-                BlockRequest req = m_Queue[0];
-                BlockRequest send = GetNextInList();
-
-                send.Request();
-                m_WorldConnection.UploadBlockRequest(send);
+                while (m_Queue.Count > 0)
+                {                   
+                    //Send the most tasked block
+                    BlockRequest req = m_Queue[0];
+                    BlockRequest send = GetNextInList();
+                    if (send == null)
+                    {
+                        break;
+                    }
+                    
+                    send.Request();
+                    m_WorldConnection.UploadBlockRequest(send);
+                }
+            }
+            catch (ThreadAbortException)
+            {
+                //Handled
             }
 
             if (m_ResetEvent != null)
@@ -136,6 +150,9 @@ namespace Fluid
             return true;
         }
 
+        /// <summary>
+        /// Creates a new upload thread
+        /// </summary>
         internal void CreateUploadThread()
         {
             m_uploadThread = new Thread(UploadThread);
@@ -144,6 +161,17 @@ namespace Fluid
             m_uploadThread.Start();
 
             m_ResetEvent = new ManualResetEvent(false);
+        }
+
+        /// <summary>
+        /// Stops the upload thread
+        /// </summary>
+        internal void StopThread()
+        {
+            if (Uploading)
+            {
+                m_uploadThread.Abort();
+            }
         }
 
         /// <summary>
@@ -174,11 +202,11 @@ namespace Fluid
                 {
                     Block expected = m_Queue[0].Block;
 
-                    if (!block.Equals(expected))
+                    if (!block.EqualsBlock(expected))
                     {
                         for (int i = 0; i < m_Queue.Count; i++)
                         {
-                            if (m_Queue[i].Block.Equals(block))
+                            if (m_Queue[i].Block.EqualsBlock(block))
                             {
                                 m_Queue.RemoveAt(i);
                                 i--;
@@ -221,6 +249,22 @@ namespace Fluid
         {
             m_Queue = new List<BlockRequest>();
             m_WorldConnection = worldCon;
+        }
+
+        /// <summary>
+        /// Destructor
+        /// </summary>
+        ~BlockUploadManager()
+        {
+            if (Uploading)
+            {
+                StopThread();
+            }
+
+            if (m_ResetEvent != null)
+            {
+                m_ResetEvent.Dispose();
+            }
         }
     }
 }

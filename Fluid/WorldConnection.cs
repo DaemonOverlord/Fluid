@@ -219,6 +219,7 @@ namespace Fluid
             if (block != null)
             {
                 block.Upload();
+                blockRequest.HasBeenSent = true;
                 Thread.Sleep(blockRequest.BlockThrottle);
             }
         }

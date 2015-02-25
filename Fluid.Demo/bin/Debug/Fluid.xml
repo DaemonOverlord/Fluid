@@ -276,6 +276,11 @@
             Gets or sets whether the request was missed
             </summary>
         </member>
+        <member name="P:Fluid.BlockRequest.HasBeenSent">
+            <summary>
+            Gets or sets whether the block has been sent
+            </summary>
+        </member>
         <member name="M:Fluid.Blocks.Block.Bind(Fluid.WorldConnection)">
             <summary>
             Binds the block to a connection
@@ -784,14 +789,14 @@
             Creates a new chat message
             </summary>
             <param name="player">The player</param>
-            <param name="message">The message</param>
+            <param name="text">The text</param>
         </member>
         <member name="P:Fluid.ChatMessage.Player">
             <summary>
             Gets the player who chatted
             </summary>
         </member>
-        <member name="P:Fluid.ChatMessage.Message">
+        <member name="P:Fluid.ChatMessage.Text">
             <summary>
             Gets the chat message
             </summary>
@@ -4962,6 +4967,11 @@
             </summary>
             <returns>The next block that should be sent</returns>
         </member>
+        <member name="M:Fluid.BlockUploadManager.UploadThread">
+            <summary>
+            The upload thread loop
+            </summary>
+        </member>
         <member name="M:Fluid.BlockUploadManager.IsQueueEmpty">
             <summary>
             Gets if the queue is empty
@@ -4973,6 +4983,16 @@
             Gets if the upload thread is dead
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Fluid.BlockUploadManager.CreateUploadThread">
+            <summary>
+            Creates a new upload thread
+            </summary>
+        </member>
+        <member name="M:Fluid.BlockUploadManager.StopThread">
+            <summary>
+            Stops the upload thread
+            </summary>
         </member>
         <member name="M:Fluid.BlockUploadManager.RemoveExpected">
             <summary>
@@ -4997,6 +5017,11 @@
             Creates a new block manager
             </summary>
             <param name="worldCon"></param>
+        </member>
+        <member name="M:Fluid.BlockUploadManager.Finalize">
+            <summary>
+            Destructor
+            </summary>
         </member>
         <member name="P:Fluid.BlockUploadManager.BlocksQueued">
             <summary>

@@ -28,13 +28,17 @@ namespace Fluid
         public bool Missed { get; private set; }
 
         /// <summary>
+        /// Gets or sets whether the block has been sent
+        /// </summary>
+        public bool HasBeenSent { get; internal set; }
+
+        /// <summary>
         /// Sets the block as missed
         /// </summary>
         public void SetMissed()
         {
             Missed = true;
             m_NullTimestamp = true;
-            Timestamp = null;
         }
 
         /// <summary>
@@ -68,6 +72,7 @@ namespace Fluid
         {
             Block = block;
             BlockThrottle = blockThrottle;
+            HasBeenSent = false;
         }
     }
 }
