@@ -1820,6 +1820,11 @@
             Gets or sets the log output
             </summary>
         </member>
+        <member name="E:Fluid.FluidLog.OnMessage">
+            <summary>
+            Adds or removes the on message event
+            </summary>
+        </member>
         <member name="F:Fluid.FluidLogCategory.Fail">
             <summary>
             Preventable fail
@@ -2472,7 +2477,7 @@
             </summary>
             <param name="player">The player</param>
         </member>
-        <member name="M:Fluid.WorldConnection.TeleportPlayer(Fluid.WorldPlayer,Fluid.Physics.Vector)">
+        <member name="M:Fluid.WorldConnection.TeleportPlayer(Fluid.WorldPlayer,Fluid.FluidPoint)">
             <summary>
             Teleports a player to a location
             </summary>
@@ -2486,7 +2491,7 @@
             <param name="player">The source player</param>
             <param name="target">The target player</param>
         </member>
-        <member name="M:Fluid.WorldConnection.MoveToLocation(Fluid.Physics.Vector)">
+        <member name="M:Fluid.WorldConnection.MoveToLocation(Fluid.FluidPoint)">
             <summary>
             Teleports to a location
             </summary>
@@ -5324,9 +5329,21 @@
         </member>
         <member name="M:Fluid.WorldPlayer.GetLocation">
             <summary>
+            Gets the exact location of the player
+            </summary>
+            <returns>The exact location</returns>
+        </member>
+        <member name="M:Fluid.WorldPlayer.GetBlockLocation">
+            <summary>
             Gets the block location of the player
             </summary>
-            <returns>The block location</returns>
+            <returns></returns>
+        </member>
+        <member name="M:Fluid.WorldPlayer.GetVelocity">
+            <summary>
+            Gets the velocity of the player
+            </summary>
+            <returns>The player's velocity</returns>
         </member>
         <member name="M:Fluid.WorldPlayer.Kick">
             <summary>
@@ -5344,7 +5361,7 @@
             </summary>
             <param name="message">The message</param>
         </member>
-        <member name="M:Fluid.WorldPlayer.Teleport(Fluid.Physics.Vector)">
+        <member name="M:Fluid.WorldPlayer.Teleport(Fluid.FluidPoint)">
             <summary>
             Teleports the player to a location
             </summary>

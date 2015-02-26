@@ -784,8 +784,11 @@ namespace Fluid.Physics
                     switch (worldPlayer.Current)
                     {
                         case BlockID.SwitchPurple:
-                            PurpleBlock block = (PurpleBlock)World[cx, cy, Layer.Foreground];
-                            worldPlayer.m_switches[block.SwitchID] = !worldPlayer.m_switches[block.SwitchID];
+                            if (World[cx, cy, Layer.Foreground] is PurpleBlock)
+                            {
+                                PurpleBlock block = (PurpleBlock)World[cx, cy, Layer.Foreground];
+                                worldPlayer.m_switches[block.SwitchID] = !worldPlayer.m_switches[block.SwitchID];
+                            }
                             break;
                         case BlockID.ToolCheckpoint:
                             if (!isGodMode)

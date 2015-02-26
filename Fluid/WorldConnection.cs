@@ -613,7 +613,7 @@ namespace Fluid
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="location">The location</param>
-        public void TeleportPlayer(WorldPlayer player, Vector location)
+        public void TeleportPlayer(WorldPlayer player, FluidPoint location)
         {
             if (player == null)
             {
@@ -621,7 +621,7 @@ namespace Fluid
                 return;
             }
 
-            this.SendMessage("say", string.Format("/teleport {0} {1} {2}", player.Username, (int)location.X, (int)location.Y));
+            this.SendMessage("say", string.Format("/teleport {0} {1} {2}", player.Username, location.X, location.Y));
         }
 
         /// <summary>
@@ -637,14 +637,14 @@ namespace Fluid
                 return;
             }
 
-            this.TeleportPlayer(player, target.GetLocation());
+            this.TeleportPlayer(player, target.GetBlockLocation());
         }
 
         /// <summary>
         /// Teleports to a location
         /// </summary>
         /// <param name="location">The world location</param>
-        public void MoveToLocation(Vector location)
+        public void MoveToLocation(FluidPoint location)
         {
             if (location == null)
             {

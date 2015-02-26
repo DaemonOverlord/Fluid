@@ -272,12 +272,30 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Gets the block location of the player
+        /// Gets the exact location of the player
         /// </summary>
-        /// <returns>The block location</returns>
+        /// <returns>The exact location</returns>
         public Vector GetLocation()
         {
-            return new Vector(BlockX, BlockY);
+            return new Vector(X, Y);
+        }
+
+        /// <summary>
+        /// Gets the block location of the player
+        /// </summary>
+        /// <returns></returns>
+        public FluidPoint GetBlockLocation()
+        {
+            return new FluidPoint(BlockX, BlockY);
+        }
+
+        /// <summary>
+        /// Gets the velocity of the player
+        /// </summary>
+        /// <returns>The player's velocity</returns>
+        public Vector GetVelocity()
+        {
+            return new Vector(SpeedX, SpeedY);
         }
 
         /// <summary>
@@ -318,7 +336,7 @@ namespace Fluid
         /// Teleports the player to a location
         /// </summary>
         /// <param name="location">The location</param>
-        public void Teleport(Vector location)
+        public void Teleport(FluidPoint location)
         {
             if (m_Connection != null)
             {

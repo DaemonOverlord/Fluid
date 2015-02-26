@@ -22,20 +22,29 @@ namespace Fluid.Handlers
         /// <param name="handled">Whether the message was already handled</param>
         public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
+            WorldConnection worldCon = (WorldConnection)connectionBase;
+            World world = worldCon.World;
+
             Layer layer = (Layer)message.GetInt(0);
             int x = message.GetInt(1);
             int y = message.GetInt(2);
             BlockID blockId = (BlockID)message.GetInt(3);
-            int userId = message.GetInt(4);
 
-            WorldConnection worldCon = (WorldConnection)connectionBase;
-
-            World world = worldCon.World;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
-            Block block = new Block(worldCon, blockId, layer, x, y)
+            Block block = null;
+            if (message.Count > 4)
             {
-                Placer = player
-            };
+                int userId = message.GetInt(4);
+
+                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                block = new Block(worldCon, blockId, layer, x, y)
+                {
+                    Placer = player
+                };
+            }
+            else
+            {
+                block = new Block(worldCon, blockId, layer, x, y);
+            }
 
             if (!handled)
             {

@@ -22,6 +22,9 @@ namespace Fluid.Handlers
         /// <param name="handled">Whether the message was already handled</param>
         public void Process(ConnectionBase connectionBase, Message message, bool handled)
         {
+            WorldConnection worldCon = (WorldConnection)connectionBase;
+            World world = worldCon.World;
+
             int x = message.GetInt(0);
             int y = message.GetInt(1);
             BlockID blockId = (BlockID)message.GetInt(2);
@@ -30,17 +33,22 @@ namespace Fluid.Handlers
             uint portalId = message.GetUInt(4);
             uint portalTargetId = message.GetUInt(5);
 
-            int userId = message.GetInt(6);
+            Portal portal = null;
 
-            WorldConnection worldCon = (WorldConnection)connectionBase;
-
-            World world = worldCon.World;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
-
-            Portal portal = new Portal(worldCon, blockId, x, y, rotation, portalId, portalTargetId)
+            if (message.Count > 6)
             {
-                Placer = player
-            };
+                int userId = message.GetInt(6);
+                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+
+                portal = new Portal(worldCon, blockId, x, y, rotation, portalId, portalTargetId)
+                {
+                    Placer = player
+                };
+            }
+            else
+            {
+                portal = new Portal(worldCon, blockId, x, y, rotation, portalId, portalTargetId);
+            }
 
             if (!handled)
             {

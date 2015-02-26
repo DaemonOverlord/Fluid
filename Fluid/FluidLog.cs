@@ -53,6 +53,11 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Adds or removes the on message event
+        /// </summary>
+        public event EventHandler<FluidLogMessage> OnMessage; 
+
+        /// <summary>
         /// Get's all log messages
         /// </summary>
         public List<FluidLogMessage> GetAllMessages()
@@ -92,12 +97,18 @@ namespace Fluid
         internal void Add(FluidLogCategory category, string text)
         {
             StackTrace currentTrace = new StackTrace(1);
-            m_Log.Add(new FluidLogMessage(text, currentTrace, category));
+            FluidLogMessage logMessage =  new FluidLogMessage(text, currentTrace, category);
+            m_Log.Add(logMessage);
 
             if (m_TextWriter != null)
             {
                 string cat = Enum.GetName(typeof(FluidLogCategory), category);
                 m_TextWriter.WriteLine(string.Format("[Log] ({0}): {1}", cat, text));
+
+                if (OnMessage != null)
+                {
+                    OnMessage(this, logMessage);
+                }
             }
         }
 

@@ -11,12 +11,10 @@ namespace Fluid.Demo
             GuestAuth guestAuth = new GuestAuth();
 
             FluidClient client = new FluidClient(guestAuth);
+            client.Log.Output = Console.Out;
 
             if (client.LogIn())
             {
-                List<WorldReference> worlds = client.GetLobbyRooms();
-
-                Console.WriteLine("Done.");
                 Console.ReadKey();
             }
         }
