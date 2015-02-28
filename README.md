@@ -162,7 +162,7 @@ private static void BlockOrPortal(object sender, IServerEvent e)
 
 ###Sending blocks
 
-Sending blocks in fluid is really simple and handling extensively to provide a flexible codebase.
+Sending blocks in fluid is really simple and handled extensively to provide a flexible codebase.
 To start join a world as demonstrated in Getting Started.
 
 ```c#
