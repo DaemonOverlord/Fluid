@@ -52,7 +52,7 @@ myWorldCon.AddServerEVentHandler<CrownEvent>(OnCrown);
 And add your own code for each event! It's that simple.
 
 ```c#
-public static void OnCrown(CrownEvent e)
+public static void OnCrown(ConnectionBase c, CrownEvent e)
 { 
   //My code
 }
@@ -126,7 +126,7 @@ Server events are very simliar in syntax to create also.
 con.AddServerEventHandler<BlockEvent>(OnBlock);
 
 //Same tip can be used as metioned in the above example to create the method quicker.
-private static void OnBlock(BlockEvent eventMessage)
+private static void OnBlock(ConnectionBase c, BlockEvent eventMessage)
 {
     //Your block handling code
 }
@@ -161,3 +161,44 @@ private static void BlockOrPortal(object sender, IServerEvent e)
 ```
 
 ###Sending blocks
+
+Sending blocks in fluid is really simple and handling extensively to provide a flexible codebase.
+To start join a world as demonstrated in Getting Started.
+
+```c#
+worldCon.SendBlock(BlockID.BasicBlack, 5, 10);
+```
+
+This code snippet will place a block a the coordinate 5, 10, in the foreground layer since the block BasicBlack is a foreground block. You will not need to worry about this. The speed of the upload is determined automatically by fluid based upon your connection to the servers. To override this simply provide another parameter, the lowest recommended speed in 10ms as everybodyedits does have a upload limit per connection. If you need to place more blocks in less than ~10ms then you can use multiple connections as another option.
+
+```c#
+//Upload a block with a delay of 15 milliseconds
+worldCon.SendBlock(BlockID.BasicBlack, 5, 10, 15);
+```
+
+Because fluid places these blocks in a queue, these methods are asynchronous, meaning the completion of the method does not guarantee the block was uploaded. To wait for all blocked queued to be uploaded you can use the UploadManager in the world connection.
+
+```c#
+//Will wait for all blocks to be sent
+worldCon.Uploader.WaitForBlocks();
+
+//... all blocks have been sent!
+```
+
+In everybodyedits some blocks cannot be just defined using an x and y coordinate and an id. To upload portals, doors, gates, and another complex blocks you must create them first.
+
+```c#
+
+//Create a new regular portal at 25, 3, rotated left, a source id of 1 and a portal target of 2
+Portal portal = new Portal(BlockID.Portal, 25, 3, Rotation.Left, 1, 2);
+
+//Create a invisible portal at 8, 12, rotated right, a source id of 2 and a portal target of 0
+Portal invisPortal = new Portal(BlockID.InvisiblePortal, 8, 12, Rotation.Right, 2, 0);
+
+//Upload the portal
+worldCon.SendBlock(portal);
+
+//Upload the invisible portal at a speed of 12ms
+worldCon.SendBlock(invisPortal, 12);
+
+```
