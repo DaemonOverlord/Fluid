@@ -10,6 +10,7 @@ PM> Install-Package Fluid
 ## Table of Contents
 **[Getting started](#getting-started)**                                                                                     
 **[All about events](#all-about-events)**
+**[Sending blocks](#sending-blocks)**
 
 ###Getting started
 ######Logging in
@@ -158,3 +159,5 @@ private static void BlockOrPortal(object sender, IServerEvent e)
     //My handler code
 }
 ```
+
+###Sending blocks
