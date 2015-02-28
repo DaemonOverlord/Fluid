@@ -28,6 +28,8 @@ namespace Fluid.Handlers
 
             string username = message.GetString(9);
             int userId = message.GetInt(6);
+            bool canEdit = message.GetBoolean(10);
+            bool isOwner = message.GetBoolean(11);
 
             WorldPlayer connected = new WorldPlayer(worldCon, username, userId);
 
@@ -43,6 +45,23 @@ namespace Fluid.Handlers
                 connected.IsFriendsWithYou = false;
                 connected.IsGuardian = playerObject.IsGuardian;
                 connected.IsModerator = playerObject.IsModerator;
+
+                if (isOwner)
+                {
+                    connected.AccessLevel = AccessLevel.Owner | AccessLevel.Edit;
+                }
+                else
+                {
+                    if (canEdit)
+                    {
+                        connected.AccessLevel |= AccessLevel.Edit;
+                    }
+
+                    if (connected.IsGuardian || connected.IsModerator)
+                    {
+                        connected.AccessLevel |= AccessLevel.Guardian;
+                    }
+                }
             }
             else
             {
@@ -52,6 +71,11 @@ namespace Fluid.Handlers
                 connected.IsFriendsWithYou = false;
                 connected.IsGuardian = false;
                 connected.IsModerator = false;
+
+                if (canEdit)
+                {
+                    connected.AccessLevel = AccessLevel.Edit;
+                }
             }
 
             connected.X = message.GetInt(7);

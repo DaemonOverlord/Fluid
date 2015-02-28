@@ -24,6 +24,7 @@ namespace Fluid.Handlers
             WorldConnection worldCon = (WorldConnection)connectionBase;
             worldCon.HasAccess = true;
 
+            worldCon.Me.AccessLevel |= AccessLevel.Edit;
             AccessEvent accessEvent = new AccessEvent()
             {
                 Raw = message

@@ -4,6 +4,26 @@
         <name>Fluid</name>
     </assembly>
     <members>
+        <member name="F:Fluid.AccessLevel.None">
+            <summary>
+            Has no priveledges
+            </summary>
+        </member>
+        <member name="F:Fluid.AccessLevel.Owner">
+            <summary>
+            Has owner priveledges
+            </summary>
+        </member>
+        <member name="F:Fluid.AccessLevel.Edit">
+            <summary>
+            Has edit priveledges
+            </summary>
+        </member>
+        <member name="F:Fluid.AccessLevel.Guardian">
+            <summary>
+            Has kicking and command priveledges
+            </summary>
+        </member>
         <member name="T:Fluid.IAuth">
             <summary>
             The IAuth interface for different game authentication's
@@ -5422,6 +5442,22 @@
             </summary>
             <param name="loc">The location vector</param>
         </member>
+        <member name="M:Fluid.WorldPlayer.Get``1(System.String)">
+            <summary>
+            Gets a stored variable attached to this player
+            </summary>
+            <typeparam name="T">The variable type</typeparam>
+            <param name="variableName">The variable name</param>
+            <returns>The variable if found; otherwise null</returns>
+        </member>
+        <member name="M:Fluid.WorldPlayer.Set``1(System.String,``0)">
+            <summary>
+            Sets a stored variable attached to the player
+            </summary>
+            <typeparam name="T">The variable type</typeparam>
+            <param name="variableName">The variable name</param>
+            <param name="variableValue">The variable value</param>
+        </member>
         <member name="M:Fluid.WorldPlayer.#ctor(Fluid.WorldConnection,System.String,System.Int32)">
             <summary>
             Creates a new 
@@ -5438,6 +5474,11 @@
         <member name="P:Fluid.WorldPlayer.Face">
             <summary>
             Gets the player's face
+            </summary>
+        </member>
+        <member name="P:Fluid.WorldPlayer.AccessLevel">
+            <summary>
+            Gets the player's priveledges
             </summary>
         </member>
         <member name="P:Fluid.WorldPlayer.InGodMode">

@@ -15,6 +15,7 @@ namespace Fluid.Demo
 
             if (client.LogIn())
             {
+                client.GetWorldConnection("PWKK8zFHH8bEI").Join();
                 Console.ReadKey();
             }
         }

@@ -37,6 +37,8 @@ namespace Fluid
 
         internal bool[] m_switches = new bool[PhysicsEngine.SwitchIDCount];
 
+        private Dictionary<string, object> m_attachedData = new Dictionary<string, object>();
+
         /// <summary>
         /// Gets the player's id
         /// </summary>
@@ -46,6 +48,11 @@ namespace Fluid
         /// Gets the player's face
         /// </summary>
         public FaceID Face { get; internal set; }
+
+        /// <summary>
+        /// Gets the player's priveledges
+        /// </summary>
+        public AccessLevel AccessLevel { get; internal set; }
 
         /// <summary>
         /// Gets whether the player is in god mode
@@ -454,6 +461,40 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets a stored variable attached to this player
+        /// </summary>
+        /// <typeparam name="T">The variable type</typeparam>
+        /// <param name="variableName">The variable name</param>
+        /// <returns>The variable if found; otherwise null</returns>
+        public T Get<T>(string variableName)
+        {
+            if (m_attachedData.ContainsKey(variableName))
+            {
+                return (T)m_attachedData[variableName];
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
+        /// Sets a stored variable attached to the player
+        /// </summary>
+        /// <typeparam name="T">The variable type</typeparam>
+        /// <param name="variableName">The variable name</param>
+        /// <param name="variableValue">The variable value</param>
+        public void Set<T>(string variableName, T variableValue)
+        {
+            if (!m_attachedData.ContainsKey(variableName))
+            {
+                m_attachedData.Add(variableName, variableValue);
+            }
+            else
+            {
+                m_attachedData[variableName] = variableValue;
+            }
+        }
+
+        /// <summary>
         /// Creates a new 
         /// </summary>
         /// <param name="connection">The world connection</param>
@@ -463,7 +504,8 @@ namespace Fluid
         {
             this.m_Connection = connection;
             Id = id;
-    
+
+            m_attachedData = new Dictionary<string, object>();
             CollectedGoldCoins = new List<Block>();
             CollectedBlueCoins = new List<Block>();
             Potions = new ConcurrentDictionary<Potion, PotionState>();

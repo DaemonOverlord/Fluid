@@ -33,12 +33,9 @@ namespace Fluid.Handlers
             player.HasChat = message.GetBoolean(7);
             player.GoldCoins = message.GetInt(8);
             player.BlueCoins = message.GetInt(9);
-
-            //Message 10 will eventually be removed or changed
-            //No need to get purple information
-
-            player.IsFriendsWithYou = message.GetBoolean(11);
-            player.HasBuildersClub = message.GetBoolean(12);
+            player.IsFriendsWithYou = message.GetBoolean(10);
+            player.HasBuildersClub = message.GetBoolean(11);
+            player.IsGuardian = message.GetBoolean(12);
 
             if (!handled)
             {

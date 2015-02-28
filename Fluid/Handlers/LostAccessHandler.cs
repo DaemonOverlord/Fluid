@@ -24,6 +24,7 @@ namespace Fluid.Handlers
             WorldConnection worldCon = (WorldConnection)connectionBase;
             worldCon.HasAccess = false;
 
+            worldCon.Me.AccessLevel &= ~AccessLevel.Edit;
             LostAccessEvent lostAccessEvent = new LostAccessEvent()
             {
                 Raw = message

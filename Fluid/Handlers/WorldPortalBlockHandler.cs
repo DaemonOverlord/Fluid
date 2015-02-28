@@ -39,6 +39,14 @@ namespace Fluid.Handlers
                 {
                     Placer = player
                 };
+
+                if (player != null)
+                {
+                    if ((player.AccessLevel & AccessLevel.Edit) == 0)
+                    {
+                        player.AccessLevel |= AccessLevel.Edit;
+                    }
+                }
             }
             else
             {

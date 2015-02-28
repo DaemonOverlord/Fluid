@@ -254,7 +254,7 @@ namespace Fluid
             {
                 if (m_Client != null)
                 {
-                    DatabaseObject worldObject = m_Toolbelt.RunSafe<DatabaseObject>(() => m_Client.BigDB.Load("worlds", worldIdOrUrl));
+                    DatabaseObject worldObject = m_Toolbelt.RunSafe<DatabaseObject>(() => m_Client.BigDB.Load("worlds", worldId));
 
                     if (worldObject != null)
                     {

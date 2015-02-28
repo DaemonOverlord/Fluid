@@ -30,6 +30,11 @@ namespace Fluid.Handlers
             if (!handled && player != null)
             {
                 player.InGodMode = godEnabled;
+
+                if ((player.AccessLevel & AccessLevel.Edit) == 0 && godEnabled)
+                {
+                    player.AccessLevel |= AccessLevel.Edit;
+                }
             }
 
             GodEvent godEvent = new GodEvent()

@@ -36,7 +36,15 @@ namespace Fluid.Handlers
             {
                 int userId = message.GetInt(4);
                 player = worldCon.Players.GetPlayer(userId);
-            }   
+            }
+
+            if (player != null)
+            {
+                if ((player.AccessLevel & AccessLevel.Edit) == 0)
+                {
+                    player.AccessLevel |= AccessLevel.Edit;
+                }
+            }
 
             switch (blockId)
             {

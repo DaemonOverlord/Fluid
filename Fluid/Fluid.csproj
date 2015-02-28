@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessLevel.cs" />
     <Compile Include="Auth\ArmorgamesAuth.cs" />
     <Compile Include="Auth\ArmorgamesFlashvars.cs" />
     <Compile Include="Auth\FacebookAuth.cs" />
