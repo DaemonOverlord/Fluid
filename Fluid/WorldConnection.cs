@@ -149,15 +149,31 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the layer of a block id
+        /// </summary>
+        /// <param name="blockId">The block id</param>
+        /// <returns>The layer of the block</returns>
+        public Layer GetBlockLayer(BlockID blockId)
+        {
+            int id = (int)blockId;
+            if (500 <= id && id <= 700)
+            {
+                return Layer.Background;
+            }
+
+            return Layer.Foreground;
+        }
+
+        /// <summary>
         /// Sends a block to the world
         /// </summary>
         /// <param name="id">The block id</param>
         /// <param name="layer">The layer</param>
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
-        public void SendBlock(BlockID id, Layer layer, int x, int y)
+        public void SendBlock(BlockID id, int x, int y)
         {
-            this.SendBlock(new Block(this, id, layer, x, y));
+            this.SendBlock(new Block(this, id, GetBlockLayer(id), x, y));
         }
 
         /// <summary>
@@ -168,9 +184,10 @@ namespace Fluid
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
-        public void SendBlock(BlockID id, Layer layer, int x, int y, int blockThrottle)
+        public void SendBlock(BlockID id, int x, int y, int blockThrottle)
         {
-            this.SendBlock(new Block(this, id, layer, x, y), blockThrottle);
+
+            this.SendBlock(new Block(this, id, GetBlockLayer(id), x, y), blockThrottle);
         }
 
         /// <summary>

@@ -153,7 +153,7 @@ namespace Fluid
 
             if (m_ServerEventHandlers.ContainsKey(messageType))
             {
-                m_ServerEventHandlers[messageType].DynamicInvoke(message);
+                m_ServerEventHandlers[messageType].DynamicInvoke(this, message);
             }
 
             if (m_GroupServerEventHandlers.ContainsKey(messageType))

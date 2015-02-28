@@ -1530,6 +1530,7 @@
             Creates a new Fluid event handler
             </summary>
             <typeparam name="T">The type of message</typeparam>
+            <param name="connection">The connection</param>
             <param name="eventMessage">The message</param>
         </member>
         <member name="M:Fluid.LobbyConnection.Join">
@@ -2236,7 +2237,14 @@
             </summary>
             <param name="key">The key to activate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,Fluid.Blocks.Layer,System.Int32,System.Int32)">
+        <member name="M:Fluid.WorldConnection.GetBlockLayer(Fluid.Blocks.BlockID)">
+            <summary>
+            Gets the layer of a block id
+            </summary>
+            <param name="blockId">The block id</param>
+            <returns>The layer of the block</returns>
+        </member>
+        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32)">
             <summary>
             Sends a block to the world
             </summary>
@@ -2245,7 +2253,7 @@
             <param name="x">The x coordinate</param>
             <param name="y">The y coordinate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,Fluid.Blocks.Layer,System.Int32,System.Int32,System.Int32)">
+        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.Int32)">
             <summary>
             Sends a block to the world
             </summary>

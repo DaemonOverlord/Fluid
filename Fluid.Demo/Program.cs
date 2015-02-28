@@ -1,4 +1,5 @@
 ﻿using Fluid.Auth;
+using Fluid.ServerEvents;
 using System;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace Fluid.Demo
 
             if (client.LogIn())
             {
-                client.GetWorldConnection("PWKK8zFHH8bEI").Join();
+                client.GetWorldConnection("PW_1hlEAB_bUI").Join();
                 Console.ReadKey();
             }
         }
