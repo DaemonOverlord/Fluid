@@ -60,7 +60,7 @@ namespace Fluid.Handlers
             }
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
 
             ChatMessage chatMessage = new ChatMessage(player, text);
             QuickChatEvent quickChatEvent = new QuickChatEvent()

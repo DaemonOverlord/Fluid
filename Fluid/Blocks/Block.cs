@@ -3,38 +3,26 @@
     public class Block
     {
         protected WorldConnection m_WorldConnection;
-        private BlockID m_ID;
 
         /// <summary>
-        /// Gets the block's id
+        /// Gets or sets the block's id
         /// </summary>
-        public BlockID ID 
-        { 
-            get 
-            { 
-                return m_ID; 
-            } 
-            set 
-            {
-                m_ID = value;
-                m_WorldConnection.SendBlock(this);
-            }
-        }
+        public BlockID ID { get; set; }
 
         /// <summary>
-        /// Gets the block's layer
+        /// Gets or sets the block's layer
         /// </summary>
-        public Layer Layer { get; internal set; }
+        public Layer Layer { get; set; }
 
         /// <summary>
-        /// Gets the block's X Coordinate
+        /// Gets or sets the block's X Coordinate
         /// </summary>
-        public int X { get; internal set; }
+        public int X { get; set; }
 
         /// <summary>
-        /// Gets the block's Y Coordinate
+        /// Gets or sets the block's Y Coordinate
         /// </summary>
-        public int Y { get; internal set; }
+        public int Y { get; set; }
 
         /// <summary>
         /// Gets the block's placer
@@ -60,20 +48,35 @@
         /// </summary>
         internal virtual void Upload()
         {
-            string key = m_WorldConnection.World.WorldKey;
-            m_WorldConnection.SendMessage(key,
-                (int)Layer,
-                X,
-                Y,
-                (int)ID
-            );
+            if (m_WorldConnection != null)
+            {
+                if (m_WorldConnection.World != null)
+                {
+                    string key = m_WorldConnection.World.WorldKey;
+                    m_WorldConnection.SendMessage(key,
+                        (int)Layer,
+                        X,
+                        Y,
+                        (int)ID
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create's a cloned copy of this block
+        /// </summary>
+        /// <returns>A clone of this block</returns>
+        public virtual Block Clone()
+        {
+            return new Block(ID, Layer, X, Y);
         }
 
         /// <summary>
         /// Checks if two blocks are the same
         /// </summary>
         /// <param name="bl">The block</param>
-        public bool EqualsBlock(Block bl)
+        public virtual bool EqualsBlock(Block bl)
         {
             return X == bl.X && Y == bl.Y && ID == bl.ID && Layer == bl.Layer;
         }
@@ -95,7 +98,7 @@
         /// <param name="y">The y coordinate</param>
         public Block(BlockID id, Layer layer, int x, int y)
         {
-            m_ID = id;
+            ID = id;
             Layer = layer;
             X = x;
             Y = y;

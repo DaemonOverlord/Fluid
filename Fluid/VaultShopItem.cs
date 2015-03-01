@@ -112,6 +112,10 @@
         /// </summary>
         public bool IsDevOnly { get; set; }
 
+        /// <summary>
+        /// Gets the vault shop item debug message
+        /// </summary>
+        /// <returns>The vault shop item debug message</returns>
         public override string ToString()
         {
             return string.Format("Id: {0}", Type ?? "null");

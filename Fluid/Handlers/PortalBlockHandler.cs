@@ -38,7 +38,7 @@ namespace Fluid.Handlers
             if (message.Count > 6)
             {
                 int userId = message.GetInt(6);
-                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                WorldPlayer player = worldCon.Players.Get(userId);
 
                 portal = new Portal(worldCon, blockId, x, y, rotation, portalId, portalTargetId)
                 {

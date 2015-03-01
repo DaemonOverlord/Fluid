@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server callback event for getting the list of friend invites
+    /// </summary>
     public class GetInvitesEvent : IServerEvent
     {
         /// <summary>

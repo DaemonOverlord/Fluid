@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when key's are hidden
+    /// </summary>
     public class HideEvent : IServerEvent
     {
         /// <summary>

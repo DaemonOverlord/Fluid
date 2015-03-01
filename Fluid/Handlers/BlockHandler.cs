@@ -35,7 +35,7 @@ namespace Fluid.Handlers
             {
                 int userId = message.GetInt(4);
 
-                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                WorldPlayer player = worldCon.Players.Get(userId);
                 block = new Block(worldCon, blockId, layer, x, y)
                 {
                     Placer = player

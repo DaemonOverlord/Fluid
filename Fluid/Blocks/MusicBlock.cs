@@ -30,9 +30,10 @@
         }
 
         /// <summary>
-        /// Gets the music id
+        /// <para>Gets the music id</para>                               
+        /// <para>Use PianoNote and PercussionSound for more information</para>
         /// </summary>
-        public uint MusicID { get; private set; }
+        public uint MusicID { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -50,11 +51,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this music block
+        /// </summary>
+        /// <returns>A clone of this music block</returns>
+        public override Block Clone()
+        {
+            return new MusicBlock(ID, X, Y, MusicID);
+        }
+
+        /// <summary>
         /// Tests if a music block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is MusicBlock)
             {

@@ -50,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this purple block
+        /// </summary>
+        /// <returns>A clone of this purple block</returns>
+        public override Block Clone()
+        {
+            return new MusicBlock(ID, X, Y, SwitchID);
+        }
+
+        /// <summary>
         /// Tests if a purple block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is PurpleBlock)
             {

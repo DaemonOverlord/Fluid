@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player gets a coin
+    /// </summary>
     public class CoinEvent : IServerEvent
     {
         /// <summary>

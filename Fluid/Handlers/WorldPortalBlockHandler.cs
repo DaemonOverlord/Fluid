@@ -34,7 +34,7 @@ namespace Fluid.Handlers
             if (message.Count > 4)
             {
                 int userId = message.GetInt(4);
-                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                WorldPlayer player = worldCon.Players.Get(userId);
                 worldPortal = new WorldPortal(worldCon, blockId, x, y, target)
                 {
                     Placer = player

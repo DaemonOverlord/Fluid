@@ -18,6 +18,7 @@
         /// <summary>
         /// Creates a death block
         /// </summary>
+        /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
@@ -49,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this death block
+        /// </summary>
+        /// <returns>A clone of this death block</returns>
+        public override Block Clone()
+        {
+            return new DeathBlock(ID, X, Y, RequiredDeaths);
+        }
+
+        /// <summary>
         /// Tests if a death block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is DeathBlock)
             {

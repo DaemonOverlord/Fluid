@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a friend was deleted successfully
+    /// </summary>
     public class DeleteFriendEvent : IServerEvent
     {
         /// <summary>

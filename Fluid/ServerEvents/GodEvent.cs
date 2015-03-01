@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player changed god mode
+    /// </summary>
     public class GodEvent : IServerEvent
     {
         /// <summary>

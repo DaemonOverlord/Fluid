@@ -38,12 +38,12 @@
         /// <summary>
         /// Gets the portal's id
         /// </summary>
-        public uint SourceID { get; private set; }
+        public uint SourceID { get; set; }
 
         /// <summary>
         /// Gets the portal's target
         /// </summary>
-        public uint Target { get; private set; }
+        public uint Target { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -63,11 +63,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this portal
+        /// </summary>
+        /// <returns>A clone of this portal</returns>
+        public override Block Clone()
+        {
+            return new Portal(ID, X, Y, Rotation, SourceID, Target);
+        }
+
+        /// <summary>
         /// Tests if a portal block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is Portal)
             {

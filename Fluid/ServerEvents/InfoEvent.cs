@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player receives information from the server
+    /// </summary>
     public class InfoEvent : IServerEvent
     {
         /// <summary>

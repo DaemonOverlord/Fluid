@@ -1,5 +1,8 @@
-﻿namespace Fluid
+﻿using System;
+
+namespace Fluid
 {
+    [Flags]
     public enum AccessLevel : uint
     {
         /// <summary>

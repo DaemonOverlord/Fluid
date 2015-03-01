@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when all players are reset
+    /// </summary>
     public class ResetEvent : IServerEvent
     {
         /// <summary>

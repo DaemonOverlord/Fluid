@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when potions enabled has changed
+    /// </summary>
     public class AllowPotionEvent : IServerEvent
     {
         /// <summary>

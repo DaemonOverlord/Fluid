@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player inputs movement
+    /// </summary>
     public class MovementEvent : IServerEvent
     {
         /// <summary>

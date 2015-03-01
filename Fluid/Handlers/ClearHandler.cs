@@ -34,7 +34,7 @@ namespace Fluid.Handlers
             if (!handled)
             {
                 world.Clear(width, height, (BlockID)borderId, (BlockID)workareaId);
-                foreach (KeyValuePair<int, WorldPlayer> player in worldCon.Players.GetDictionary())
+                foreach (KeyValuePair<int, WorldPlayer> player in worldCon.Players.GetList())
                 {
                     player.Value.Reset();
                 }

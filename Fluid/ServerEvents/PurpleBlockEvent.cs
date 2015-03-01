@@ -3,6 +3,9 @@ using PlayerIOClient;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a purple block is placed
+    /// </summary>
     public class PurpleBlockEvent : IServerEvent
     {
         /// <summary>

@@ -25,7 +25,7 @@ namespace Fluid.Handlers
             string text = message.GetString(1);
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
             ChatMessage chatMessage = new ChatMessage(player, text);
 
             if (!handled)

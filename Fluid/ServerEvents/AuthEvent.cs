@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server authentication event
+    /// </summary>
     public class AuthEvent : IServerEvent
     {
         /// <summary>

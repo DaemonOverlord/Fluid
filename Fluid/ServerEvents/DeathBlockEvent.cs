@@ -3,6 +3,9 @@ using PlayerIOClient;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a death block was placed
+    /// </summary>
     public class DeathBlockEvent : IServerEvent
     {
         /// <summary>

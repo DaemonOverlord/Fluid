@@ -155,7 +155,7 @@ namespace Fluid
         {
             if (IsInBounds(x, y, layer))
             {
-                return m_WorldData[x, y, (int)layer];
+                return m_WorldData[x, y, (int)layer].Clone();
             }
 
             return null;

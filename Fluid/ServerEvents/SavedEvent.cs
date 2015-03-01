@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when the world is saved
+    /// </summary>
     public class SavedEvent : IServerEvent
     {
         /// <summary>

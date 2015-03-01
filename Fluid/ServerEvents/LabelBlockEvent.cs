@@ -3,6 +3,9 @@ using PlayerIOClient;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a label block is placed
+    /// </summary>
     public class LabelBlockEvent : IServerEvent
     {
         /// <summary>

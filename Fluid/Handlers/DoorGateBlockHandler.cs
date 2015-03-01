@@ -35,7 +35,7 @@ namespace Fluid.Handlers
             if (message.Count > 4)
             {
                 int userId = message.GetInt(4);
-                player = worldCon.Players.GetPlayer(userId);
+                player = worldCon.Players.Get(userId);
             }
 
             if (player != null)

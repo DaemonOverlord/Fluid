@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player is added
+    /// </summary>
     public class AddEvent : IServerEvent
     {
         /// <summary>

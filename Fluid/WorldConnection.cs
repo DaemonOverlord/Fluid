@@ -79,16 +79,18 @@ namespace Fluid
         public WorldConnection Join()
         {
             Connection connection = m_Client.CreateWorldConnection(WorldID);
+            this.SetConnection(connection);
 
-            if (connection != null)
+            this.SendMessage("init");
+            Physics.Start();
+
+            if (WaitForServerEvent<InitEvent>(2000) != null)
             {
-                this.SetConnection(connection);
-
-                this.SendMessage("init");
-                Physics.Start();
-
-                WaitForServerEvent<InitEvent>();
                 this.SendMessage("init2");
+            }
+            else
+            {
+                Physics.Stop();
             }
 
             return this;
@@ -277,6 +279,14 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the silver crown
+        /// </summary>
+        public void GetSilverCrown()
+        {
+            this.SendMessage("levelcomplete");
+        }
+
+        /// <summary>
         /// Sets the title to the level
         /// </summary>
         /// <param name="title">The title</param>
@@ -440,25 +450,41 @@ namespace Fluid
         /// <summary>
         /// Touches cake
         /// </summary>
-        public void TouchCake()
+        /// <param name="blockX">The block's x coordinate</param>
+        /// <param name="blockY">The block's y coordinate</param>
+        public void TouchCake(int blockX, int blockY)
         {
-            this.SendMessage("caketouch", Me.BlockX, Me.BlockY);
+            this.SendMessage("caketouch", blockX, blockY);
         }
 
         /// <summary>
-        /// Touchs diamond
+        /// Touchs a diamond
         /// </summary>
-        public void TouchDiamond()
+        /// <param name="blockX">The block's x coordinate</param>
+        /// <param name="blockY">The block's y coordinate</param>
+        public void TouchDiamond(int blockX, int blockY)
         {
-            this.SendMessage("diamondtouch", Me.BlockX, Me.BlockY);
+            this.SendMessage("diamondtouch", blockX, blockY);
+        }
+
+        /// <summary>
+        /// Touchs a hologram
+        /// </summary>
+        /// <param name="blockX">The block's x coordinate</param>
+        /// <param name="blockY">The block's y coordinate</param>
+        public void TouchHologram(int blockX, int blockY)
+        {
+            this.SendMessage("hologramtouch", blockX, blockY);
         }
 
         /// <summary>
         /// Touchs a checkpoint
         /// </summary>
-        public void TouchCheckpoint()
+        /// <param name="blockX">The block's x coordinate</param>
+        /// <param name="blockY">The block's y coordinate</param>
+        public void TouchCheckpoint(int blockX, int blockY)
         {
-            this.SendMessage("checkpoint", Me.BlockX, Me.BlockY);
+            this.SendMessage("checkpoint", blockX, blockY);
         }
 
         /// <summary>

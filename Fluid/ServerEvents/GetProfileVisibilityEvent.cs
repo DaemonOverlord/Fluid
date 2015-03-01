@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server callback event for getting changing the player's profile visibility
+    /// </summary>
     public class GetProfileVisibilityEvent : IServerEvent
     {
         /// <summary>

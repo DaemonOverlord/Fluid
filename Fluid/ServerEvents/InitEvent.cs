@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for the initial world data
+    /// </summary>
     public class InitEvent : IServerEvent
     {
         /// <summary>

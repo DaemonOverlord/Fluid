@@ -36,7 +36,7 @@ namespace Fluid.Handlers
             {
                 int userId = message.GetInt(5);
 
-                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                WorldPlayer player = worldCon.Players.Get(userId);
                 labelBlock = new LabelBlock(worldCon, blockId, x, y, text, hexColor)
                 {
                     Placer = player

@@ -28,7 +28,7 @@ namespace Fluid.Handlers
             Potion potion = (Potion)potionId;
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
 
             if (!handled && player != null)
             {

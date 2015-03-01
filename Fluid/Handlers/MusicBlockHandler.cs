@@ -34,7 +34,7 @@ namespace Fluid.Handlers
             if (message.Count > 4)
             {
                 int userId = message.GetInt(4);
-                WorldPlayer player = worldCon.Players.GetPlayer(userId);
+                WorldPlayer player = worldCon.Players.Get(userId);
 
                 musicBlock = new MusicBlock(worldCon, blockId, x, y, musicId)
                 {

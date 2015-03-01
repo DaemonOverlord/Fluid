@@ -3,6 +3,9 @@ using PlayerIOClient;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player places a world portal
+    /// </summary>
     public class WorldPortalBlockEvent : IServerEvent
     {
         /// <summary>

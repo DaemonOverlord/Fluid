@@ -105,11 +105,32 @@ namespace Fluid
                 while (m_Queue.Count > 0)
                 {                   
                     //Send the most tasked block
-                    BlockRequest req = m_Queue[0];
                     BlockRequest send = GetNextInList();
                     if (send == null)
                     {
                         break;
+                    }
+                    else if (send.Missed)
+                    {
+                        bool removed = false;
+                        Block existing = m_WorldConnection.World[send.Block.X, send.Block.Y, send.Block.Layer];
+                        if (existing.EqualsBlock(send.Block))
+                        {
+                            for (int i = 0; i < m_Queue.Count; i++)
+                            {
+                                if (m_Queue[i].Block.EqualsBlock(send.Block))
+                                {
+                                    m_Queue.RemoveAt(i);
+                                    removed = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (removed)
+                        {
+                            continue;
+                        }
                     }
                     
                     send.Request();

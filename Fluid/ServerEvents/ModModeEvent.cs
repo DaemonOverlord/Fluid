@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player changes moderator mode
+    /// </summary>
     public class ModModeEvent : IServerEvent
     {
         /// <summary>

@@ -34,7 +34,7 @@ namespace Fluid.Handlers
             bool spacedown = message.GetBoolean(10);
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
 
             if (!handled && player != null)
             {

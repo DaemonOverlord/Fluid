@@ -32,7 +32,7 @@
         /// <summary>
         /// Gets the text
         /// </summary>
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -50,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this text block
+        /// </summary>
+        /// <returns>A clone of this text block</returns>
+        public override Block Clone()
+        {
+            return new TextBlock(ID, X, Y, Text);
+        }
+
+        /// <summary>
         /// Tests if a text block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is TextBlock)
             {

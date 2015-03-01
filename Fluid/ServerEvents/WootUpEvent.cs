@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player gives a woot
+    /// </summary>
     public class WootUpEvent : IServerEvent
     {
         /// <summary>

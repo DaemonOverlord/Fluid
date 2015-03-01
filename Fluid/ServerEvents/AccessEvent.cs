@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The event for when the connection gains edit access
+    /// </summary>
     public class AccessEvent : IServerEvent
     {
         /// <summary>

@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a world's background color is changed
+    /// </summary>
     public class BackgroundColorChangedEvent : IServerEvent
     {
         /// <summary>

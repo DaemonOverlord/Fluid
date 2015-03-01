@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player sends a quick chat message
+    /// </summary>
     public class QuickChatEvent : IServerEvent
     {
         /// <summary>

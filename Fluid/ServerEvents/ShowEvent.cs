@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when the world's keys are shown
+    /// </summary>
     public class ShowEvent : IServerEvent
     {
         /// <summary>

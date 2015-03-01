@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player completes the level, or gets the silver crown
+    /// </summary>
     public class SilverCrownEvent : IServerEvent
     {
         /// <summary>

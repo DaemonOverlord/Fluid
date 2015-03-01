@@ -18,6 +18,10 @@
         /// </summary>
         public bool OwnedInPayvault { get; internal set; }
 
+        /// <summary>
+        /// Gets the shop item debug message
+        /// </summary>
+        /// <returns>The shop item debug message</returns>
         public override string ToString()
         {
             return string.Format("Id: {0}", ID ?? "null");

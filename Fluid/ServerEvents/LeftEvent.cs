@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player leaves the world
+    /// </summary>
     public class LeftEvent : IServerEvent
     {
         /// <summary>

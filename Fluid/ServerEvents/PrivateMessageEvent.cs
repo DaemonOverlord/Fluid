@@ -3,9 +3,9 @@
 namespace Fluid.ServerEvents
 {
     /// <summary>
-    /// The server event for when a player gives a woot
+    /// The server event for when a private message is received
     /// </summary>
-    public class WootEvent : IServerEvent
+    public class PrivateMessageEvent : IServerEvent
     {
         /// <summary>
         /// Gets the raw message
@@ -13,8 +13,8 @@ namespace Fluid.ServerEvents
         public Message Raw { get; set; }
 
         /// <summary>
-        /// Gets the player
+        /// Gets the chat message
         /// </summary>
-        public WorldPlayer Player { get; internal set; }
+        public ChatMessage ChatMessage { get; set; }
     }
 }

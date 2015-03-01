@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when the world's plays, woots, title, etc. is updated
+    /// </summary>
     public class UpdateMetaEvent : IServerEvent
     {
         /// <summary>

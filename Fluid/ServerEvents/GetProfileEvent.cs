@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server callback event for getting a player's profile
+    /// </summary>
     public class GetProfileEvent : IServerEvent
     {
         /// <summary>

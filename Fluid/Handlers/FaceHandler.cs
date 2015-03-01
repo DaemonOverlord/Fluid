@@ -25,7 +25,7 @@ namespace Fluid.Handlers
             int face = message.GetInt(1);
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
 
             if (!handled && player != null)
             {

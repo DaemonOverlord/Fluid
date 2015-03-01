@@ -9,10 +9,24 @@
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
+        /// <param name="hexColor">The html color of the label</param>
         public LabelBlock(BlockID blockId, int x, int y, string text, string hexColor)
             : base(blockId, x, y, text)
         {
             Color = new FluidColor(hexColor);
+        }
+
+        /// <summary>
+        /// Creates a label block
+        /// </summary>
+        /// <param name="blockId">the block ID</param>
+        /// <param name="x">The x coorindate</param>
+        /// <param name="y">The y coordinate</param>
+        /// <param name="color">The color of the label</param>
+        public LabelBlock(BlockID blockId, int x, int y, string text, FluidColor color)
+            : base(blockId, x, y, text)
+        {
+            Color = color;
         }
 
         /// <summary>
@@ -60,7 +74,7 @@
         /// <summary>
         /// Gets the label color
         /// </summary>
-        public FluidColor Color { get; private set; }
+        public FluidColor Color { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -79,11 +93,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this label block
+        /// </summary>
+        /// <returns>A clone of this label block</returns>
+        public override Block Clone()
+        {
+            return new LabelBlock(ID, X, Y, Text, Color);
+        }
+
+        /// <summary>
         /// Tests if a label block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is LabelBlock)
             {

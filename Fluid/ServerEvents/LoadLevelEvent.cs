@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when the level is reloaded
+    /// </summary>
     public class LoadLevelEvent : IServerEvent
     {
         /// <summary>

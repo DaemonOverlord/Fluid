@@ -11,12 +11,15 @@ namespace Fluid.Demo
         {
             GuestAuth guestAuth = new GuestAuth();
 
-            FluidClient client = new FluidClient(guestAuth);
+            FluidClient client = new FluidClient(new SimpleAuth("ugotpwned75@hotmail.com", "Code99"));
             client.Log.Output = Console.Out;
 
             if (client.LogIn())
             {
-                client.GetWorldConnection("PW_1hlEAB_bUI").Join();
+                var c = client.GetWorldConnection("http://everybodyedits.com/games/PWjF93CG-2a0I");
+                c.Physics.EventMode = Physics.PhysicsEventMode.Ignore;
+                c.Join();
+
                 Console.ReadKey();
             }
         }

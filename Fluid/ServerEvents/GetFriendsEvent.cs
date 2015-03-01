@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server callback event for getting the list of friends
+    /// </summary>
     public class GetFriendsEvent : IServerEvent
     {
         /// <summary>

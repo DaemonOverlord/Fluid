@@ -25,7 +25,7 @@ namespace Fluid.Handlers
             bool godEnabled = message.GetBoolean(1);
 
             WorldConnection worldCon = (WorldConnection)connectionBase;
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
 
             if (!handled && player != null)
             {

@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player's face changes
+    /// </summary>
     public class FaceEvent : IServerEvent
     {
         /// <summary>

@@ -103,6 +103,8 @@
     <Compile Include="Blocks\LabelBlock.cs" />
     <Compile Include="Blocks\Layer.cs" />
     <Compile Include="Blocks\MusicBlock.cs" />
+    <Compile Include="Blocks\PercussionSound.cs" />
+    <Compile Include="Blocks\PianoNote.cs" />
     <Compile Include="Blocks\Portal.cs" />
     <Compile Include="Blocks\PurpleBlock.cs" />
     <Compile Include="Blocks\RotatableBlock.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="FluidParser.cs" />
     <Compile Include="FluidPlayerDatabase.cs" />
     <Compile Include="FluidPoint.cs" />
+    <Compile Include="Physics\PhysicsEventMode.cs" />
     <Compile Include="Physics\TickMode.cs" />
     <Compile Include="PotionState.cs" />
     <Compile Include="QuickChatMessage.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="FluidShopInfo.cs" />
     <Compile Include="FluidToolbelt.cs" />
     <Compile Include="FluidWire.cs" />
+    <Compile Include="ServerEvents\PrivateMessageEvent.cs" />
     <Compile Include="WorldConnection.cs" />
     <Compile Include="Handlers\AccessHandler.cs" />
     <Compile Include="Handlers\AddHandler.cs" />
@@ -238,7 +242,6 @@
     <Compile Include="ServerEvents\KillEvent.cs" />
     <Compile Include="ServerEvents\LabelBlockEvent.cs" />
     <Compile Include="ServerEvents\LeftEvent.cs" />
-    <Compile Include="ServerEvents\LevelupEvent.cs" />
     <Compile Include="ServerEvents\LoadLevelEvent.cs" />
     <Compile Include="ServerEvents\LostAccessEvent.cs" />
     <Compile Include="ServerEvents\MessageReceivedEvent.cs" />

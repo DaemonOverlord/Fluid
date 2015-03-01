@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player's potion state changes. Activation or deactivation.
+    /// </summary>
     public class PotionEvent : IServerEvent
     {
         /// <summary>

@@ -29,7 +29,7 @@ namespace Fluid.Handlers
             if (worldCon != null)
             {
                 //Update each player's potions
-                foreach (KeyValuePair<int, WorldPlayer> playerEntry in worldCon.Players.GetDictionary())
+                foreach (KeyValuePair<int, WorldPlayer> playerEntry in worldCon.Players.GetList())
                 {
                     foreach (KeyValuePair<Potion, PotionState> potionEntry in playerEntry.Value.Potions)
                     {

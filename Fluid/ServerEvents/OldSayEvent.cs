@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a old chatmessage is loaded
+    /// </summary>
     public class OldSayEvent : IServerEvent
     {
         /// <summary>

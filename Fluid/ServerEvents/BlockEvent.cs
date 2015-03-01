@@ -3,6 +3,9 @@ using PlayerIOClient;
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a regular block was placed, or erased
+    /// </summary>
     public class BlockEvent : IServerEvent
     {
         /// <summary>

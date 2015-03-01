@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server callback event for when a player object is received
+    /// </summary>
     public class PlayerObjectEvent : IServerEvent
     {
         /// <summary>

@@ -25,7 +25,7 @@ namespace Fluid.Handlers
 
             int userId = message.GetInt(0);
 
-            WorldPlayer player = worldCon.Players.GetPlayer(userId);
+            WorldPlayer player = worldCon.Players.Get(userId);
             LeftEvent leftEvent = new LeftEvent()
             {
                 Raw = message,

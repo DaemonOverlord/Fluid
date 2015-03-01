@@ -66,7 +66,7 @@ namespace Fluid
         /// </summary>
         /// <param name="id">The player's id</param>
         /// <returns>The player if found; otherwise null</returns>
-        public WorldPlayer GetPlayer(int id)
+        public WorldPlayer Get(int id)
         {
             WorldPlayer player = null;
             if (m_Players.TryGetValue(id, out player))
@@ -83,7 +83,7 @@ namespace Fluid
         /// <param name="username">The player's username</param>
         /// <returns>The player if found; otherwise null</returns>
         /// <param name="includeConnectedPlayer">Whether to include the connected player in the search</param>
-        public WorldPlayer GetPlayer(string username, bool includeConnectedPlayer = false)
+        public WorldPlayer Get(string username, bool includeConnectedPlayer = false)
         {
             using (IEnumerator<KeyValuePair<int, WorldPlayer>> enumerator = m_Players.GetEnumerator())
             {
@@ -108,7 +108,7 @@ namespace Fluid
         /// Gets a player
         /// </summary>
         /// <param name="playerSelector">The player selector</param>
-        public WorldPlayer GetPlayer(Predicate<WorldPlayer> playerSelector)
+        public WorldPlayer Get(Predicate<WorldPlayer> playerSelector)
         {
             using (IEnumerator<KeyValuePair<int, WorldPlayer>> enumerator = m_Players.GetEnumerator())
             {
@@ -127,7 +127,7 @@ namespace Fluid
         /// <summary>
         /// Gets the player dictionary
         /// </summary>
-        public ConcurrentDictionary<int, WorldPlayer> GetDictionary()
+        public ConcurrentDictionary<int, WorldPlayer> GetList()
         {
             return m_Players;
         }
@@ -139,7 +139,7 @@ namespace Fluid
         /// <returns>The player if found; otherwise null</returns>
         public WorldPlayer this[int id]
         {
-            get { return GetPlayer(id); }
+            get { return Get(id); }
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Fluid
         /// <returns>The player if found; otherwise null</returns>
         public WorldPlayer this[string username]
         {
-            get { return GetPlayer(username); }
+            get { return Get(username); }
         }
 
         /// <summary>

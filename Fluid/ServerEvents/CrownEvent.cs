@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when the player gets the gold crown
+    /// </summary>
     public class CrownEvent : IServerEvent
     {
         /// <summary>

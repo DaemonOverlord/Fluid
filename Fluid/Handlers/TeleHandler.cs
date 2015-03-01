@@ -32,7 +32,7 @@ namespace Fluid.Handlers
             uint index = 1;
             while (index + 2 < message.Count)
             {
-                WorldPlayer player = worldCon.Players.GetPlayer(message.GetInt(index));
+                WorldPlayer player = worldCon.Players.Get(message.GetInt(index));
                 if (player != null)
                 {
                     if (!handled)

@@ -28,7 +28,7 @@ namespace Fluid.Handlers
             if (!handled)
             {
                 world.Deserialize(message);
-                foreach (KeyValuePair<int, WorldPlayer> player in worldCon.Players.GetDictionary())
+                foreach (KeyValuePair<int, WorldPlayer> player in worldCon.Players.GetList())
                 {
                     player.Value.Reset();
                 }

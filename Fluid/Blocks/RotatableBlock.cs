@@ -32,7 +32,7 @@
         /// <summary>
         /// Gets the rotation of the block
         /// </summary>
-        public Rotation Rotation { get; private set; }
+        public Rotation Rotation { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -50,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this rotatable block
+        /// </summary>
+        /// <returns>A clone of this rotatable block</returns>
+        public override Block Clone()
+        {
+            return new RotatableBlock(ID, X, Y, Rotation);
+        }
+
+        /// <summary>
         /// Tests if a rotatatable block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is RotatableBlock)
             {

@@ -32,7 +32,7 @@
         /// <summary>
         /// Gets the coin door's coin goal
         /// </summary>
-        public uint Goal { get; private set; }
+        public uint Goal { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -50,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this coin block
+        /// </summary>
+        /// <returns>A clone of this coin block</returns>
+        public override Block Clone()
+        {
+            return new CoinBlock(ID, X, Y, Goal);
+        }
+
+        /// <summary>
         /// Tests if a coin block is equal to an block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is CoinBlock)
             {

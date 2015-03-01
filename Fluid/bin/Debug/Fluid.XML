@@ -312,6 +312,12 @@
             Uploads the block to the server
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.Block.Clone">
+            <summary>
+            Create's a cloned copy of this block
+            </summary>
+            <returns>A clone of this block</returns>
+        </member>
         <member name="M:Fluid.Blocks.Block.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Checks if two blocks are the same
@@ -344,22 +350,22 @@
         </member>
         <member name="P:Fluid.Blocks.Block.ID">
             <summary>
-            Gets the block's id
+            Gets or sets the block's id
             </summary>
         </member>
         <member name="P:Fluid.Blocks.Block.Layer">
             <summary>
-            Gets the block's layer
+            Gets or sets the block's layer
             </summary>
         </member>
         <member name="P:Fluid.Blocks.Block.X">
             <summary>
-            Gets the block's X Coordinate
+            Gets or sets the block's X Coordinate
             </summary>
         </member>
         <member name="P:Fluid.Blocks.Block.Y">
             <summary>
-            Gets the block's Y Coordinate
+            Gets or sets the block's Y Coordinate
             </summary>
         </member>
         <member name="P:Fluid.Blocks.Block.Placer">
@@ -396,6 +402,12 @@
             Uploads the block to the server
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.CoinBlock.Clone">
+            <summary>
+            Creates a clone of this coin block
+            </summary>
+            <returns>A clone of this coin block</returns>
+        </member>
         <member name="M:Fluid.Blocks.CoinBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Tests if a coin block is equal to an block
@@ -421,6 +433,7 @@
             <summary>
             Creates a death block
             </summary>
+            <param name="worldCon">The world connection</param>
             <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
@@ -430,6 +443,12 @@
             <summary>
             Uploads the block to the server
             </summary>
+        </member>
+        <member name="M:Fluid.Blocks.DeathBlock.Clone">
+            <summary>
+            Creates a clone of this death block
+            </summary>
+            <returns>A clone of this death block</returns>
         </member>
         <member name="M:Fluid.Blocks.DeathBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
@@ -467,6 +486,12 @@
             Uploads the block to the server
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.TextBlock.Clone">
+            <summary>
+            Creates a clone of this text block
+            </summary>
+            <returns>A clone of this text block</returns>
+        </member>
         <member name="M:Fluid.Blocks.TextBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Tests if a text block is equal to a block
@@ -487,6 +512,16 @@
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
+            <param name="hexColor">The html color of the label</param>
+        </member>
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String,Fluid.FluidColor)">
+            <summary>
+            Creates a label block
+            </summary>
+            <param name="blockId">the block ID</param>
+            <param name="x">The x coorindate</param>
+            <param name="y">The y coordinate</param>
+            <param name="color">The color of the label</param>
         </member>
         <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
             <summary>
@@ -522,6 +557,12 @@
             <summary>
             Uploads the block to the server
             </summary>
+        </member>
+        <member name="M:Fluid.Blocks.LabelBlock.Clone">
+            <summary>
+            Creates a clone of this label block
+            </summary>
+            <returns>A clone of this label block</returns>
         </member>
         <member name="M:Fluid.Blocks.LabelBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
@@ -569,6 +610,12 @@
             Uploads the block to the server
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.MusicBlock.Clone">
+            <summary>
+            Creates a clone of this music block
+            </summary>
+            <returns>A clone of this music block</returns>
+        </member>
         <member name="M:Fluid.Blocks.MusicBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Tests if a music block is equal to a block
@@ -578,7 +625,8 @@
         </member>
         <member name="P:Fluid.Blocks.MusicBlock.MusicID">
             <summary>
-            Gets the music id
+            <para>Gets the music id</para>                               
+            <para>Use PianoNote and PercussionSound for more information</para>
             </summary>
         </member>
         <member name="M:Fluid.Blocks.RotatableBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,Fluid.Blocks.Rotation)">
@@ -604,6 +652,12 @@
             <summary>
             Uploads the block to the server
             </summary>
+        </member>
+        <member name="M:Fluid.Blocks.RotatableBlock.Clone">
+            <summary>
+            Creates a clone of this rotatable block
+            </summary>
+            <returns>A clone of this rotatable block</returns>
         </member>
         <member name="M:Fluid.Blocks.RotatableBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
@@ -645,6 +699,12 @@
             Uploads the block to the server
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.Portal.Clone">
+            <summary>
+            Creates a clone of this portal
+            </summary>
+            <returns>A clone of this portal</returns>
+        </member>
         <member name="M:Fluid.Blocks.Portal.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
             Tests if a portal block is equal to a block
@@ -685,6 +745,12 @@
             <summary>
             Uploads the block to the server
             </summary>
+        </member>
+        <member name="M:Fluid.Blocks.PurpleBlock.Clone">
+            <summary>
+            Creates a clone of this purple block
+            </summary>
+            <returns>A clone of this purple block</returns>
         </member>
         <member name="M:Fluid.Blocks.PurpleBlock.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
@@ -741,6 +807,12 @@
             <summary>
             Uploads the block to the server
             </summary>
+        </member>
+        <member name="M:Fluid.Blocks.WorldPortal.Clone">
+            <summary>
+            Creates a clone of this world portal
+            </summary>
+            <returns>A clone of this world portal</returns>
         </member>
         <member name="M:Fluid.Blocks.WorldPortal.EqualsBlock(Fluid.Blocks.Block)">
             <summary>
@@ -1533,6 +1605,61 @@
             <param name="connection">The connection</param>
             <param name="eventMessage">The message</param>
         </member>
+        <member name="F:Fluid.Input.Nothing">
+            <summary>
+            No input
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.HoldLeft">
+            <summary>
+            Holding left
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.HoldUp">
+            <summary>
+            Holding up
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.HoldRight">
+            <summary>
+            Holding right
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.HoldDown">
+            <summary>
+            Holding down
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.HoldSpace">
+            <summary>
+            Holding space
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.ReleaseLeft">
+            <summary>
+            Releasing left
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.ReleaseUp">
+            <summary>
+            Releasing up
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.ReleaseRight">
+            <summary>
+            Releasing right
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.ReleaseDown">
+            <summary>
+            Releasing down
+            </summary>
+        </member>
+        <member name="F:Fluid.Input.ReleaseSpace">
+            <summary>
+            Releasing space
+            </summary>
+        </member>
         <member name="M:Fluid.LobbyConnection.Join">
             <summary>
             Joins the lobby
@@ -1975,6 +2102,18 @@
             Gets whether the connection is established
             </summary>
         </member>
+        <member name="M:Fluid.FluidPoint.ToVector">
+            <summary>
+            Converts this point into a vector
+            </summary>
+            <returns>The vector</returns>
+        </member>
+        <member name="M:Fluid.FluidPoint.ToString">
+            <summary>
+            Gets the point debug message
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Fluid.FluidPoint.#ctor(System.Int32,System.Int32)">
             <summary>
             Creates a new point
@@ -1990,6 +2129,16 @@
         <member name="P:Fluid.FluidPoint.Y">
             <summary>
             Gets the y component
+            </summary>
+        </member>
+        <member name="F:Fluid.Physics.PhysicsEventMode.Send">
+            <summary>
+            Sends all keys and touches, etc. to the server
+            </summary>
+        </member>
+        <member name="F:Fluid.Physics.PhysicsEventMode.Ignore">
+            <summary>
+            Ignores all keys and touches, etc.
             </summary>
         </member>
         <member name="F:Fluid.Physics.TickMode.RealTime">
@@ -2220,6 +2369,31 @@
             The event for when playerio request was sniffed
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.PrivateMessageEvent">
+            <summary>
+            The server event for when a private message is received
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.IServerEvent">
+            <summary>
+            The message interface
+            </summary>
+        </member>
+        <member name="P:Fluid.ServerEvents.IServerEvent.Raw">
+            <summary>
+            Gets the raw message
+            </summary>
+        </member>
+        <member name="P:Fluid.ServerEvents.PrivateMessageEvent.Raw">
+            <summary>
+            Gets the raw message
+            </summary>
+        </member>
+        <member name="P:Fluid.ServerEvents.PrivateMessageEvent.ChatMessage">
+            <summary>
+            Gets the chat message
+            </summary>
+        </member>
         <member name="M:Fluid.WorldConnection.Join">
             <summary>
             Joins the world
@@ -2310,6 +2484,11 @@
         <member name="M:Fluid.WorldConnection.GetCrown">
             <summary>
             Gives the crown to the connected player
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldConnection.GetSilverCrown">
+            <summary>
+            Gets the silver crown
             </summary>
         </member>
         <member name="M:Fluid.WorldConnection.SetTitle(System.String)">
@@ -2407,20 +2586,33 @@
             <param name="player">The player</param>
             <param name="potion">The potion</param>
         </member>
-        <member name="M:Fluid.WorldConnection.TouchCake">
+        <member name="M:Fluid.WorldConnection.TouchCake(System.Int32,System.Int32)">
             <summary>
             Touches cake
             </summary>
+            <param name="blockX">The block's x coordinate</param>
+            <param name="blockY">The block's y coordinate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.TouchDiamond">
+        <member name="M:Fluid.WorldConnection.TouchDiamond(System.Int32,System.Int32)">
             <summary>
-            Touchs diamond
+            Touchs a diamond
             </summary>
+            <param name="blockX">The block's x coordinate</param>
+            <param name="blockY">The block's y coordinate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.TouchCheckpoint">
+        <member name="M:Fluid.WorldConnection.TouchHologram(System.Int32,System.Int32)">
+            <summary>
+            Touchs a hologram
+            </summary>
+            <param name="blockX">The block's x coordinate</param>
+            <param name="blockY">The block's y coordinate</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.TouchCheckpoint(System.Int32,System.Int32)">
             <summary>
             Touchs a checkpoint
             </summary>
+            <param name="blockX">The block's x coordinate</param>
+            <param name="blockY">The block's y coordinate</param>
         </member>
         <member name="M:Fluid.WorldConnection.ActivatePotion(Fluid.Potion)">
             <summary>
@@ -3577,10 +3769,75 @@
             Gets or sets the tick mode
             </summary>
         </member>
+        <member name="P:Fluid.Physics.PhysicsEngine.EventMode">
+            <summary>
+            Gets or sets the physics event mode
+            </summary>
+        </member>
         <member name="P:Fluid.Physics.PhysicsEngine.World">
             <summary>
             Gets the current world
             </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Add(System.Double,System.Double)">
+            <summary>
+            Adds x and y components to a vector
+            </summary>
+            <param name="x">The x component</param>
+            <param name="y">The y component</param>
+            <returns>The resulting vector</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Add(Fluid.Physics.Vector)">
+            <summary>
+            Adds a vector
+            </summary>
+            <param name="v">The vector</param>
+            <returns>The resulting vector</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Subtract(System.Double,System.Double)">
+            <summary>
+            Subtracts x and y components from a vector
+            </summary>
+            <param name="x">The x component</param>
+            <param name="y">The y component</param>
+            <returns>The resulting vecotr</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Subtract(Fluid.Physics.Vector)">
+            <summary>
+            Subtracts a vector
+            </summary>
+            <param name="v">The vector the subtract</param>
+            <returns>The resulting vecotr</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.DistanceTo(Fluid.Physics.Vector)">
+            <summary>
+            Distance to another vector
+            </summary>
+            <param name="v">The vecotr</param>
+            <returns>The distance</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.ToPoint">
+            <summary>
+            Converts the vector into a point
+            </summary>
+            <returns>A truncated point</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Invert">
+            <summary>
+            Inverts the vector
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.IsZero">
+            <summary>
+            Tests if the X and Y components are zero
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Equals(Fluid.Physics.Vector)">
+            <summary>
+            Tests if this vector is equal to another vector
+            </summary>
+            <param name="v">The vector to check</param>
+            <returns>True if equal; otherwise false</returns>
         </member>
         <member name="M:Fluid.Physics.Vector.ToString">
             <summary>
@@ -3671,14 +3928,14 @@
             <param name="username">The player's username</param>
             <returns>True if removed; otherwise false</returns>
         </member>
-        <member name="M:Fluid.PlayerManager.GetPlayer(System.Int32)">
+        <member name="M:Fluid.PlayerManager.Get(System.Int32)">
             <summary>
             Gets a player
             </summary>
             <param name="id">The player's id</param>
             <returns>The player if found; otherwise null</returns>
         </member>
-        <member name="M:Fluid.PlayerManager.GetPlayer(System.String,System.Boolean)">
+        <member name="M:Fluid.PlayerManager.Get(System.String,System.Boolean)">
             <summary>
             Gets a player
             </summary>
@@ -3686,13 +3943,13 @@
             <returns>The player if found; otherwise null</returns>
             <param name="includeConnectedPlayer">Whether to include the connected player in the search</param>
         </member>
-        <member name="M:Fluid.PlayerManager.GetPlayer(System.Predicate{Fluid.WorldPlayer})">
+        <member name="M:Fluid.PlayerManager.Get(System.Predicate{Fluid.WorldPlayer})">
             <summary>
             Gets a player
             </summary>
             <param name="playerSelector">The player selector</param>
         </member>
-        <member name="M:Fluid.PlayerManager.GetDictionary">
+        <member name="M:Fluid.PlayerManager.GetList">
             <summary>
             Gets the player dictionary
             </summary>
@@ -4055,6 +4312,16 @@
             Gets if the player's profile is visible
             </summary>
         </member>
+        <member name="F:Fluid.ProfileVisibility.Public">
+            <summary>
+            Profile is public
+            </summary>
+        </member>
+        <member name="F:Fluid.ProfileVisibility.Private">
+            <summary>
+            Profile is private
+            </summary>
+        </member>
         <member name="F:Fluid.RoomType.Normal">
             <summary>
             The everybodyedits room type
@@ -4100,19 +4367,19 @@
             A unknown room type
             </summary>
         </member>
-        <member name="T:Fluid.ServerEvents.IServerEvent">
+        <member name="T:Fluid.ServerEvents.AccessEvent">
             <summary>
-            The message interface
-            </summary>
-        </member>
-        <member name="P:Fluid.ServerEvents.IServerEvent.Raw">
-            <summary>
-            Gets the raw message
+            The event for when the connection gains edit access
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.AccessEvent.Raw">
             <summary>
             Gets the raw message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.AddEvent">
+            <summary>
+            The server event for when a player is added
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.AddEvent.Raw">
@@ -4123,6 +4390,11 @@
         <member name="P:Fluid.ServerEvents.AddEvent.Player">
             <summary>
             Gets the player who joined
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.AllowPotionEvent">
+            <summary>
+            The server event for when potions enabled has changed
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.AllowPotionEvent.Raw">
@@ -4138,6 +4410,11 @@
         <member name="P:Fluid.ServerEvents.AllowPotionEvent.AreEnabled">
             <summary>
             Gets whether the potions are enabled
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.AuthEvent">
+            <summary>
+            The server authentication event
             </summary>
         </member>
         <member name="M:Fluid.ServerEvents.AuthEvent.IsAuthenitcated">
@@ -4167,6 +4444,11 @@
             The auth
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.BackgroundColorChangedEvent">
+            <summary>
+            The server event for when a world's background color is changed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.BackgroundColorChangedEvent.Raw">
             <summary>
             Gets the raw message
@@ -4177,6 +4459,11 @@
             Gets the color the background was changed to
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.BlockEvent">
+            <summary>
+            The server event for when a regular block was placed, or erased
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.BlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4185,6 +4472,11 @@
         <member name="P:Fluid.ServerEvents.BlockEvent.Block">
             <summary>
             Gets the changed block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.ClearEvent">
+            <summary>
+            The server event for when a level is cleared
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.ClearEvent.Raw">
@@ -4207,6 +4499,11 @@
             Gets the workarea block id
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.CoinBlockEvent">
+            <summary>
+            The server event for when a coin block is placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.CoinBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4215,6 +4512,11 @@
         <member name="P:Fluid.ServerEvents.CoinBlockEvent.CoinBlock">
             <summary>
             Gets the coin block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.CoinEvent">
+            <summary>
+            The server event for when a player gets a coin
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.CoinEvent.Raw">
@@ -4227,9 +4529,19 @@
             Gets the player who hit a coin
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.ConnectionCompleteEvent">
+            <summary>
+            The server event for when the lobby connection is complete
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.ConnectionCompleteEvent.Raw">
             <summary>
             Gets the raw message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.CrownEvent">
+            <summary>
+            The server event for when the player gets the gold crown
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.CrownEvent.Raw">
@@ -4242,6 +4554,11 @@
             Gets the player who touched the crown
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.DeathBlockEvent">
+            <summary>
+            The server event for when a death block was placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.DeathBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4250,6 +4567,11 @@
         <member name="P:Fluid.ServerEvents.DeathBlockEvent.DeathBlock">
             <summary>
             Gets the death block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.DeleteFriendEvent">
+            <summary>
+            The server event for when a friend was deleted successfully
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.DeleteFriendEvent.Raw">
@@ -4262,6 +4584,11 @@
             Gets if the deletion was successful
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.FaceEvent">
+            <summary>
+            The server event for when a player's face changes
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.FaceEvent.Raw">
             <summary>
             Gets the raw message
@@ -4270,6 +4597,11 @@
         <member name="P:Fluid.ServerEvents.FaceEvent.Player">
             <summary>
             Gets the player who changed their face
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.GetBlockedEvent">
+            <summary>
+            The server callback event for the getting the list of blocked friends
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.GetBlockedEvent.Raw">
@@ -4282,6 +4614,11 @@
             Gets the list of blocked friends
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.GetFriendsEvent">
+            <summary>
+            The server callback event for getting the list of friends
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.GetFriendsEvent.Friends">
             <summary>
             Gets the list of friends
@@ -4290,6 +4627,11 @@
         <member name="P:Fluid.ServerEvents.GetFriendsEvent.Raw">
             <summary>
             Gets the raw message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.GetInvitesEvent">
+            <summary>
+            The server callback event for getting the list of friend invites
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.GetInvitesEvent.Raw">
@@ -4302,6 +4644,11 @@
             Gets the list of friend invites
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.GetLobbyPropertiesEvent">
+            <summary>
+            The server callback event for getting the lobby properties
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.GetLobbyPropertiesEvent.Raw">
             <summary>
             Gets the raw message
@@ -4310,6 +4657,11 @@
         <member name="P:Fluid.ServerEvents.GetLobbyPropertiesEvent.LobbyProperties">
             <summary>
             Gets the lobby properties
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.GetPendingEvent">
+            <summary>
+            The server callback event for gettings the list of pending friends
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.GetPendingEvent.Raw">
@@ -4322,6 +4674,11 @@
             Gets the list of pending friends
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.GetProfileEvent">
+            <summary>
+            The server callback event for getting a player's profile
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.GetProfileEvent.Raw">
             <summary>
             Gets the raw message
@@ -4330,6 +4687,11 @@
         <member name="P:Fluid.ServerEvents.GetProfileEvent.Profile">
             <summary>
             Gets the profile
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.GetProfileVisibilityEvent">
+            <summary>
+            The server callback event for getting changing the player's profile visibility
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.GetProfileVisibilityEvent.Raw">
@@ -4357,6 +4719,11 @@
             Gets the raw message
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.GodEvent">
+            <summary>
+            The server event for when a player changed god mode
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.GodEvent.Raw">
             <summary>
             Gets the raw message
@@ -4365,6 +4732,11 @@
         <member name="P:Fluid.ServerEvents.GodEvent.Player">
             <summary>
             Gets the player who changed god mode
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.GuardianModeEvent">
+            <summary>
+            The server event for when a player changes their guardian mode
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.GuardianModeEvent.Raw">
@@ -4377,6 +4749,11 @@
             Gets the player who toggled guardian mode
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.HideEvent">
+            <summary>
+            The server event for when key's are hidden
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.HideEvent.Raw">
             <summary>
             Gets the raw message
@@ -4387,6 +4764,11 @@
             Gets the list of key triggers
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.InfoEvent">
+            <summary>
+            The server event for when a player receives information from the server
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.InfoEvent.Raw">
             <summary>
             Gets the raw message
@@ -4395,6 +4777,11 @@
         <member name="P:Fluid.ServerEvents.InfoEvent.SystemMessage">
             <summary>
             Gets the system message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.InitEvent">
+            <summary>
+            The server event for the initial world data
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.InitEvent.Raw">
@@ -4412,6 +4799,11 @@
             Gets the connected player
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.KillEvent">
+            <summary>
+            The server event for when a player is killed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.KillEvent.Raw">
             <summary>
             Gets the raw message
@@ -4420,6 +4812,11 @@
         <member name="P:Fluid.ServerEvents.KillEvent.Player">
             <summary>
             Gets the player who was killed
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.LabelBlockEvent">
+            <summary>
+            The server event for when a label block is placed
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.LabelBlockEvent.Raw">
@@ -4432,6 +4829,11 @@
             Gets the label block
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.LeftEvent">
+            <summary>
+            The server event for when a player leaves the world
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.LeftEvent.Raw">
             <summary>
             Gets the raw message
@@ -4442,14 +4844,9 @@
             Gets the player who left
             </summary>
         </member>
-        <member name="P:Fluid.ServerEvents.LevelupEvent.Raw">
+        <member name="T:Fluid.ServerEvents.LoadLevelEvent">
             <summary>
-            Gets the raw message
-            </summary>
-        </member>
-        <member name="P:Fluid.ServerEvents.LevelupEvent.Player">
-            <summary>
-            Gets the player who leveled up
+            The server event for when the level is reloaded
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.LoadLevelEvent.Raw">
@@ -4460,6 +4857,11 @@
         <member name="P:Fluid.ServerEvents.LoadLevelEvent.World">
             <summary>
             Gets the world
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.LostAccessEvent">
+            <summary>
+            The server event for when the connection loses edit priveledges
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.LostAccessEvent.Raw">
@@ -4494,6 +4896,11 @@
             The message received
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.ModModeEvent">
+            <summary>
+            The server event for when a player changes moderator mode
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.ModModeEvent.Raw">
             <summary>
             Gets the raw message
@@ -4502,6 +4909,11 @@
         <member name="P:Fluid.ServerEvents.ModModeEvent.Player">
             <summary>
             Gets the player who toggled moderator mode
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.MovementEvent">
+            <summary>
+            The server event for when a player inputs movement
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.MovementEvent.Raw">
@@ -4519,6 +4931,11 @@
             Gets the input of the player
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.MusicBlockEvent">
+            <summary>
+            The server event for when a music block is placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.MusicBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4527,6 +4944,11 @@
         <member name="P:Fluid.ServerEvents.MusicBlockEvent.MusicBlock">
             <summary>
             Gets the music block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.OldSayEvent">
+            <summary>
+            The server event for when a old chatmessage is loaded
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.OldSayEvent.Raw">
@@ -4555,6 +4977,11 @@
             Gets or Sets whether the message has been handled
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.PlayerObjectEvent">
+            <summary>
+            The server callback event for when a player object is received
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.PlayerObjectEvent.Raw">
             <summary>
             Gets the raw message
@@ -4565,6 +4992,11 @@
             Gets the player object
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.PortalBlockEvent">
+            <summary>
+            The server event for when a portal block is placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.PortalBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4573,6 +5005,11 @@
         <member name="P:Fluid.ServerEvents.PortalBlockEvent.Portal">
             <summary>
             Gets the portal
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.PotionEvent">
+            <summary>
+            The server event for when a player's potion state changes. Activation or deactivation.
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.PotionEvent.Raw">
@@ -4595,6 +5032,11 @@
             Gets whether the potion is active
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.PurpleBlockEvent">
+            <summary>
+            The server event for when a purple block is placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.PurpleBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4603,6 +5045,11 @@
         <member name="P:Fluid.ServerEvents.PurpleBlockEvent.PurpleBlock">
             <summary>
             Gets the purple block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.QuickChatEvent">
+            <summary>
+            The server event for when a player sends a quick chat message
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.QuickChatEvent.Raw">
@@ -4620,9 +5067,19 @@
             Gets the quick chat message
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.ResetEvent">
+            <summary>
+            The server event for when all players are reset
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.ResetEvent.Raw">
             <summary>
             Gets the raw message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.RotatableBlockEvent">
+            <summary>
+            The server event for when a rotatable block is placed
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.RotatableBlockEvent.Raw">
@@ -4635,6 +5092,11 @@
             Gets the rotatable block
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.SavedEvent">
+            <summary>
+            The server event for when the world is saved
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.SavedEvent.Raw">
             <summary>
             Gets the raw message
@@ -4643,6 +5105,11 @@
         <member name="P:Fluid.ServerEvents.SavedEvent.World">
             <summary>
             Gets the saved world
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.SayEvent">
+            <summary>
+            The server event for when a player sends a chat message
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.SayEvent.Raw">
@@ -4655,6 +5122,11 @@
             Get the chat message
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.ShowEvent">
+            <summary>
+            The server event for when the world's keys are shown
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.ShowEvent.Raw">
             <summary>
             Gets the raw message
@@ -4665,6 +5137,11 @@
             Gets the key triggers
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.SilverCrownEvent">
+            <summary>
+            The server event for when a player completes the level, or gets the silver crown
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.SilverCrownEvent.Raw">
             <summary>
             Gets the raw message
@@ -4673,6 +5150,11 @@
         <member name="P:Fluid.ServerEvents.SilverCrownEvent.Player">
             <summary>
             Gets the player who touched the silver crown
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.TeleportEvent">
+            <summary>
+            The server event for when a player is teleported
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.TeleportEvent.Raw">
@@ -4690,6 +5172,11 @@
             Gets the location
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.TextBlockEvent">
+            <summary>
+            The server event for when a text block is placed
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.TextBlockEvent.Raw">
             <summary>
             Gets the raw message
@@ -4698,6 +5185,11 @@
         <member name="P:Fluid.ServerEvents.TextBlockEvent.TextBlock">
             <summary>
             Gets the text/sign block
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.UpdateMetaEvent">
+            <summary>
+            The server event for when the world's plays, woots, title, etc. is updated
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.UpdateMetaEvent.Raw">
@@ -4710,9 +5202,19 @@
             Gets the updated world
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.UpgradeEvent">
+            <summary>
+            The server event for when the game is updated
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.UpgradeEvent.Raw">
             <summary>
             Gets the raw message
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.WootEvent">
+            <summary>
+            The server event for when a player gives a woot
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.WootEvent.Raw">
@@ -4725,6 +5227,11 @@
             Gets the player
             </summary>
         </member>
+        <member name="T:Fluid.ServerEvents.WootUpEvent">
+            <summary>
+            The server event for when a player gives a woot
+            </summary>
+        </member>
         <member name="P:Fluid.ServerEvents.WootUpEvent.Raw">
             <summary>
             Gets the raw message
@@ -4733,6 +5240,11 @@
         <member name="P:Fluid.ServerEvents.WootUpEvent.Player">
             <summary>
             Gets the player
+            </summary>
+        </member>
+        <member name="T:Fluid.ServerEvents.WorldPortalBlockEvent">
+            <summary>
+            The server event for when a player places a world portal
             </summary>
         </member>
         <member name="P:Fluid.ServerEvents.WorldPortalBlockEvent.Raw">
@@ -4769,6 +5281,12 @@
             <summary>
             Gets the list of all shop item's data
             </summary>
+        </member>
+        <member name="M:Fluid.VaultShopItem.ToString">
+            <summary>
+            Gets the vault shop item debug message
+            </summary>
+            <returns>The vault shop item debug message</returns>
         </member>
         <member name="P:Fluid.VaultShopItem.ID">
             <summary>
@@ -4879,6 +5397,12 @@
             <summary>
             Gets if the item is for developers only
             </summary>
+        </member>
+        <member name="M:Fluid.ShopItem.ToString">
+            <summary>
+            Gets the shop item debug message
+            </summary>
+            <returns>The shop item debug message</returns>
         </member>
         <member name="P:Fluid.ShopItem.EnergyUsed">
             <summary>
@@ -5465,6 +5989,12 @@
             <typeparam name="T">The variable type</typeparam>
             <param name="variableName">The variable name</param>
             <param name="variableValue">The variable value</param>
+        </member>
+        <member name="M:Fluid.WorldPlayer.GetHashCode">
+            <summary>
+            Gets the player's hash code
+            </summary>
+            <returns>The player's hash code</returns>
         </member>
         <member name="M:Fluid.WorldPlayer.#ctor(Fluid.WorldConnection,System.String,System.Int32)">
             <summary>

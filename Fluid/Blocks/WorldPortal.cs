@@ -50,11 +50,20 @@
         }
 
         /// <summary>
+        /// Creates a clone of this world portal
+        /// </summary>
+        /// <returns>A clone of this world portal</returns>
+        public override Block Clone()
+        {
+            return new WorldPortal(ID, X, Y, TargetID);
+        }
+
+        /// <summary>
         /// Tests if a wolrd portal block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
-        public bool EqualsBlock(Block b)
+        public override bool EqualsBlock(Block b)
         {
             if (b is WorldPortal)
             {

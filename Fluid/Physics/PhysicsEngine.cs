@@ -101,6 +101,11 @@ namespace Fluid.Physics
         public TickMode TickMode { get; set; }
 
         /// <summary>
+        /// Gets or sets the physics event mode
+        /// </summary>
+        public PhysicsEventMode EventMode { get; set; }
+
+        /// <summary>
         /// Gets the current world
         /// </summary>
         public World World { get { return m_WorldConnection.World; } }
@@ -136,9 +141,12 @@ namespace Fluid.Physics
                     }
 
                     long frameStartTime = sw.ElapsedMilliseconds;
-                    foreach (KeyValuePair<int, WorldPlayer> playerNode in m_WorldConnection.Players.GetDictionary())
+                    foreach (KeyValuePair<int, WorldPlayer> playerNode in m_WorldConnection.Players.GetList())
                     {
-                        this.Tick(playerNode.Value);
+                        if (playerNode.Value.IsConnectedPlayer)
+                        {
+                            this.Tick(playerNode.Value);
+                        }
 
                         PhysicsUpdateEvent updateEvent = new PhysicsUpdateEvent()
                         {
@@ -158,8 +166,15 @@ namespace Fluid.Physics
             }
             catch (ThreadAbortException)
             {
+                return;
                 //Thread is being aborted
             }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+            return;
         }
 
         /// <summary>
@@ -735,11 +750,12 @@ namespace Fluid.Physics
                     worldPlayer.m_isThrusting = false;
                 }
 
+                bool coinsChanged = false;
                 switch (worldPlayer.Current)
                 {
                     case BlockID.CoinGold:
                         lock (worldPlayer.CollectedGoldCoins)
-                        {
+                        {                            
                             bool alreadyCollected = false;
                             for (int i = 0; i < worldPlayer.CollectedGoldCoins.Count; i++)
                             {
@@ -753,6 +769,7 @@ namespace Fluid.Physics
 
                             if (!alreadyCollected)
                             {
+                                coinsChanged = true;
                                 worldPlayer.CollectedGoldCoins.Add(World[cx, cy, Layer.Foreground]);
                             }
                         }
@@ -760,6 +777,7 @@ namespace Fluid.Physics
                     case BlockID.CoinBlue:
                         lock (worldPlayer.CollectedBlueCoins)
                         {
+                            
                             bool alreadyCollected = false;
                             for (int i = 0; i < worldPlayer.CollectedBlueCoins.Count; i++)
                             {
@@ -773,14 +791,56 @@ namespace Fluid.Physics
 
                             if (!alreadyCollected)
                             {
+                                coinsChanged = true;
                                 worldPlayer.CollectedBlueCoins.Add(World[cx, cy, Layer.Foreground]);
                             }
                         }
                         break;
                 }
 
-                if (worldPlayer.m_pastx != cx || worldPlayer.m_pasty != cy)
+                if (worldPlayer.IsConnectedPlayer && EventMode == PhysicsEventMode.Send)
                 {
+                    Console.WriteLine(worldPlayer.BlockY);
+                    switch (worldPlayer.Current)
+                    {
+                        case BlockID.Crown:
+                            m_WorldConnection.GetCrown();
+                            break;
+                        case BlockID.KeyRed:
+                            m_WorldConnection.ActivateKey(Key.Red);
+                            break;
+                        case BlockID.KeyGreen:
+                            m_WorldConnection.ActivateKey(Key.Green);
+                            break;
+                        case BlockID.KeyBlue:
+                            m_WorldConnection.ActivateKey(Key.Blue);
+                            break;
+                        case BlockID.KeyCyan:
+                            m_WorldConnection.ActivateKey(Key.Cyan);
+                            break;
+                        case BlockID.KeyMagenta:
+                            m_WorldConnection.ActivateKey(Key.Magenta);
+                            break;
+                        case BlockID.KeyYellow:
+                            m_WorldConnection.ActivateKey(Key.Yellow);
+                            break;
+                        case BlockID.Diamond:
+                            m_WorldConnection.TouchDiamond(cx, cy);
+                            break;
+                        case BlockID.Cake:
+                            m_WorldConnection.TouchCake(cx, cy);
+                            break;
+                        case BlockID.Hologram:
+                            m_WorldConnection.TouchHologram(cx, cy);
+                            break;
+                        case BlockID.ToolCheckpoint:
+                            m_WorldConnection.TouchCheckpoint(cx, cy);
+                            break;
+                        case BlockID.ToolWinTrophy:
+                            m_WorldConnection.GetSilverCrown();
+                            break;
+                    }
+
                     switch (worldPlayer.Current)
                     {
                         case BlockID.SwitchPurple:
@@ -805,6 +865,11 @@ namespace Fluid.Physics
                 if (worldPlayer.HasLevitation)
                 {
                     UpdateThrust(worldPlayer);
+                }
+
+                if (worldPlayer.IsConnectedPlayer && coinsChanged && EventMode == PhysicsEventMode.Send)
+                {
+                    m_WorldConnection.SendMessage("c", worldPlayer.GoldCoins, worldPlayer.BlueCoins, cx, cy);
                 }
             }
 
@@ -1251,7 +1316,7 @@ namespace Fluid.Physics
         /// <param name="block">The gold or blue coin</param>
         internal void RemoveCoin(Block block)
         {
-            foreach (KeyValuePair<int, WorldPlayer> playerNode in m_WorldConnection.Players.GetDictionary())
+            foreach (KeyValuePair<int, WorldPlayer> playerNode in m_WorldConnection.Players.GetList())
             {
                 if (block.ID == BlockID.CoinGold)
                 {
@@ -1306,6 +1371,7 @@ namespace Fluid.Physics
             this.m_WorldConnection = worldConnection;
 
             TickMode = TickMode.RealTime;
+            EventMode = PhysicsEventMode.Ignore;
         }
     }
 }

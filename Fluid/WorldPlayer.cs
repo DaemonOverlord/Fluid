@@ -495,6 +495,15 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the player's hash code
+        /// </summary>
+        /// <returns>The player's hash code</returns>
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+
+        /// <summary>
         /// Creates a new 
         /// </summary>
         /// <param name="connection">The world connection</param>

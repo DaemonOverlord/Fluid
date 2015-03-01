@@ -2,6 +2,9 @@
 
 namespace Fluid.ServerEvents
 {
+    /// <summary>
+    /// The server event for when a player changes their guardian mode
+    /// </summary>
     public class GuardianModeEvent : IServerEvent
     {
         /// <summary>
