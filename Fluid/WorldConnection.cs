@@ -339,12 +339,11 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Sets the connected players moderator mode value
+        /// Toggles the connected players moderator mode
         /// </summary>
-        /// <param name="value">True for moderator mode; False for no moderator mode</param>
-        public void SetModeratorMode(bool value)
+        public void ToggleModeratorMode()
         {
-            this.SendMessage("mod", value);
+            this.SendMessage("mod");
         }
 
         /// <summary>
@@ -758,8 +757,8 @@ namespace Fluid
                 }
             }
 
-            horizontal = Convert.ToInt32((input & Input.HoldLeft) != 0) + Convert.ToInt32((input & Input.HoldRight) != 0);
-            vertical = Convert.ToInt32((input & Input.HoldUp) != 0) + Convert.ToInt32((input & Input.HoldDown) != 0);
+            horizontal = ((input & Input.HoldLeft) != 0 ? -1 : 1) + ((input & Input.HoldRight) != 0 ? 1 : -1);
+            vertical = ((input & Input.HoldUp) != 0 ? -1 : 1) + ((input & Input.HoldDown) != 0 ? 1 : -1);
 
             SendMovement(me.X, me.Y, speedX, speedY, me.ModifierX, me.ModifierY, horizontal, vertical, false);
         }

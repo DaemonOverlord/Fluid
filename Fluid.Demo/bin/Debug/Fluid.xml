@@ -2525,11 +2525,10 @@
             </summary>
             <param name="value">True for guardian mode; False for no guardian mode</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SetModeratorMode(System.Boolean)">
+        <member name="M:Fluid.WorldConnection.ToggleModeratorMode">
             <summary>
-            Sets the connected players moderator mode value
+            Toggles the connected players moderator mode
             </summary>
-            <param name="value">True for moderator mode; False for no moderator mode</param>
         </member>
         <member name="M:Fluid.WorldConnection.SetAllowPotions(System.Boolean)">
             <summary>

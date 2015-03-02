@@ -800,7 +800,6 @@ namespace Fluid.Physics
 
                 if (worldPlayer.IsConnectedPlayer && EventMode == PhysicsEventMode.Send)
                 {
-                    Console.WriteLine(worldPlayer.BlockY);
                     switch (worldPlayer.Current)
                     {
                         case BlockID.Crown:
