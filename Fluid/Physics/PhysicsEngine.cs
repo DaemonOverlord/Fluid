@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fluid.Physics
 {
+    [DebuggerDisplay("Running = {m_Running}")]
     public class PhysicsEngine
     {
         private WorldConnection m_WorldConnection;

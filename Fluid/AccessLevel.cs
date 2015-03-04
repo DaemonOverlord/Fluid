@@ -2,6 +2,9 @@
 
 namespace Fluid
 {
+    /// <summary>
+    /// The list of different levels of priveledges a user can have
+    /// </summary>
     [Flags]
     public enum AccessLevel : uint
     {

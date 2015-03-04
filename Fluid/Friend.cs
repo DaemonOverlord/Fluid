@@ -1,5 +1,7 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+namespace Fluid
 {
+    [DebuggerDisplay("Username = {Username}")]
     public class Friend
     {
         private LobbyConnection m_LobbyConnection;
@@ -130,23 +132,12 @@
 
             if (!string.IsNullOrEmpty(worldId))
             {
-                In = new WorldReference(m_LobbyConnection.Client, worldId)
-                {
-                    WorldName = worldName
-                };
+                In = new WorldReference(m_LobbyConnection.Client, worldId);
             }
             else
             {
                 In = null;
             }
-        }
-
-        /// <summary>
-        /// Gets the debug string for the friend
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Name: {0}", Username);
         }
 
         /// <summary>

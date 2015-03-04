@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Count = {Count}")]
     public class PlayerManager
     {
         private ConcurrentDictionary<int, WorldPlayer> m_Players;
@@ -150,14 +152,6 @@ namespace Fluid
         public WorldPlayer this[string username]
         {
             get { return Get(username); }
-        }
-
-        /// <summary>
-        /// Gets the player manager debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Count: {0}", Count);
         }
 
         /// <summary>

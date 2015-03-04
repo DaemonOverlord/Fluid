@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace Fluid
 {
+    [System.Diagnostics.DebuggerDisplay("Uploading = {Uploading}, Queued = {BlocksQueued}")]
     public class BlockUploadManager
     {
         private List<BlockRequest> m_Queue;

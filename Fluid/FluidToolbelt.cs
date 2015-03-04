@@ -64,7 +64,22 @@ namespace Fluid
             }
 
             return default(T);
+        }
 
+        /// <summary>
+        /// Gets the value of a property in a vault item
+        /// </summary>
+        /// <typeparam name="T">The value type</typeparam>
+        /// <param name="dictionary">The dictionary</param>
+        /// <param name="property">The property</param>
+        public string GetValueIfExists(Dictionary<string, string> dictionary, string property)
+        {
+            if (dictionary.ContainsKey(property))
+            {
+                return dictionary[property];
+            }
+
+            return null;
         }
     }
 }

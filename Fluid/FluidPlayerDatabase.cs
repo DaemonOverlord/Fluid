@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Connected = {Connected}")]
     public class FluidPlayerDatabase
     {
         private FluidClient m_Client;

@@ -4,14 +4,15 @@ using Fluid.ServerEvents;
 using PlayerIOClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Connected = {Connected}")]
     public abstract class ConnectionBase
     {
-
         private Connection m_Connection;
 
         /// <summary>

@@ -1,5 +1,7 @@
-﻿namespace Fluid.Blocks
+﻿using System.Diagnostics;
+namespace Fluid.Blocks
 {
+    [DebuggerDisplay("ID = {ID}, X = {X}, Y = {Y}, Layer = {Layer}")]
     public class Block
     {
         protected WorldConnection m_WorldConnection;
@@ -28,6 +30,15 @@
         /// Gets the block's placer
         /// </summary>
         public WorldPlayer Placer { get; internal set; }
+
+        /// <summary>
+        /// Gets the location of the block
+        /// </summary>
+        /// <returns>The location of the block</returns>
+        public FluidPoint Location()
+        {
+            return new FluidPoint(X, Y);
+        }
 
         /// <summary>
         /// Checks if the block is binded to a connection
@@ -79,14 +90,6 @@
         public virtual bool EqualsBlock(Block bl)
         {
             return X == bl.X && Y == bl.Y && ID == bl.ID && Layer == bl.Layer;
-        }
-
-        /// <summary>
-        /// Gets the block debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("ID: {0}, X: {1}, Y: {2}, L: {3}", ID, X, Y, Layer);
         }
 
         /// <summary>

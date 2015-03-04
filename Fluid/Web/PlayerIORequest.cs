@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 
 namespace Fluid.Web
 {
+    [DebuggerDisplay("Method = {Method}, Uri = {Uri}")]
     public class PlayerIORequest
     {
         /// <summary>
@@ -39,14 +41,6 @@ namespace Fluid.Web
             }
 
             return encoding.GetString(Body);
-        }
-
-        /// <summary>
-        /// Gets the debug string
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("{0} {1}", Method, Uri);
         }
 
         /// <summary>

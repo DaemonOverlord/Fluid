@@ -1,5 +1,7 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+namespace Fluid
 {
+    [DebuggerDisplay("ID = {ID}")]
     public class ShopItem : VaultShopItem
     {
 
@@ -17,15 +19,6 @@
         /// Gets if the item is owned in payvault
         /// </summary>
         public bool OwnedInPayvault { get; internal set; }
-
-        /// <summary>
-        /// Gets the shop item debug message
-        /// </summary>
-        /// <returns>The shop item debug message</returns>
-        public override string ToString()
-        {
-            return string.Format("Id: {0}", ID ?? "null");
-        }
 
         internal ShopItem(string id, string type, int energyPrice, int priceOfEnergyPerClick, int energyUsed, int gemsPrice, int amountOwned, int span, string textHeader, string textBody, string bitmapSheet, int bitmapSheetOffset, bool isOnSale, bool isFeatured, bool isClassic, bool isPlayerWorldOnly, bool isNew, bool isDevOnly, bool isGridFeautured, int priceUsd, int minClass, bool reusable, bool ownedInPayvault)
         {

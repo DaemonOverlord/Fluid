@@ -1,18 +1,31 @@
 ﻿using Fluid.Blocks;
-
 using PlayerIOClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Name = {Title}")]
     public sealed class World
     {
         private FluidClient m_Client;
         private Block[, ,] m_WorldData;
         private string m_WorldKey;
+
+        /// <summary>
+        /// Gets or Sets the block at a location
+        /// </summary>
+        /// <param name="x">The X coordinate</param>
+        /// <param name="y">The Y coordinate</param>
+        /// <param name="z">The layer</param>
+        /// <returns>The block at the location; null if the location is invalid</returns>
+        public Block this[int x, int y, int z]
+        {
+            get { return this.GetBlockAt(x, y, z); }
+        }
 
         /// <summary>
         /// Gets or Sets the block at a location
@@ -129,7 +142,7 @@ namespace Fluid
         /// <returns>If the location is within the world's bounds</returns>
         public bool IsInBounds(Block block)
         {
-            return this.IsInBounds(block.X, block.Y, block.Layer);
+            return this.IsInBounds(block.X, block.Y);
         }
 
         /// <summary>
@@ -137,11 +150,33 @@ namespace Fluid
         /// </summary>
         /// <param name="x">The X coordinate</param>
         /// <param name="y">The Y coordinate</param>
-        /// <param name="layer">The layer</param>
+        /// <param name="z">The layer</param>
         /// <returns>If the location is within the world's bounds</returns>
-        public bool IsInBounds(int x, int y, Layer layer)
+        public bool IsInBounds(int x, int y, int z)
+        {
+            return x >= 0 && Width > x && y >= 0 && Height > y && z >= 0 && z <= 1;
+        }
+
+        /// <summary>
+        /// Tests if a location is within the world
+        /// </summary>
+        /// <param name="x">The X coordinate</param>
+        /// <param name="y">The Y coordinate</param>
+        /// <returns>If the location is within the world's bounds</returns>
+        public bool IsInBounds(int x, int y)
         {
             return x >= 0 && Width > x && y >= 0 && Height > y;
+        }
+
+        /// <summary>
+        /// Gets a block
+        /// </summary>
+        /// <param name="p">The point</param>
+        /// <param name="layer">The block layer</param>
+        /// <returns>The block at that location</returns>
+        public Block GetBlockAt(FluidPoint p, Layer layer)
+        {
+            return this.GetBlockAt(p.X, p.Y, layer);
         }
 
         /// <summary>
@@ -153,9 +188,31 @@ namespace Fluid
         /// <returns>The block at the location; null if the location is invalid</returns>
         public Block GetBlockAt(int x, int y, Layer layer)
         {
-            if (IsInBounds(x, y, layer))
+            if (IsInBounds(x, y))
             {
                 return m_WorldData[x, y, (int)layer].Clone();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the block at a location
+        /// </summary>
+        /// <param name="x">The X coordinate</param>
+        /// <param name="y">The Y coordinate</param>
+        /// <param name="z">The layer</param>
+        /// <returns>The block at the location; null if the location is invalid</returns>
+        public Block GetBlockAt(int x, int y, int z)
+        {
+            if (z < 0 || z > 1)
+            {
+                return null;
+            }
+
+            if (IsInBounds(x, y, z))
+            {
+                return m_WorldData[x, y, z].Clone();
             }
 
             return null;
@@ -168,6 +225,58 @@ namespace Fluid
         public Block[, ,] GetBlocks()
         {
             return this.m_WorldData;
+        }
+
+        /// <summary>
+        /// Gets all the worlds blocks within a rectangle
+        /// </summary>
+        /// <param name="rect">The rectangle</param>
+        /// <returns>The list of blocks</returns>
+        public IEnumerable<Block> GetBlocks(FluidRect rect)
+        {
+            for (int x = rect.X; x < rect.X + rect.Width; x++)
+            {
+                for (int y = rect.Y; y < rect.Y + rect.Height; y++)
+                {
+                    Block fg = GetBlockAt(x, y, Layer.Foreground);
+                    if (fg != null)
+                    {
+                        yield return fg;
+                    }
+
+                    Block bg = GetBlockAt(x, y, Layer.Background);
+                    if (bg != null)
+                    {
+                        yield return bg;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Finds all blocks that match a predicate
+        /// </summary>
+        /// <param name="searchDelegate">The search predicate</param>
+        /// <returns>The list of matching blocks</returns>
+        public IEnumerable<Block> Find(Predicate<Block> searchDelegate)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    for (int z = 0; z < 2; z++)
+                    {
+                        Block current = GetBlockAt(x, y, z);
+                        if (current != null)
+                        {
+                            if (searchDelegate(current))
+                            {
+                                yield return current;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -785,14 +894,6 @@ namespace Fluid
             Deserialize(initMessage);
 
             IsLoaded = true;
-        }
-
-        /// <summary>
-        /// Gets the world debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Title: {0}", Title);
         }
 
         /// <summary>

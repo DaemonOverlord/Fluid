@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Count = {Count}")]
     public class ChatManager
     {
         private WorldConnection m_Connection;
@@ -99,14 +101,6 @@ namespace Fluid
             });
 
             Task.WaitAll(chatTask);
-        }
-
-        /// <summary>
-        /// Gets the chat debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Count: {0}", Count);
         }
 
         /// <summary>

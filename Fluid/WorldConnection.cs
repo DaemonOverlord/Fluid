@@ -84,8 +84,15 @@ namespace Fluid
             this.SendMessage("init");
             Physics.Start();
 
-            if (WaitForServerEvent<InitEvent>(2000) != null)
+            InitEvent initEvent = null;
+            if ((initEvent = WaitForServerEvent<InitEvent>(2000)) != null)
             {
+                //Invoke waiting server events for init if any
+                if (m_MessageAwaiters.ContainsKey(typeof(InitEvent)))
+                {
+                    m_MessageAwaiters[typeof(InitEvent)].Invoke(initEvent);
+                }
+
                 this.SendMessage("init2");
             }
             else
@@ -167,15 +174,15 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Sends a block to the world
+        /// Sends a block to the world synchronouslyu
         /// </summary>
         /// <param name="id">The block id</param>
         /// <param name="layer">The layer</param>
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
-        public void SendBlock(BlockID id, int x, int y)
+        public void UploadBlock(BlockID id, int x, int y)
         {
-            this.SendBlock(new Block(this, id, GetBlockLayer(id), x, y));
+            this.UploadBlock(new Block(id, GetBlockLayer(id), x, y));
         }
 
         /// <summary>
@@ -186,17 +193,64 @@ namespace Fluid
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
-        public void SendBlock(BlockID id, int x, int y, int blockThrottle)
+        public void UploadBlock(BlockID id, int x, int y, int blockThrottle)
         {
-
-            this.SendBlock(new Block(this, id, GetBlockLayer(id), x, y), blockThrottle);
+            this.UploadBlock(new Block(id, GetBlockLayer(id), x, y), blockThrottle);
         }
 
         /// <summary>
         /// Sends a block to the world
         /// </summary>
         /// <param name="block">The block to send</param>
-        public void SendBlock(Block block)
+        public void UploadBlock(Block block)
+        {
+            CheckThrottle();
+            block.Upload();
+            Thread.Sleep((int)m_blockThrottle.Value);
+        }
+
+        /// <summary>
+        /// Sends the block at a specific speed
+        /// </summary>
+        /// <param name="block">The block to send</param>
+        /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        public void UploadBlock(Block block, int blockThrottle)
+        {
+            block.Upload();
+            Thread.Sleep(blockThrottle);
+        }
+
+        /// <summary>
+        /// Sends a block to the world
+        /// </summary>
+        /// <param name="id">The block id</param>
+        /// <param name="layer">The layer</param>
+        /// <param name="x">The x coordinate</param>
+        /// <param name="y">The y coordinate</param>
+        public void UploadBlockAsync(BlockID id, int x, int y)
+        {
+            this.UploadBlockAsync(new Block(this, id, GetBlockLayer(id), x, y));
+        }
+
+        /// <summary>
+        /// Sends a block to the world
+        /// </summary>
+        /// <param name="id">The block id</param>
+        /// <param name="layer">The layer</param>
+        /// <param name="x">The x coordinate</param>
+        /// <param name="y">The y coordinate</param>
+        /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        public void UploadBlockAsync(BlockID id, int x, int y, int blockThrottle)
+        {
+
+            this.UploadBlockAsync(new Block(this, id, GetBlockLayer(id), x, y), blockThrottle);
+        }
+
+        /// <summary>
+        /// Sends a block to the world
+        /// </summary>
+        /// <param name="block">The block to send</param>
+        public void UploadBlockAsync(Block block)
         {
             CheckThrottle();
             this.QueueBlock(block, (int)m_blockThrottle.Value);           
@@ -207,7 +261,7 @@ namespace Fluid
         /// </summary>
         /// <param name="block">The block to send</param>
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
-        public void SendBlock(Block block, int blockThrottle)
+        public void UploadBlockAsync(Block block, int blockThrottle)
         {
             this.QueueBlock(block, blockThrottle);
         }

@@ -1,8 +1,10 @@
 ﻿using Fluid.Blocks;
 using System;
+using System.Diagnostics;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Block = {Block}")]
     internal class BlockRequest
     {
         private bool m_NullTimestamp = false;

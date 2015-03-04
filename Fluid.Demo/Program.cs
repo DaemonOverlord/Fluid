@@ -1,4 +1,5 @@
 ﻿using Fluid.Auth;
+using Fluid.Blocks;
 using Fluid.ServerEvents;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,10 @@ namespace Fluid.Demo
         public static void Main()
         {
             FluidClient client = new FluidClient(new GuestAuth());
-
             if (client.LogIn())
             {
-                var c = client.GetWorldConnection("PWAOhb0r2Ca0I");
-                c.Join();
+                return;
             }
-
-            Console.ReadKey();
         }
     }
 }

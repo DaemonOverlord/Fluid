@@ -2,6 +2,7 @@
 
 namespace Fluid
 {
+    [DebuggerDisplay("[{Category}] {Text}")]
     public class FluidLogMessage
     {
         /// <summary>
@@ -18,14 +19,6 @@ namespace Fluid
         /// Gets the log message's stack trace
         /// </summary>
         public StackTrace Trace { get; set; }
-
-        /// <summary>
-        /// Converts the message to a string
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("[{0}, {1}]", Category, Text ?? "null");
-        }
 
         /// <summary>
         /// Creates new a new Fluid log message

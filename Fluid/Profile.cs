@@ -1,5 +1,7 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+namespace Fluid
 {
+    [DebuggerDisplay("Username = {Username}")]
     public class Profile
     {
         /// <summary>
@@ -71,13 +73,5 @@
         /// Gets if the player's profile is visible
         /// </summary>
         public bool ProfileVisible { get; internal set; }
-
-        /// <summary>
-        /// Gets the profile debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Name: {0}", Username);
-        }
     }
 }

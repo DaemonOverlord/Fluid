@@ -1,5 +1,7 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+namespace Fluid
 {
+    [DebuggerDisplay("Name = {Username}")]
     public class Player
     {
         private FluidClient m_Client;
@@ -36,14 +38,6 @@
         public Profile GetProfile()
         {
             return m_Client.LoadProfile(Username);
-        }
-
-        /// <summary>
-        /// Gets the player debug message
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Name: {0}", Username);
         }
 
         /// <summary>

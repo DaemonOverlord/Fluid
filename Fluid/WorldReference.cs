@@ -1,5 +1,8 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+
+namespace Fluid
 {
+    [DebuggerDisplay("WorldID = {WorldID}")]
     public class WorldReference
     {
         private FluidClient m_Client;
@@ -10,25 +13,12 @@
         public string WorldID { get; private set; }
 
         /// <summary>
-        /// Gets the world name if readibly known; otherwise null
-        /// </summary>
-        public string WorldName { get; internal set; }
-
-        /// <summary>
         /// Loads the world
         /// </summary>
         /// <returns>The world if valid; otherwise null</returns>
         public World Load()
         {
             return m_Client.LoadWorld(WorldID);
-        }
-
-        /// <summary>
-        /// Gets the world reference debug string
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Id: {0}", WorldID);
         }
 
         /// <summary>

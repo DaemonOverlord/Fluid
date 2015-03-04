@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace Fluid
 {
+    [DebuggerDisplay("R = {R}, G = {G}, B = {B}")]
     public class FluidColor
     {
         /// <summary>
@@ -224,15 +226,6 @@ namespace Fluid
         {
             uint argb = ToArgb();
             return argb.GetHashCode();
-        }
-
-        /// <summary>
-        /// Gets the Fluid color debug message
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("R: {0} G: {1} B: {2}", R, G, B);
         }
 
         /// <summary>

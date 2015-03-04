@@ -5,6 +5,7 @@ using System.IO;
 
 namespace Fluid
 {
+    [DebuggerDisplay("Count = {Count}")]
     public class FluidLog
     {
         private TextWriter m_TextWriter;
@@ -118,14 +119,6 @@ namespace Fluid
         public void Clear()
         {
             m_Log.Clear();
-        }
-
-        /// <summary>
-        /// Shows hte count of messages
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Format("Messages: {0}", Count);
         }
 
         /// <summary>

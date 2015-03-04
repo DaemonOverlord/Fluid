@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fluid
 {
+    [DebuggerDisplay("TotalPotionCount = {TotalPotionCount}")]
     public class PotionManager
     {
         private Dictionary<Potion, int> m_Inventory;
@@ -105,15 +107,6 @@ namespace Fluid
                     m_Inventory.Add(potion, count);
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets the potion manager debug message
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("Total Potions: {0}", TotalPotionCount);
         }
 
         /// <summary>

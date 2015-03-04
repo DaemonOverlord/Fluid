@@ -1,5 +1,8 @@
-﻿namespace Fluid
+﻿using System.Diagnostics;
+
+namespace Fluid
 {
+    [DebuggerDisplay("{Player.Username}: {Text}")]
     public class ChatMessage
     {
         /// <summary>
@@ -11,19 +14,6 @@
         /// Gets the chat message
         /// </summary>
         public string Text { get; private set; }
-
-        /// <summary>
-        /// Gets the chat message debug message
-        /// </summary>
-        public override string ToString()
-        {
-            if (Player == null)
-            {
-                return Text;
-            }
-
-            return string.Format("{0}: {1}", Player.Username, Text);
-        }
 
         /// <summary>
         /// Creates a new chat message

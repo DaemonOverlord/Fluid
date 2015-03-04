@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+
 namespace Fluid.Physics
 {
+    [DebuggerDisplay("X = {X}, Y = {Y}")]
     public class Vector
     {
-
-
         /// <summary>
         /// Gets or sets the x component
         /// </summary>
@@ -58,6 +59,31 @@ namespace Fluid.Physics
         }
 
         /// <summary>
+        /// Multiplies this vector
+        /// </summary>
+        /// <param name="v">The vector to multiply by</param>
+        /// <returns>The resulting vector</returns>
+        public Vector Multiply(Vector v)
+        {
+            return new Vector(X * v.X, Y * v.Y);
+        }
+
+        /// <summary>
+        /// Divides this vector
+        /// </summary>
+        /// <param name="v">The vector to divide by</param>
+        /// <returns>The resulting vector</returns>
+        public Vector Divide(Vector v)
+        {
+            if (v.X == 0 || v.Y == 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return new Vector(X / v.Y, Y / v.Y);
+        }
+
+        /// <summary>
         /// Distance to another vector
         /// </summary>
         /// <param name="v">The vecotr</param>
@@ -79,10 +105,11 @@ namespace Fluid.Physics
         /// <summary>
         /// Inverts the vector
         /// </summary>
-        public void Invert()
+        public Vector Invert()
         {
             X = -X;
             Y = -Y;
+            return this;
         }
 
         /// <summary>
@@ -104,15 +131,6 @@ namespace Fluid.Physics
         }
 
         /// <summary>
-        /// Gets the vector debug message
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format("X: {0}, Y: {1}", X, Y);
-        }
-
-        /// <summary>
         /// Creates a new vector
         /// </summary>
         /// <param name="x">The x component</param>
@@ -121,6 +139,46 @@ namespace Fluid.Physics
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary>
+        /// Adds two vectors
+        /// </summary>
+        public static Vector operator +(Vector v1, Vector v2)
+        {
+            return v1.Add(v2);
+        }
+
+        /// <summary>
+        /// Inverts the vector
+        /// </summary>
+        public static Vector operator -(Vector v1)
+        {
+            return v1.Invert();
+        }
+
+        /// <summary>
+        /// Subtracts two vectors
+        /// </summary>
+        public static Vector operator -(Vector v1, Vector v2)
+        {
+            return v1.Subtract(v2);
+        }
+
+        /// <summary>
+        /// Multiplies two vectors
+        /// </summary>
+        public static Vector operator *(Vector v1, Vector v2)
+        {
+            return v1.Multiply(v2);
+        }
+
+        /// <summary>
+        /// Divides two vectors
+        /// </summary>
+        public static Vector operator /(Vector v1, Vector v2)
+        {
+            return v1.Divide(v2);
         }
     }
 }

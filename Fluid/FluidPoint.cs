@@ -1,7 +1,10 @@
 ﻿using Fluid.Physics;
+using System;
+using System.Diagnostics;
 
 namespace Fluid
 {
+    [DebuggerDisplay("X = {X}, Y = {Y}")]
     public class FluidPoint
     {
         /// <summary>
@@ -15,6 +18,16 @@ namespace Fluid
         public int Y { get; set; }
 
         /// <summary>
+        /// Gets the distance to another point
+        /// </summary>
+        /// <param name="p">The point</param>
+        /// <returns>The distance</returns>
+        public double DistanceTo(FluidPoint p)
+        {
+            return Math.Sqrt(((X - p.X) * (X - p.X)) + ((Y - p.Y) * (Y - p.Y)));
+        }
+
+        /// <summary>
         /// Converts this point into a vector
         /// </summary>
         /// <returns>The vector</returns>
@@ -24,12 +37,13 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Gets the point debug message
+        /// Checks if this point is equal to another point
         /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        /// <param name="p">The point</param>
+        /// <returns>True if equal; otherwise false</returns>
+        public bool Equals(FluidPoint p)
         {
-            return string.Format("{0}, {1}", X, Y);
+            return X == p.X && Y == p.Y;
         }
 
         /// <summary>

@@ -297,6 +297,15 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gets the player's field of view
+        /// </summary>
+        /// <returns>The field of view</returns>
+        public FluidRect GetFOV()
+        {
+            return new FluidRect(BlockX - 20, BlockY - 15, 40, 30);
+        }
+
+        /// <summary>
         /// Gets the velocity of the player
         /// </summary>
         /// <returns>The player's velocity</returns>

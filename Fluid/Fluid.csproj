@@ -41,21 +41,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Base, Version=1.0.2.21761, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
+    <Reference Include="PcapDotNet.Base, Version=1.0.2.21699, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Pcap.Net.x64.1.0.2\lib\net40\PcapDotNet.Base.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.2\lib\net40\PcapDotNet.Base.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core, Version=1.0.2.21772, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=AMD64">
+    <Reference Include="PcapDotNet.Core, Version=1.0.2.21711, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Pcap.Net.x64.1.0.2\lib\net40\PcapDotNet.Core.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.2\lib\net40\PcapDotNet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core.Extensions, Version=1.0.2.21773, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=AMD64">
+    <Reference Include="PcapDotNet.Core.Extensions, Version=1.0.2.21712, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Pcap.Net.x64.1.0.2\lib\net40\PcapDotNet.Core.Extensions.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.2\lib\net40\PcapDotNet.Core.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Packets, Version=1.0.2.21762, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
+    <Reference Include="PcapDotNet.Packets, Version=1.0.2.21701, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Pcap.Net.x64.1.0.2\lib\net40\PcapDotNet.Packets.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.2\lib\net40\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="PlayerIOClient">
       <HintPath>..\packages\PlayerIOClient-Signed.2.3.6.0\lib\PlayerIOClient.dll</HintPath>
@@ -119,6 +119,7 @@
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\PhysicsUpdateEvent.cs" />
     <Compile Include="FaceID.cs" />
+    <Compile Include="FluidExtensions.cs" />
     <Compile Include="Friend.cs" />
     <Compile Include="FluidClient.cs" />
     <Compile Include="FluidColor.cs" />
@@ -132,10 +133,12 @@
     <Compile Include="FluidParser.cs" />
     <Compile Include="FluidPlayerDatabase.cs" />
     <Compile Include="FluidPoint.cs" />
+    <Compile Include="LobbyWorldReference.cs" />
     <Compile Include="Physics\PhysicsEventMode.cs" />
     <Compile Include="Physics\TickMode.cs" />
     <Compile Include="PotionState.cs" />
     <Compile Include="QuickChatMessage.cs" />
+    <Compile Include="FluidRect.cs" />
     <Compile Include="SecureConnection.cs" />
     <Compile Include="FluidShopInfo.cs" />
     <Compile Include="FluidToolbelt.cs" />

@@ -21,7 +21,7 @@ namespace Fluid
 {
     public class FluidWire : IDisposable
     {
-        private byte[] m_PlayerIOAddress;
+        private byte[][] m_PlayerIOAddresses;
         private bool m_Sniff = false;
         private bool m_WaitingForResponse = false;
         private DateTime m_RequestTimestamp;
@@ -77,12 +77,17 @@ namespace Fluid
         /// Gets the player io api service's ip address
         /// </summary>
         /// <returns></returns>
-        private byte[] GetPlayerIOAddress()
+        private byte[][] GetPlayerIOAddresses()
         {
-            Ping networkPing = new Ping();
-            PingReply reply = networkPing.Send("api.playerio.com");
+            IPAddress[] addresses = Dns.GetHostAddresses("api.playerio.com"); //api.gameanalytics.com
 
-            return reply.Address.GetAddressBytes();
+            byte[][] addressesBytes = new byte[addresses.Length][];
+            for (int i = 0; i < addresses.Length; i++)
+            {
+                addressesBytes[i] = addresses[i].GetAddressBytes();
+            }
+
+            return addressesBytes;
         }
 
         /// <summary>
@@ -91,17 +96,20 @@ namespace Fluid
         /// <param name="address">The IPV4 Address</param>
         private bool IsPlayerIOApi(IpV4Address address)
         {
-            if (m_PlayerIOAddress == null)
+            if (m_PlayerIOAddresses == null)
             {
                 return false;
             }
 
             byte[] addressBytes = GetAddressBytes(address);
-            for (int i = 0; i < addressBytes.Length; i++)
+            for (int j = 0; j < m_PlayerIOAddresses.Length; j++)
             {
-                if (addressBytes[i] != m_PlayerIOAddress[i])
+                for (int i = 0; i < addressBytes.Length; i++)
                 {
-                    return false;
+                    if (addressBytes[i] != m_PlayerIOAddresses[j][i])
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -251,7 +259,7 @@ namespace Fluid
         {
             try
             {
-                m_PlayerIOAddress = GetPlayerIOAddress();
+                m_PlayerIOAddresses = GetPlayerIOAddresses();
 
                 while (m_Sniff && !m_Disposed)
                 {
@@ -450,26 +458,6 @@ namespace Fluid
 
             Console.WriteLine("Opened!");
             return true;
-        }
-
-        public void TestIO()
-        {
-            for (int i = 0; i < 1000; i++)
-            {
-                Console.Write("Opening ({0})...", i);
-                IList<LivePacketDevice> allDevices = null;
-                try
-                {
-                    allDevices = LivePacketDevice.AllLocalMachine;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Failed. {0}", ex.Message);
-                    return;
-                }
-
-                Console.WriteLine("Success.");
-            }
         }
 
         /// <summary>

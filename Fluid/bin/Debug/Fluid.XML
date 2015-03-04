@@ -4,6 +4,11 @@
         <name>Fluid</name>
     </assembly>
     <members>
+        <member name="T:Fluid.AccessLevel">
+            <summary>
+            The list of different levels of priveledges a user can have
+            </summary>
+        </member>
         <member name="F:Fluid.AccessLevel.None">
             <summary>
             Has no priveledges
@@ -301,6 +306,12 @@
             Gets or sets whether the block has been sent
             </summary>
         </member>
+        <member name="M:Fluid.Blocks.Block.Location">
+            <summary>
+            Gets the location of the block
+            </summary>
+            <returns>The location of the block</returns>
+        </member>
         <member name="M:Fluid.Blocks.Block.Bind(Fluid.WorldConnection)">
             <summary>
             Binds the block to a connection
@@ -323,11 +334,6 @@
             Checks if two blocks are the same
             </summary>
             <param name="bl">The block</param>
-        </member>
-        <member name="M:Fluid.Blocks.Block.ToString">
-            <summary>
-            Gets the block debug message
-            </summary>
         </member>
         <member name="M:Fluid.Blocks.Block.#ctor(Fluid.Blocks.BlockID,Fluid.Blocks.Layer,System.Int32,System.Int32)">
             <summary>
@@ -846,11 +852,6 @@
             </summary>
             <param name="message">The message to say</param>
         </member>
-        <member name="M:Fluid.ChatManager.ToString">
-            <summary>
-            Gets the chat debug message
-            </summary>
-        </member>
         <member name="M:Fluid.ChatManager.#ctor(Fluid.WorldConnection)">
             <summary>
             Creates a new chat manager
@@ -869,11 +870,6 @@
         <member name="P:Fluid.ChatManager.Last">
             <summary>
             Gets the last chat message
-            </summary>
-        </member>
-        <member name="M:Fluid.ChatMessage.ToString">
-            <summary>
-            Gets the chat message debug message
             </summary>
         </member>
         <member name="M:Fluid.ChatMessage.#ctor(Fluid.Player,System.String)">
@@ -974,6 +970,62 @@
             Gets the player whose physics were updated
             </summary>
         </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.Int32)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.Int16)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.UInt32)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.Int64)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.Byte)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.SByte)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.UInt64)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
+        <member name="M:Fluid.FluidExtensions.ToID(System.UInt16)">
+            <summary>
+            Converts the number to a block id
+            </summary>
+            <param name="i">The number</param>
+            <returns>The block id</returns>
+        </member>
         <member name="M:Fluid.Friend.GetProfile">
             <summary>
             Gets the players profile
@@ -1018,11 +1070,6 @@
             <param name="smiley">The selected smiley</param>
             <param name="worldId">The World ID</param>
             <param name="worldName">The world name</param>
-        </member>
-        <member name="M:Fluid.Friend.ToString">
-            <summary>
-            Gets the debug string for the friend
-            </summary>
         </member>
         <member name="M:Fluid.Friend.#ctor(Fluid.LobbyConnection,System.String)">
             <summary>
@@ -1363,12 +1410,6 @@
             <summary>
             Gets the Fluid color hashcode
             </summary>
-        </member>
-        <member name="M:Fluid.FluidColor.ToString">
-            <summary>
-            Gets the Fluid color debug message
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Fluid.FluidColor.#ctor(System.Byte,System.Byte,System.Byte)">
             <summary>
@@ -1937,11 +1978,6 @@
             Clears the log
             </summary>
         </member>
-        <member name="M:Fluid.FluidLog.ToString">
-            <summary>
-            Shows hte count of messages
-            </summary>
-        </member>
         <member name="M:Fluid.FluidLog.#ctor">
             <summary>
             Creates a new Fluid log
@@ -1986,11 +2022,6 @@
         <member name="F:Fluid.FluidLogCategory.Message">
             <summary>
             Message
-            </summary>
-        </member>
-        <member name="M:Fluid.FluidLogMessage.ToString">
-            <summary>
-            Converts the message to a string
             </summary>
         </member>
         <member name="M:Fluid.FluidLogMessage.#ctor(System.String,System.Diagnostics.StackTrace,Fluid.FluidLogCategory)">
@@ -2102,17 +2133,25 @@
             Gets whether the connection is established
             </summary>
         </member>
+        <member name="M:Fluid.FluidPoint.DistanceTo(Fluid.FluidPoint)">
+            <summary>
+            Gets the distance to another point
+            </summary>
+            <param name="p">The point</param>
+            <returns>The distance</returns>
+        </member>
         <member name="M:Fluid.FluidPoint.ToVector">
             <summary>
             Converts this point into a vector
             </summary>
             <returns>The vector</returns>
         </member>
-        <member name="M:Fluid.FluidPoint.ToString">
+        <member name="M:Fluid.FluidPoint.Equals(Fluid.FluidPoint)">
             <summary>
-            Gets the point debug message
+            Checks if this point is equal to another point
             </summary>
-            <returns></returns>
+            <param name="p">The point</param>
+            <returns>True if equal; otherwise false</returns>
         </member>
         <member name="M:Fluid.FluidPoint.#ctor(System.Int32,System.Int32)">
             <summary>
@@ -2129,6 +2168,72 @@
         <member name="P:Fluid.FluidPoint.Y">
             <summary>
             Gets the y component
+            </summary>
+        </member>
+        <member name="M:Fluid.WorldReference.Load">
+            <summary>
+            Loads the world
+            </summary>
+            <returns>The world if valid; otherwise null</returns>
+        </member>
+        <member name="M:Fluid.WorldReference.#ctor(Fluid.FluidClient,System.String)">
+            <summary>
+            Creates a new world reference
+            </summary>
+            <param name="client">The Fluid client</param>
+            <param name="worldId">The world id</param>
+        </member>
+        <member name="P:Fluid.WorldReference.WorldID">
+            <summary>
+            Gets the world id
+            </summary>
+        </member>
+        <member name="M:Fluid.LobbyWorldReference.#ctor(Fluid.FluidClient,System.String,System.Int32)">
+            <summary>
+            Creates a new lobby world reference
+            </summary>
+            <param name="client">The client</param>
+            <param name="worldID">The world id</param>
+            <param name="onlineUsers">The amount of online users</param>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.OnlineUsers">
+            <summary>
+            Gets the amount of online users
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.Owned">
+            <summary>
+            Gets whether the world is owned
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.NeedsKey">
+            <summary>
+            Gets whether the world needs a key
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.Plays">
+            <summary>
+            Gets the amount of plays the world has
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.Rating">
+            <summary>
+            Gets the rating of the world
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.Name">
+            <summary>
+            Gets the name of the world
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.Woots">
+            <summary>
+            Gets the amount of woots the world has
+            </summary>
+        </member>
+        <member name="P:Fluid.LobbyWorldReference.IsFeatured">
+            <summary>
+            Gets whether the world is featured
             </summary>
         </member>
         <member name="F:Fluid.Physics.PhysicsEventMode.Send">
@@ -2221,6 +2326,70 @@
             "Right."
             </summary>
         </member>
+        <member name="M:Fluid.FluidRect.Center">
+            <summary>
+            Gets the center of the rectangle
+            </summary>
+            <returns>The center point</returns>
+        </member>
+        <member name="M:Fluid.FluidRect.Intersects(Fluid.FluidRect)">
+            <summary>
+            Checks if this rectangle intersects with another rectangle
+            </summary>
+            <param name="rect">The rectangle to check</param>
+            <returns>True is they intersect; otherwise false</returns>
+        </member>
+        <member name="M:Fluid.FluidRect.Contains(Fluid.FluidPoint)">
+            <summary>
+            Checks if a point is within this rectangle
+            </summary>
+            <param name="point">The point</param>
+            <returns>True if the point is within this rectangle</returns>
+        </member>
+        <member name="M:Fluid.FluidRect.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new rectangle
+            </summary>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <param name="width">The width</param>
+            <param name="height">The height</param>
+        </member>
+        <member name="M:Fluid.FluidRect.#ctor(Fluid.FluidPoint,System.Int32,System.Int32)">
+            <summary>
+            Creates a new rectangle
+            </summary>
+            <param name="p">The location</param>
+            <param name="width">The width</param>
+            <param name="height">The height</param>
+        </member>
+        <member name="M:Fluid.FluidRect.#ctor(Fluid.FluidPoint,Fluid.FluidPoint)">
+            <summary>
+            Creates a new rectangle
+            </summary>
+            <param name="p">The top-left location</param>
+            <param name="e">The bottom-right location</param>
+        </member>
+        <member name="P:Fluid.FluidRect.X">
+            <summary>
+            Gets or sets the x coordinate
+            </summary>
+        </member>
+        <member name="P:Fluid.FluidRect.Y">
+            <summary>
+            Gets or sets the y coordinate
+            </summary>
+        </member>
+        <member name="P:Fluid.FluidRect.Width">
+            <summary>
+            Gets or sets the width
+            </summary>
+        </member>
+        <member name="P:Fluid.FluidRect.Height">
+            <summary>
+            Gets or sets the height
+            </summary>
+        </member>
         <member name="M:Fluid.SecureConnection.SendAuth(System.String,System.String)">
             <summary>
             Sends a authentication request
@@ -2274,13 +2443,21 @@
             <param name="vaultItem">The vault item</param>
             <param name="property">The property</param>
         </member>
+        <member name="M:Fluid.FluidToolbelt.GetValueIfExists(System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>
+            Gets the value of a property in a vault item
+            </summary>
+            <typeparam name="T">The value type</typeparam>
+            <param name="dictionary">The dictionary</param>
+            <param name="property">The property</param>
+        </member>
         <member name="M:Fluid.FluidWire.GetAddressBytes(PcapDotNet.Packets.IpV4.IpV4Address)">
             <summary>
             Gets the address's bytes
             </summary>
             <param name="address">The IPV4 address</param>
         </member>
-        <member name="M:Fluid.FluidWire.GetPlayerIOAddress">
+        <member name="M:Fluid.FluidWire.GetPlayerIOAddresses">
             <summary>
             Gets the player io api service's ip address
             </summary>
@@ -2418,16 +2595,16 @@
             <param name="blockId">The block id</param>
             <returns>The layer of the block</returns>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32)">
+        <member name="M:Fluid.WorldConnection.UploadBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32)">
             <summary>
-            Sends a block to the world
+            Sends a block to the world synchronouslyu
             </summary>
             <param name="id">The block id</param>
             <param name="layer">The layer</param>
             <param name="x">The x coordinate</param>
             <param name="y">The y coordinate</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.Int32)">
+        <member name="M:Fluid.WorldConnection.UploadBlock(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.Int32)">
             <summary>
             Sends a block to the world
             </summary>
@@ -2437,13 +2614,45 @@
             <param name="y">The y coordinate</param>
             <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.Block)">
+        <member name="M:Fluid.WorldConnection.UploadBlock(Fluid.Blocks.Block)">
             <summary>
             Sends a block to the world
             </summary>
             <param name="block">The block to send</param>
         </member>
-        <member name="M:Fluid.WorldConnection.SendBlock(Fluid.Blocks.Block,System.Int32)">
+        <member name="M:Fluid.WorldConnection.UploadBlock(Fluid.Blocks.Block,System.Int32)">
+            <summary>
+            Sends the block at a specific speed
+            </summary>
+            <param name="block">The block to send</param>
+            <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.UploadBlockAsync(Fluid.Blocks.BlockID,System.Int32,System.Int32)">
+            <summary>
+            Sends a block to the world
+            </summary>
+            <param name="id">The block id</param>
+            <param name="layer">The layer</param>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.UploadBlockAsync(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sends a block to the world
+            </summary>
+            <param name="id">The block id</param>
+            <param name="layer">The layer</param>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.UploadBlockAsync(Fluid.Blocks.Block)">
+            <summary>
+            Sends a block to the world
+            </summary>
+            <param name="block">The block to send</param>
+        </member>
+        <member name="M:Fluid.WorldConnection.UploadBlockAsync(Fluid.Blocks.Block,System.Int32)">
             <summary>
             Sends the block at a specific speed
             </summary>
@@ -3808,6 +4017,20 @@
             <param name="v">The vector the subtract</param>
             <returns>The resulting vecotr</returns>
         </member>
+        <member name="M:Fluid.Physics.Vector.Multiply(Fluid.Physics.Vector)">
+            <summary>
+            Multiplies this vector
+            </summary>
+            <param name="v">The vector to multiply by</param>
+            <returns>The resulting vector</returns>
+        </member>
+        <member name="M:Fluid.Physics.Vector.Divide(Fluid.Physics.Vector)">
+            <summary>
+            Divides this vector
+            </summary>
+            <param name="v">The vector to divide by</param>
+            <returns>The resulting vector</returns>
+        </member>
         <member name="M:Fluid.Physics.Vector.DistanceTo(Fluid.Physics.Vector)">
             <summary>
             Distance to another vector
@@ -3838,18 +4061,37 @@
             <param name="v">The vector to check</param>
             <returns>True if equal; otherwise false</returns>
         </member>
-        <member name="M:Fluid.Physics.Vector.ToString">
-            <summary>
-            Gets the vector debug message
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Fluid.Physics.Vector.#ctor(System.Double,System.Double)">
             <summary>
             Creates a new vector
             </summary>
             <param name="x">The x component</param>
             <param name="y">The y component</param>
+        </member>
+        <member name="M:Fluid.Physics.Vector.op_Addition(Fluid.Physics.Vector,Fluid.Physics.Vector)">
+            <summary>
+            Adds two vectors
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.op_UnaryNegation(Fluid.Physics.Vector)">
+            <summary>
+            Inverts the vector
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.op_Subtraction(Fluid.Physics.Vector,Fluid.Physics.Vector)">
+            <summary>
+            Subtracts two vectors
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.op_Multiply(Fluid.Physics.Vector,Fluid.Physics.Vector)">
+            <summary>
+            Multiplies two vectors
+            </summary>
+        </member>
+        <member name="M:Fluid.Physics.Vector.op_Division(Fluid.Physics.Vector,Fluid.Physics.Vector)">
+            <summary>
+            Divides two vectors
+            </summary>
         </member>
         <member name="P:Fluid.Physics.Vector.X">
             <summary>
@@ -3869,11 +4111,6 @@
         <member name="M:Fluid.Player.GetProfile">
             <summary>
             Gets the player's profile
-            </summary>
-        </member>
-        <member name="M:Fluid.Player.ToString">
-            <summary>
-            Gets the player debug message
             </summary>
         </member>
         <member name="M:Fluid.Player.#ctor(Fluid.FluidClient,System.String)">
@@ -3951,11 +4188,6 @@
         <member name="M:Fluid.PlayerManager.GetList">
             <summary>
             Gets the player dictionary
-            </summary>
-        </member>
-        <member name="M:Fluid.PlayerManager.ToString">
-            <summary>
-            Gets the player manager debug message
             </summary>
         </member>
         <member name="M:Fluid.PlayerManager.#ctor">
@@ -4220,12 +4452,6 @@
             <param name="potion">The potion</param>
             <param name="count">The count of potions</param>
         </member>
-        <member name="M:Fluid.PotionManager.ToString">
-            <summary>
-            Gets the potion manager debug message
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Fluid.PotionManager.#ctor">
             <summary>
             Creates a new potion manager
@@ -4234,11 +4460,6 @@
         <member name="P:Fluid.PotionManager.TotalPotionCount">
             <summary>
             Gets the total amount of potions in the inventory
-            </summary>
-        </member>
-        <member name="M:Fluid.Profile.ToString">
-            <summary>
-            Gets the profile debug message
             </summary>
         </member>
         <member name="P:Fluid.Profile.ConnectionId">
@@ -5281,12 +5502,6 @@
             Gets the list of all shop item's data
             </summary>
         </member>
-        <member name="M:Fluid.VaultShopItem.ToString">
-            <summary>
-            Gets the vault shop item debug message
-            </summary>
-            <returns>The vault shop item debug message</returns>
-        </member>
         <member name="P:Fluid.VaultShopItem.ID">
             <summary>
             Gets the item id
@@ -5396,12 +5611,6 @@
             <summary>
             Gets if the item is for developers only
             </summary>
-        </member>
-        <member name="M:Fluid.ShopItem.ToString">
-            <summary>
-            Gets the shop item debug message
-            </summary>
-            <returns>The shop item debug message</returns>
         </member>
         <member name="P:Fluid.ShopItem.EnergyUsed">
             <summary>
@@ -5608,11 +5817,6 @@
             <param name="encoding">The encoding to use</param>
             <returns>The decoded body</returns>
         </member>
-        <member name="M:Fluid.Web.PlayerIORequest.ToString">
-            <summary>
-            Gets the debug string
-            </summary>
-        </member>
         <member name="M:Fluid.Web.PlayerIORequest.#ctor(System.String,System.Uri,System.Net.WebHeaderCollection,System.Byte[])">
             <summary>
             Creates a new player io request
@@ -5649,14 +5853,30 @@
             <param name="block">The block</param>
             <returns>If the location is within the world's bounds</returns>
         </member>
-        <member name="M:Fluid.World.IsInBounds(System.Int32,System.Int32,Fluid.Blocks.Layer)">
+        <member name="M:Fluid.World.IsInBounds(System.Int32,System.Int32,System.Int32)">
             <summary>
             Tests if a location is within the world
             </summary>
             <param name="x">The X coordinate</param>
             <param name="y">The Y coordinate</param>
-            <param name="layer">The layer</param>
+            <param name="z">The layer</param>
             <returns>If the location is within the world's bounds</returns>
+        </member>
+        <member name="M:Fluid.World.IsInBounds(System.Int32,System.Int32)">
+            <summary>
+            Tests if a location is within the world
+            </summary>
+            <param name="x">The X coordinate</param>
+            <param name="y">The Y coordinate</param>
+            <returns>If the location is within the world's bounds</returns>
+        </member>
+        <member name="M:Fluid.World.GetBlockAt(Fluid.FluidPoint,Fluid.Blocks.Layer)">
+            <summary>
+            Gets a block
+            </summary>
+            <param name="p">The point</param>
+            <param name="layer">The block layer</param>
+            <returns>The block at that location</returns>
         </member>
         <member name="M:Fluid.World.GetBlockAt(System.Int32,System.Int32,Fluid.Blocks.Layer)">
             <summary>
@@ -5667,11 +5887,34 @@
             <param name="layer">The layer</param>
             <returns>The block at the location; null if the location is invalid</returns>
         </member>
+        <member name="M:Fluid.World.GetBlockAt(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets the block at a location
+            </summary>
+            <param name="x">The X coordinate</param>
+            <param name="y">The Y coordinate</param>
+            <param name="z">The layer</param>
+            <returns>The block at the location; null if the location is invalid</returns>
+        </member>
         <member name="M:Fluid.World.GetBlocks">
             <summary>
             Gets all the worlds blocks
             </summary>
             <returns>The world's array of blocks</returns>
+        </member>
+        <member name="M:Fluid.World.GetBlocks(Fluid.FluidRect)">
+            <summary>
+            Gets all the worlds blocks within a rectangle
+            </summary>
+            <param name="rect">The rectangle</param>
+            <returns>The list of blocks</returns>
+        </member>
+        <member name="M:Fluid.World.Find(System.Predicate{Fluid.Blocks.Block})">
+            <summary>
+            Finds all blocks that match a predicate
+            </summary>
+            <param name="searchDelegate">The search predicate</param>
+            <returns>The list of matching blocks</returns>
         </member>
         <member name="M:Fluid.World.SetBlock(Fluid.Blocks.Block)">
             <summary>
@@ -5759,11 +6002,6 @@
             </summary>
             <param name="initMessage">The init message</param>
         </member>
-        <member name="M:Fluid.World.ToString">
-            <summary>
-            Gets the world debug message
-            </summary>
-        </member>
         <member name="M:Fluid.World.#ctor(Fluid.FluidClient,PlayerIOClient.DatabaseObject)">
             <summary>
             Creates a new world from database data
@@ -5777,6 +6015,15 @@
             </summary>
             <param name="client">The client</param>
             <param name="initMessage">The init message</param>
+        </member>
+        <member name="P:Fluid.World.Item(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets or Sets the block at a location
+            </summary>
+            <param name="x">The X coordinate</param>
+            <param name="y">The Y coordinate</param>
+            <param name="z">The layer</param>
+            <returns>The block at the location; null if the location is invalid</returns>
         </member>
         <member name="P:Fluid.World.Item(System.Int32,System.Int32,Fluid.Blocks.Layer)">
             <summary>
@@ -5889,6 +6136,12 @@
             Gets the block location of the player
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Fluid.WorldPlayer.GetFOV">
+            <summary>
+            Gets the player's field of view
+            </summary>
+            <returns>The field of view</returns>
         </member>
         <member name="M:Fluid.WorldPlayer.GetVelocity">
             <summary>
@@ -6191,34 +6444,6 @@
         <member name="P:Fluid.WorldPlayer.SpeedMultiplier">
             <summary>
             Gets the player's speed multiplier
-            </summary>
-        </member>
-        <member name="M:Fluid.WorldReference.Load">
-            <summary>
-            Loads the world
-            </summary>
-            <returns>The world if valid; otherwise null</returns>
-        </member>
-        <member name="M:Fluid.WorldReference.ToString">
-            <summary>
-            Gets the world reference debug string
-            </summary>
-        </member>
-        <member name="M:Fluid.WorldReference.#ctor(Fluid.FluidClient,System.String)">
-            <summary>
-            Creates a new world reference
-            </summary>
-            <param name="client">The Fluid client</param>
-            <param name="worldId">The world id</param>
-        </member>
-        <member name="P:Fluid.WorldReference.WorldID">
-            <summary>
-            Gets the world id
-            </summary>
-        </member>
-        <member name="P:Fluid.WorldReference.WorldName">
-            <summary>
-            Gets the world name if readibly known; otherwise null
             </summary>
         </member>
         <member name="F:Fluid.WorldType.Unknown">

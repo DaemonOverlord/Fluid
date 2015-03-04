@@ -3,6 +3,7 @@ using Fluid.Blocks;
 using PlayerIOClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -142,9 +143,9 @@ namespace Fluid
         /// Gets a list of rooms in the lobby
         /// </summary>
         /// <returns>The list of rooms in the lobby</returns>
-        public List<WorldReference> GetLobbyRooms()
+        public List<LobbyWorldReference> GetLobbyRooms()
         {
-            List<WorldReference> worlds = new List<WorldReference>();
+            List<LobbyWorldReference> worlds = new List<LobbyWorldReference>();
 
             int gameVersion = GetGameVersion();
             if (gameVersion == -1)
@@ -161,7 +162,16 @@ namespace Fluid
                 if (string.Compare(rooms[i].RoomType, eeRoom) == 0 ||
                     string.Compare(rooms[i].RoomType, betaRoom) == 0)
                 {
-                    worlds.Add(new WorldReference(this, rooms[i].Id));
+                    worlds.Add(new LobbyWorldReference(this, rooms[i].Id, rooms[i].OnlineUsers)
+                        {
+                            Owned = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "owned"),
+                            NeedsKey = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "needskey"),
+                            Plays = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "plays"),
+                            Rating = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "rating"),
+                            Name = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "name"),
+                            Woots = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "woots"),
+                            IsFeatured = m_Toolbelt.GetValueIfExists(rooms[i].RoomData, "IsFeatured")
+                        });
                 }
             }
 
@@ -172,9 +182,9 @@ namespace Fluid
         /// Gets a list of rooms in the lobby asynchronously
         /// </summary>
         /// <returns>The async task</returns>
-        public async Task<List<WorldReference>> GetLobbyRoomsAsync()
+        public async Task<List<LobbyWorldReference>> GetLobbyRoomsAsync()
         {
-            return await Task.Run<List<WorldReference>>(() => GetLobbyRooms());
+            return await Task.Run<List<LobbyWorldReference>>(() => GetLobbyRooms());
         }
 
         /// <summary>
@@ -184,7 +194,16 @@ namespace Fluid
         public List<Player> GetPlayersOnline()
         {
             List<Player> online = new List<Player>();
-            RoomInfo[] roomInfo = m_Client.Multiplayer.ListRooms("Lobby188", null, 0, 0);
+
+            int currentVersion = GetGameVersion();
+            if (currentVersion == -1)
+            {
+                //Logged message will be from .GetGameVersion() if failed.
+                return online;
+            }
+
+            string lobbyType = string.Format(m_Config.LobbyRoom, currentVersion);
+            RoomInfo[] roomInfo = m_Client.Multiplayer.ListRooms(lobbyType, null, 0, 0);
 
             for (int i = 0; i < roomInfo.Length; i++)
             {
