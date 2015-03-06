@@ -266,7 +266,7 @@
         </member>
         <member name="M:Fluid.BlockRequest.GetTimePassed">
             <summary>
-            Gets the last time a request was sent
+            Gets the time since the last request
             </summary>
         </member>
         <member name="M:Fluid.BlockRequest.Request">
@@ -468,6 +468,16 @@
             Gets or sets the required deaths
             </summary>
         </member>
+        <member name="T:Fluid.Blocks.LabelBlock">
+            <summary>
+            A label block
+            </summary>
+        </member>
+        <member name="T:Fluid.Blocks.TextBlock">
+            <summary>
+            A Sign or label
+            </summary>
+        </member>
         <member name="M:Fluid.Blocks.TextBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
             <summary>
             Creates a text block
@@ -510,26 +520,25 @@
             Gets the text
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String,System.String)">
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(System.Int32,System.Int32,System.String,System.String)">
             <summary>
             Creates a label block
             </summary>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
             <param name="hexColor">The html color of the label</param>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String,Fluid.FluidColor)">
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(System.Int32,System.Int32,System.String,Fluid.FluidColor)">
             <summary>
             Creates a label block
             </summary>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
+            <param name="text">The text of the block</param>
             <param name="color">The color of the label</param>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(System.Int32,System.Int32,System.String)">
             <summary>
             Creates a label block
             </summary>
@@ -538,23 +547,21 @@
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.WorldConnection,Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String,System.String)">
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.WorldConnection,System.Int32,System.Int32,System.String,System.String)">
             <summary>
             Creates a label block
             </summary>
             <param name="worldCon">The world connection</param>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
             <param name="hexColor">The hexadecimal color string</param>
         </member>
-        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.WorldConnection,Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
+        <member name="M:Fluid.Blocks.LabelBlock.#ctor(Fluid.WorldConnection,System.Int32,System.Int32,System.String)">
             <summary>
             Creates a label block
             </summary>
             <param name="worldCon">The world connection</param>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="text">The text of the block</param>
@@ -790,21 +797,19 @@
             Rotated to the right direction
             </summary>
         </member>
-        <member name="M:Fluid.Blocks.WorldPortal.#ctor(Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
+        <member name="M:Fluid.Blocks.WorldPortal.#ctor(System.Int32,System.Int32,System.String)">
             <summary>
             Creates a world portal block
             </summary>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="targetId">The target world id</param>
         </member>
-        <member name="M:Fluid.Blocks.WorldPortal.#ctor(Fluid.WorldConnection,Fluid.Blocks.BlockID,System.Int32,System.Int32,System.String)">
+        <member name="M:Fluid.Blocks.WorldPortal.#ctor(Fluid.WorldConnection,System.Int32,System.Int32,System.String)">
             <summary>
             Creates a world portal block
             </summary>
             <param name="worldCon">The world connection</param>
-            <param name="blockId">the block ID</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
             <param name="targetId">The target world id</param>
@@ -969,62 +974,6 @@
             <summary>
             Gets the player whose physics were updated
             </summary>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.Int32)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.Int16)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.UInt32)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.Int64)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.Byte)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.SByte)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.UInt64)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
-        </member>
-        <member name="M:Fluid.FluidExtensions.ToID(System.UInt16)">
-            <summary>
-            Converts the number to a block id
-            </summary>
-            <param name="i">The number</param>
-            <returns>The block id</returns>
         </member>
         <member name="M:Fluid.Friend.GetProfile">
             <summary>
@@ -4190,6 +4139,16 @@
             Gets the player dictionary
             </summary>
         </member>
+        <member name="M:Fluid.PlayerManager.GetEnumerator">
+            <summary>
+            Gets the worldplayer enumerator
+            </summary>
+        </member>
+        <member name="M:Fluid.PlayerManager.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets the enumerator
+            </summary>
+        </member>
         <member name="M:Fluid.PlayerManager.#ctor">
             <summary>
             Creates a new player manager
@@ -5731,6 +5690,11 @@
         <member name="T:Fluid.UnsafeAction`1">
             <summary>
             Safe Action Delegate
+            </summary>
+        </member>
+        <member name="T:Fluid.BlockUploadManager">
+            <summary>
+            The asynchronous block upload manager
             </summary>
         </member>
         <member name="M:Fluid.BlockUploadManager.WaitForBlocks">

@@ -1,17 +1,19 @@
 ﻿namespace Fluid.Blocks
 {
+    /// <summary>
+    /// A label block
+    /// </summary>
     public class LabelBlock : TextBlock
     {
         /// <summary>
         /// Creates a label block
         /// </summary>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
         /// <param name="hexColor">The html color of the label</param>
-        public LabelBlock(BlockID blockId, int x, int y, string text, string hexColor)
-            : base(blockId, x, y, text)
+        public LabelBlock(int x, int y, string text, string hexColor)
+            : base(BlockID.DecorLabel, x, y, text)
         {
             Color = new FluidColor(hexColor);
         }
@@ -19,12 +21,12 @@
         /// <summary>
         /// Creates a label block
         /// </summary>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
+        /// <param name="text">The text of the block</param>
         /// <param name="color">The color of the label</param>
-        public LabelBlock(BlockID blockId, int x, int y, string text, FluidColor color)
-            : base(blockId, x, y, text)
+        public LabelBlock(int x, int y, string text, FluidColor color)
+            : base(BlockID.DecorLabel, x, y, text)
         {
             Color = color;
         }
@@ -36,8 +38,8 @@
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
-        public LabelBlock(BlockID blockId, int x, int y, string text)
-            : base(blockId, x, y, text)
+        public LabelBlock(int x, int y, string text)
+            : base(BlockID.DecorLabel, x, y, text)
         {
             Color = new FluidColor(255, 255, 255);
         }
@@ -46,13 +48,12 @@
         /// Creates a label block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
         /// <param name="hexColor">The hexadecimal color string</param>
-        public LabelBlock(WorldConnection worldCon, BlockID blockId, int x, int y, string text, string hexColor)
-            : base(worldCon, blockId, x, y, text)
+        public LabelBlock(WorldConnection worldCon, int x, int y, string text, string hexColor)
+            : base(worldCon, BlockID.DecorLabel, x, y, text)
         {
             Color = new FluidColor(hexColor);
         }
@@ -61,12 +62,11 @@
         /// Creates a label block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
-        public LabelBlock(WorldConnection worldCon, BlockID blockId, int x, int y, string text)
-            : base(worldCon, blockId, x, y, text)
+        public LabelBlock(WorldConnection worldCon, int x, int y, string text)
+            : base(worldCon, BlockID.DecorLabel, x, y, text)
         {
             Color = new FluidColor(255, 255, 255);
         }
@@ -98,7 +98,7 @@
         /// <returns>A clone of this label block</returns>
         public override Block Clone()
         {
-            return new LabelBlock(ID, X, Y, Text, Color);
+            return new LabelBlock(X, Y, Text, Color);
         }
 
         /// <summary>

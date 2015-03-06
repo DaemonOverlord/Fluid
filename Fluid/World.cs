@@ -644,7 +644,7 @@ namespace Fluid
                                     {
                                         string targetId = blockData.GetString("target");
 
-                                        WorldPortal worldPortal = new WorldPortal(blockId, x, y, targetId);
+                                        WorldPortal worldPortal = new WorldPortal(x, y, targetId);
                                         SetBlock(worldPortal);
                                     }
                                     break;
@@ -663,12 +663,12 @@ namespace Fluid
                                         {
                                             string hexColor = blockData.GetString("text_color");
 
-                                            LabelBlock labelBlock = new LabelBlock(blockId, x, y, text, hexColor);
+                                            LabelBlock labelBlock = new LabelBlock(x, y, text, hexColor);
                                             SetBlock(labelBlock);
                                         }
                                         else
                                         {
-                                            LabelBlock labelBlock = new LabelBlock(blockId, x, y, text);
+                                            LabelBlock labelBlock = new LabelBlock(x, y, text);
                                             SetBlock(labelBlock);
                                         }
                                     }
@@ -824,7 +824,7 @@ namespace Fluid
 
                                 foreach (FluidPoint p in locations)
                                 {
-                                    WorldPortal worldPortal = new WorldPortal(blockId, p.X, p.Y, targetId);
+                                    WorldPortal worldPortal = new WorldPortal(p.X, p.Y, targetId);
                                     SetBlock(worldPortal);
                                 }
                             }
@@ -847,7 +847,7 @@ namespace Fluid
 
                                 foreach (FluidPoint p in locations)
                                 {
-                                    LabelBlock labelBlock = new LabelBlock(blockId, p.X, p.Y, text, hexColor);
+                                    LabelBlock labelBlock = new LabelBlock(p.X, p.Y, text, hexColor);
                                     SetBlock(labelBlock);
                                 }
                             }

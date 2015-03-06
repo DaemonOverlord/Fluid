@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Diagnostics;
 namespace Fluid
 {
     [DebuggerDisplay("Count = {Count}")]
-    public class PlayerManager
+    public class PlayerManager : IEnumerable<WorldPlayer>
     {
         private ConcurrentDictionary<int, WorldPlayer> m_Players;
 
@@ -152,6 +153,22 @@ namespace Fluid
         public WorldPlayer this[string username]
         {
             get { return Get(username); }
+        }
+
+        /// <summary>
+        /// Gets the worldplayer enumerator
+        /// </summary>
+        public IEnumerator<WorldPlayer> GetEnumerator()
+        {
+            return m_Players.Select<KeyValuePair<int, WorldPlayer>, WorldPlayer>(t => t.Value).GetEnumerator();
+        }
+
+        /// <summary>
+        /// Gets the enumerator
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return m_Players.Select<KeyValuePair<int, WorldPlayer>, WorldPlayer>(t => t.Value).GetEnumerator();
         }
 
         /// <summary>

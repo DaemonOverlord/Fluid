@@ -35,7 +35,7 @@ namespace Fluid.Handlers
             {
                 int userId = message.GetInt(4);
                 WorldPlayer player = worldCon.Players.Get(userId);
-                worldPortal = new WorldPortal(worldCon, blockId, x, y, target)
+                worldPortal = new WorldPortal(worldCon, x, y, target)
                 {
                     Placer = player
                 };
@@ -50,7 +50,7 @@ namespace Fluid.Handlers
             }
             else
             {
-                worldPortal = new WorldPortal(worldCon, blockId, x, y, target);
+                worldPortal = new WorldPortal(worldCon, x, y, target);
             }
 
             if (!handled)

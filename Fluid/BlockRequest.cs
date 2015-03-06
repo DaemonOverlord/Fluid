@@ -44,7 +44,7 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Gets the last time a request was sent
+        /// Gets the time since the last request
         /// </summary>
         public int GetTimePassed()
         {

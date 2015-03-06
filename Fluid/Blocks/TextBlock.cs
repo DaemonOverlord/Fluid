@@ -1,5 +1,8 @@
 ﻿namespace Fluid.Blocks
 {
+    /// <summary>
+    /// A Sign or label
+    /// </summary>
     public class TextBlock : Block
     {
         /// <summary>

@@ -11,6 +11,7 @@ namespace Fluid
 {
     public sealed class FluidClient
     {
+        private bool m_LoggedIn = false;
         private Config m_Config;
         private FluidLog m_Log;
         private FluidParser m_Parser;
@@ -488,6 +489,7 @@ namespace Fluid
                     return false;
                 }
 
+                m_LoggedIn = true;
                 m_Client.Multiplayer.UseSecureConnections = useSecureConnection;
 
                 if (!m_PlayerDatabase.Connected)

@@ -85,7 +85,7 @@ namespace Fluid
             Physics.Start();
 
             InitEvent initEvent = null;
-            if ((initEvent = WaitForServerEvent<InitEvent>(2000)) != null)
+            if ((initEvent = WaitForServerEvent<InitEvent>(3000)) != null)
             {
                 //Invoke waiting server events for init if any
                 if (m_MessageAwaiters.ContainsKey(typeof(InitEvent)))
@@ -180,6 +180,7 @@ namespace Fluid
         /// <param name="layer">The layer</param>
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
+        [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(BlockID id, int x, int y)
         {
             this.UploadBlock(new Block(id, GetBlockLayer(id), x, y));
@@ -193,6 +194,7 @@ namespace Fluid
         /// <param name="x">The x coordinate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(BlockID id, int x, int y, int blockThrottle)
         {
             this.UploadBlock(new Block(id, GetBlockLayer(id), x, y), blockThrottle);
@@ -202,8 +204,14 @@ namespace Fluid
         /// Sends a block to the world
         /// </summary>
         /// <param name="block">The block to send</param>
+        [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(Block block)
         {
+            if (block == null)
+            {
+                return;
+            }
+
             CheckThrottle();
             block.Upload();
             Thread.Sleep((int)m_blockThrottle.Value);
@@ -214,8 +222,14 @@ namespace Fluid
         /// </summary>
         /// <param name="block">The block to send</param>
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
+        [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(Block block, int blockThrottle)
         {
+            if (block == null)
+            {
+                return;
+            }
+
             block.Upload();
             Thread.Sleep(blockThrottle);
         }
@@ -252,6 +266,11 @@ namespace Fluid
         /// <param name="block">The block to send</param>
         public void UploadBlockAsync(Block block)
         {
+            if (block == null)
+            {
+                return;
+            }
+
             CheckThrottle();
             this.QueueBlock(block, (int)m_blockThrottle.Value);           
         }
@@ -273,6 +292,11 @@ namespace Fluid
         /// <param name="blockThrottle">The speed to upload the block</param>
         internal void QueueBlock(Block block, int blockThrottle)
         {
+            if (block == null)
+            {
+                return;
+            }
+
             if (!block.IsBinded)
             {
                 block.Bind(this);

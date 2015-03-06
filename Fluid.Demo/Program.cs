@@ -14,11 +14,11 @@ namespace Fluid.Demo
     {
         public static void Main()
         {
-            FluidClient client = new FluidClient(new GuestAuth());
+            FluidClient client = new FluidClient(null);
             if (client.LogIn())
             {
                 return;
             }
         }
-    }
+    }  
 }

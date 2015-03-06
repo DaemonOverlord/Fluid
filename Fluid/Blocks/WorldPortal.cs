@@ -5,12 +5,11 @@
         /// <summary>
         /// Creates a world portal block
         /// </summary>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
-        public WorldPortal(BlockID blockId, int x, int y, string targetId)
-            : base(blockId, Layer.Foreground, x, y)
+        public WorldPortal(int x, int y, string targetId)
+            : base(BlockID.WorldPortal, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }
@@ -19,12 +18,11 @@
         /// Creates a world portal block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
-        /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
-        public WorldPortal(WorldConnection worldCon, BlockID blockId, int x, int y, string targetId)
-            : base(worldCon, blockId, Layer.Foreground, x, y)
+        public WorldPortal(WorldConnection worldCon, int x, int y, string targetId)
+            : base(worldCon, BlockID.WorldPortal, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }
@@ -55,7 +53,7 @@
         /// <returns>A clone of this world portal</returns>
         public override Block Clone()
         {
-            return new WorldPortal(ID, X, Y, TargetID);
+            return new WorldPortal(X, Y, TargetID);
         }
 
         /// <summary>

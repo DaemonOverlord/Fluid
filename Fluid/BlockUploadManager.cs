@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Fluid
 {
+    /// <summary>
+    /// The asynchronous block upload manager
+    /// </summary>
     [System.Diagnostics.DebuggerDisplay("Uploading = {Uploading}, Queued = {BlocksQueued}")]
     public class BlockUploadManager
     {
@@ -109,6 +112,7 @@ namespace Fluid
                     BlockRequest send = GetNextInList();
                     if (send == null)
                     {
+                        m_Queue.Clear();
                         break;
                     }
                     else if (send.Missed)
