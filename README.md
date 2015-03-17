@@ -11,6 +11,8 @@ PM> Install-Package Fluid
 **[Getting started](#getting-started)**                                                                                     
 **[All about events](#all-about-events)**                                                                                   
 **[Sending blocks](#sending-blocks)**
+**[Players](#players)**
+**[Using Storage Providers](#using-storage-providers)**
 
 ###Getting started
 ######Logging in
@@ -192,7 +194,7 @@ If you need to continue doing things but still want to know when the uploader is
 //Add finish event
 worldCon.Uploader.OnQueueFinished += OnDone;
 
-private void OnDone(object sender, EventArgs e)
+private static void OnDone(object sender, EventArgs e)
 {
    //My code here
 }
@@ -216,3 +218,51 @@ worldCon.SendBlock(portal);
 worldCon.SendBlock(invisPortal, 12);
 
 ```
+
+###Players
+
+In Fluid, when you need to access players you will need to get the PlayerManager. If you've joined a World, you can get the PlayerManager from your WorldConnection.
+
+```c#
+var players = connection.Players;
+```
+
+Most of the time, it will be easier to use the players directly without a variable.
+
+In this example we will say hello to all the players in the room except ourselves (the bot). Please note that the bot is included in the list of connected players.
+
+```c#
+foreach (WorldPlayer player in connection.Players)
+{
+    //Make sure the player is not us
+    if (!player.IsConnectedPlayer)
+    {
+        con.Say("Hello " + player.Username);
+    }
+}
+```
+
+All information about each of the players can be accessed through each player. We can find out the player's position, conditions such as whether they have the crown, is flying, access level, potions they have active, velocity, connection type, and even what keys they are pressing.
+
+#####Attaching information to players
+
+Sometimes, you want your own information about each player specific to your bot. In fluid you can do this without having to create your own class around the player.
+
+In this example, we will increment a score value every time the player gets a coin.
+
+```c#
+con.AddServerEventHandler<CoinEvent>(OnCoin);
+
+public static void OnCoin(ConnectionBase connection, CoinEvent e)
+{
+    WorldPlayer p = e.Player;
+    
+    //In this scenario we have our own integer variable named "Score"
+    int currentScore = p.Get<int>("Score");
+    
+    //Increment the score by 1
+    p.Set<int>("Score", currentScore + 1);
+}
+```
+
+And it's as simple as that. Please note that after your program exits your player information will not be saved. To learn how to save player data to hard memory skip to ****[Using Storage Providers](#using-storage-providers)****.
