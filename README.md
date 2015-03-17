@@ -10,7 +10,7 @@ PM> Install-Package Fluid
 ## Table of Contents
 **[Getting started](#getting-started)**                                                                                     
 **[All about events](#all-about-events)**                                                                                   
-**[Sending blocks](#sending-blocks)**
+**[Sending blocks](#sending-blocks)**                                                                                       
 **[Players](#players)**                                                                                                     
 **[Using Storage Providers](#using-storage-providers)**
 
