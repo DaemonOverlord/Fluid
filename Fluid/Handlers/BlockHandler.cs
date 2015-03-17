@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using Fluid.ServerEvents;
 using PlayerIOClient;
 
@@ -56,11 +56,11 @@ namespace Fluid.Handlers
 
             if (!handled)
             {
-                if (blockId == 0)
+                Block old = world[x, y, layer];
+                if (old.ID == BlockIDS.Action.Coins.Gold ||
+                    old.ID == BlockIDS.Action.Coins.Blue)
                 {
-                    Block old = world[x, y, layer];
-                    if (old.ID == BlockID.CoinGold ||
-                        old.ID == BlockID.CoinBlue)
+                    if (blockId != old.ID)
                     {
                         worldCon.Physics.RemoveCoin(old);
                     }

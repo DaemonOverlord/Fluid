@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-namespace Fluid.Blocks
+namespace Fluid.Room
 {
     [DebuggerDisplay("ID = {ID}, X = {X}, Y = {Y}, Layer = {Layer}")]
     public class Block

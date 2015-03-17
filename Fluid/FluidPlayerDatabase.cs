@@ -35,7 +35,7 @@ namespace Fluid
         /// </summary>
         private bool CheckIfOpen()
         {
-            if (m_dbConnection.State != ConnectionState.Open)
+            if (m_dbConnection != null &&m_dbConnection.State != ConnectionState.Open)
             {
                 if (m_Logger != null)
                 {

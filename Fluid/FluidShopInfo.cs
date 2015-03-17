@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using System.Collections.Generic;
 
 namespace Fluid
@@ -13,7 +13,7 @@ namespace Fluid
         /// </summary>
         public int[] GetDefaultBlocks()
         {
-            return new int[] { 9, 10, 11, 12, 13, 14, 15, 182, 16, 17, 18, 19, 20, 21, 29, 30, 31, 34, 35, 36, 22, 32, 33, 0, 1, 2, 3, 4, 6, 7, 8, 26, 27, 28, 23, 24, 25, 100, 101, 5, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 411, 412, 413, 414, 1005, 1006, 1007, 1008, 1009, 1010, 408, 409, 410, 1018, 1022, 1023, 1024, 644, 645, 646, 647, 648, 1013 };
+            return new int[] { 9, 10, 11, 12, 13, 14, 15, 182, 16, 17, 18, 19, 20, 21, 29, 30, 31, 34, 35, 36, 22, 32, 33, 0, 1, 2, 3, 4, 6, 7, 8, 26, 27, 28, 23, 24, 25, 100, 101, 5, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 411, 412, 413, 414, 1005, 1006, 1007, 1008, 1009, 1010, 408, 409, 410, 1018, 1022, 1023, 1024, 644, 645, 646, 647, 648 };
         }
 
         /// <summary>
@@ -49,6 +49,9 @@ namespace Fluid
             return null;
         }
 
+        /// <summary>
+        /// Creates the shop info
+        /// </summary>
         public FluidShopInfo()
         {
             m_Smilies.Add(0, "");
@@ -157,6 +160,11 @@ namespace Fluid
             m_Smilies.Add(103, "smileyelf");
             m_Smilies.Add(104, "smileynutcracker");
             m_Smilies.Add(105, "brickvalentines2015");
+            m_Smilies.Add(106, "smileyartist");
+            m_Smilies.Add(107, "smileyprincess");
+            m_Smilies.Add(108, "smileychef");
+            m_Smilies.Add(109, "smileyclown");
+            m_Smilies.Add(110, "smileysmileyninjared");
 
             m_BlockPacks.Add("", new List<int>(new int[] { 9, 10, 11, 12, 13, 14, 15, 182 }));
             m_BlockPacks.Add("pro", new List<int>(new int[] { 37, 38, 39, 40, 41, 42 }));        
@@ -229,7 +237,7 @@ namespace Fluid
             m_BlockPacks.Add("brickchecker", new List<int>(new int[] { 186, 187, 188, 189, 190, 191, 192 }));
             m_BlockPacks.Add("brickjungleruins", new List<int>(new int[] { 193, 194, 195, 196, 197, 198, 617, 618, 619, 620 }));
             m_BlockPacks.Add("brickxmas2012", new List<int>(new int[] { 624, 625, 626, 362, 363, 364, 365, 366, 367 }));
-            m_BlockPacks.Add("bricklava", new List<int>(new int[] { 202, 203, 204, 627, 628, 629 }));
+            m_BlockPacks.Add("bricklava", new List<int>(new int[] { 202, 203, 204, 627, 628, 629, 415 }));
             m_BlockPacks.Add("brickscifi2013", new List<int>(new int[] { 375, 376, 377, 378, 379, 380, 637 }));
             m_BlockPacks.Add("bricksparta", new List<int>(new int[] { 382, 383, 384, 208, 209, 210, 211, 638, 639, 640 }));
             m_BlockPacks.Add("bricksign", new List<int>(new int[] { 385 }));
@@ -243,6 +251,11 @@ namespace Fluid
             m_BlockPacks.Add("bricktimedgate", new List<int>(new int[] { 157 }));
             m_BlockPacks.Add("brickbluecoindoor", new List<int>(new int[] { 213 }));
             m_BlockPacks.Add("brickbluecoingate", new List<int>(new int[] { 214 }));
+            m_BlockPacks.Add("brickmagic", new List<int>() { 1013 });
+            m_BlockPacks.Add("brickmagic2", new List<int>() { 1014 });
+            m_BlockPacks.Add("brickmagic3", new List<int>() { 1015 });
+            m_BlockPacks.Add("brickmagic4", new List<int>() { 1016 });
+            m_BlockPacks.Add("brickmagic5", new List<int>() { 1017 });
         }
     }
 }

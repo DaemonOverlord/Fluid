@@ -1,39 +1,38 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    public class MusicBlock : Block
+    public class CoinBlock : Block
     {
         /// <summary>
-        /// Creates a music block
+        /// Creates a coin block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="musicId">The id of the music; Drum, Piano</param>
-        public MusicBlock(BlockID blockId, int x, int y, uint musicId)
+        /// <param name="goal">The coin door coin goal</param>
+        public CoinBlock(BlockID blockId, int x, int y, uint goal)
             : base(blockId, Layer.Foreground, x, y)
         {
-            MusicID = musicId;
+            Goal = goal;
         }
 
         /// <summary>
-        /// Creates a music block
+        /// Creates a coin block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="musicId">The id of the music; Drum, Piano</param>
-        public MusicBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint musicId)
-            : base(worldCon, blockId, Layer.Foreground, x, y)
+        /// <param name="goal">The coin door coin goal</param>
+        public CoinBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint goal)
+            : base(worldCon, blockId, Layer.Background, x, y)
         {
-            MusicID = musicId;
+            Goal = goal;
         }
 
         /// <summary>
-        /// <para>Gets the music id</para>                               
-        /// <para>Use PianoNote and PercussionSound for more information</para>
+        /// Gets the coin door's coin goal
         /// </summary>
-        public uint MusicID { get; set; }
+        public uint Goal { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -46,30 +45,30 @@
                 X,
                 Y,
                 (int)ID,
-                (int)MusicID
+                (int)Goal
             );
         }
 
         /// <summary>
-        /// Creates a clone of this music block
+        /// Creates a clone of this coin block
         /// </summary>
-        /// <returns>A clone of this music block</returns>
+        /// <returns>A clone of this coin block</returns>
         public override Block Clone()
         {
-            return new MusicBlock(ID, X, Y, MusicID);
+            return new CoinBlock(ID, X, Y, Goal);
         }
 
         /// <summary>
-        /// Tests if a music block is equal to a block
+        /// Tests if a coin block is equal to an block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is MusicBlock)
+            if (b is CoinBlock)
             {
-                MusicBlock mB = (MusicBlock)b;
-                return mB.X == X && mB.Y == Y && mB.Layer == Layer && mB.ID == ID && mB.MusicID == MusicID;
+                CoinBlock cB = (CoinBlock)b;
+                return cB.X == X && cB.Y == Y && cB.Layer == Layer && cB.ID == ID && cB.Goal == Goal;
             }
 
             return false;

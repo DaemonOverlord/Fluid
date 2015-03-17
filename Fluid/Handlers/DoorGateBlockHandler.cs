@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using Fluid.ServerEvents;
 using PlayerIOClient;
 
@@ -48,10 +48,10 @@ namespace Fluid.Handlers
 
             switch (blockId)
             {
-                case BlockID.BlueCoinDoor:
-                case BlockID.BlueCoinGate:
-                case BlockID.CoinDoor:
-                case BlockID.CoinGate:
+                case BlockIDS.Action.Gates.BlueCoin:
+                case BlockIDS.Action.Doors.BlueCoin:
+                case BlockIDS.Action.Gates.GoldCoin:
+                case BlockIDS.Action.Doors.GoldCoin:
                     {
                         CoinBlock block = new CoinBlock(worldCon, blockId, x, y, arg)
                         {
@@ -73,8 +73,8 @@ namespace Fluid.Handlers
                         connectionBase.RaiseServerEvent<CoinBlockEvent>(coinBlockEvent);
                     }
                     break;
-                case BlockID.DeathDoor:
-                case BlockID.DeathGate:
+                case BlockIDS.Action.Doors.Death:
+                case BlockIDS.Action.Gates.Death:
                     {
                         DeathBlock block = new DeathBlock(worldCon, blockId, x, y, arg)
                         {
@@ -96,9 +96,9 @@ namespace Fluid.Handlers
                         connectionBase.RaiseServerEvent<DeathBlockEvent>(deathBlockEvent);
                     }
                     break;
-                case BlockID.SwitchPurple:
-                case BlockID.PurpleSwitchDoor:
-                case BlockID.PurpleSwitchGate:
+                case BlockIDS.Action.Switches.Switch:
+                case BlockIDS.Action.Doors.Switch:
+                case BlockIDS.Action.Gates.Switch:
                     {
                         PurpleBlock block = new PurpleBlock(worldCon, blockId, x, y, arg)
                         {

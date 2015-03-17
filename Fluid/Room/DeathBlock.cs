@@ -1,38 +1,38 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    public class CoinBlock : Block
+    public class DeathBlock : Block
     {
         /// <summary>
-        /// Creates a coin block
+        /// Creates a death block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="goal">The coin door coin goal</param>
-        public CoinBlock(BlockID blockId, int x, int y, uint goal)
+        /// <param name="requiredDeaths">The deaths required to activate</param>
+        public DeathBlock(BlockID blockId, int x, int y, uint requiredDeaths)
             : base(blockId, Layer.Foreground, x, y)
         {
-            Goal = goal;
+            RequiredDeaths = requiredDeaths;
         }
 
         /// <summary>
-        /// Creates a coin block
+        /// Creates a death block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="goal">The coin door coin goal</param>
-        public CoinBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint goal)
-            : base(worldCon, blockId, Layer.Background, x, y)
+        /// <param name="requiredDeaths">The deaths required to activate</param>
+        public DeathBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint requiredDeaths)
+            : base(worldCon, blockId, Layer.Foreground, x, y)
         {
-            Goal = goal;
+            RequiredDeaths = requiredDeaths;
         }
 
         /// <summary>
-        /// Gets the coin door's coin goal
+        /// Gets or sets the required deaths
         /// </summary>
-        public uint Goal { get; set; }
+        public uint RequiredDeaths { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -45,30 +45,30 @@
                 X,
                 Y,
                 (int)ID,
-                (int)Goal
+                (int)RequiredDeaths
             );
         }
 
         /// <summary>
-        /// Creates a clone of this coin block
+        /// Creates a clone of this death block
         /// </summary>
-        /// <returns>A clone of this coin block</returns>
+        /// <returns>A clone of this death block</returns>
         public override Block Clone()
         {
-            return new CoinBlock(ID, X, Y, Goal);
+            return new DeathBlock(ID, X, Y, RequiredDeaths);
         }
 
         /// <summary>
-        /// Tests if a coin block is equal to an block
+        /// Tests if a death block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is CoinBlock)
+            if (b is DeathBlock)
             {
-                CoinBlock cB = (CoinBlock)b;
-                return cB.X == X && cB.Y == Y && cB.Layer == Layer && cB.ID == ID && cB.Goal == Goal;
+                DeathBlock dB = (DeathBlock)b;
+                return dB.X == X && dB.Y == Y && dB.Layer == Layer && dB.ID == ID && dB.RequiredDeaths == RequiredDeaths;
             }
 
             return false;

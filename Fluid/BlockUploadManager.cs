@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,6 +15,11 @@ namespace Fluid
         private WorldConnection m_WorldConnection;
         private Thread m_uploadThread;
         private ManualResetEvent m_ResetEvent;
+
+        /// <summary>
+        /// The event when blocks are finished being uploaded
+        /// </summary>
+        public event EventHandler OnQueueFinished;
 
         /// <summary>
         /// Gets the amount of blocks queued
@@ -64,20 +69,23 @@ namespace Fluid
         {
             long oldestRequestTime = 0;
             BlockRequest oldestMissed = null;
-            for (int i = 0; i < m_Queue.Count; i++)
+            lock (m_Queue)
             {
-                if (m_Queue[i].Missed)
+                for (int i = 0; i < m_Queue.Count; i++)
                 {
-                    if (!m_Queue[i].Timestamp.HasValue)
+                    if (m_Queue[i] == null)
                     {
-                        return m_Queue[i];
+                        continue;
                     }
 
-                    long timePassed = m_Queue[i].GetTimePassed();
-                    if (timePassed >= oldestRequestTime)
+                    if (m_Queue[i].Missed)
                     {
-                        oldestRequestTime = timePassed;
-                        oldestMissed = m_Queue[i];
+                        long timePassed = m_Queue[i].GetTimePassed();
+                        if (timePassed >= oldestRequestTime)
+                        {
+                            oldestRequestTime = timePassed;
+                            oldestMissed = m_Queue[i];
+                        }
                     }
                 }
             }
@@ -87,12 +95,15 @@ namespace Fluid
                 return oldestMissed;
             }
 
-            //Check queue for the oldest unattempted send
-            for (int i = 0; i < m_Queue.Count; i++)
+            lock (m_Queue)
             {
-                if (!m_Queue[i].HasBeenSent)
+                //Check queue for the oldest unattempted send
+                for (int i = 0; i < m_Queue.Count; i++)
                 {
-                    return m_Queue[i];
+                    if (!m_Queue[i].HasBeenSent)
+                    {
+                        return m_Queue[i];
+                    }
                 }
             }
 
@@ -106,8 +117,8 @@ namespace Fluid
         {
             try
             {
-                while (m_Queue.Count > 0)
-                {                   
+                while (m_Queue.Count > 0 && m_WorldConnection.Connected)
+                {
                     //Send the most tasked block
                     BlockRequest send = GetNextInList();
                     if (send == null)
@@ -121,13 +132,16 @@ namespace Fluid
                         Block existing = m_WorldConnection.World[send.Block.X, send.Block.Y, send.Block.Layer];
                         if (existing.EqualsBlock(send.Block))
                         {
-                            for (int i = 0; i < m_Queue.Count; i++)
+                            lock (m_Queue)
                             {
-                                if (m_Queue[i].Block.EqualsBlock(send.Block))
+                                for (int i = 0; i < m_Queue.Count; i++)
                                 {
-                                    m_Queue.RemoveAt(i);
-                                    removed = true;
-                                    break;
+                                    if (m_Queue[i].Block.EqualsBlock(send.Block))
+                                    {
+                                        m_Queue.RemoveAt(i);
+                                        removed = true;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -137,7 +151,7 @@ namespace Fluid
                             continue;
                         }
                     }
-                    
+
                     send.Request();
                     m_WorldConnection.UploadBlockRequest(send);
                 }
@@ -145,6 +159,15 @@ namespace Fluid
             catch (ThreadAbortException)
             {
                 //Handled
+            }
+            catch (Exception ex)
+            {
+                m_WorldConnection.Client.Log.Add(FluidLogCategory.Fail, ex.Message);
+            }
+
+            if (OnQueueFinished != null)
+            {
+                OnQueueFinished(this, EventArgs.Empty);
             }
 
             if (m_ResetEvent != null)
@@ -230,16 +253,20 @@ namespace Fluid
 
                     if (!block.EqualsBlock(expected))
                     {
-                        for (int i = 0; i < m_Queue.Count; i++)
+                        lock (m_Queue)
                         {
-                            if (m_Queue[i].Block.EqualsBlock(block))
+                            for (int i = 0; i < m_Queue.Count; i++)
                             {
-                                m_Queue.RemoveAt(i);
-                                i--;
-                            }
-                            else
-                            {
-                                m_Queue[i].SetMissed();
+                                if (m_Queue[i].Block.EqualsBlock(block))
+                                {
+                                    m_Queue.RemoveAt(i);
+                                    i--;
+                                    break;
+                                }
+                                else
+                                {
+                                    m_Queue[i].SetMissed();
+                                }
                             }
                         }
                     }
@@ -258,6 +285,11 @@ namespace Fluid
         /// <param name="blockThrottle">The speed of the block to be uploaded at</param>
         internal void QueueBlock(Block block, int blockThrottle)
         {
+            if (block == null)
+            {
+                return;
+            }
+
             BlockRequest request = new BlockRequest(block, blockThrottle);
             m_Queue.Add(request);
 

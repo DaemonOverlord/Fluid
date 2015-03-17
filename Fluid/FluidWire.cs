@@ -21,7 +21,7 @@ namespace Fluid
 {
     public class FluidWire : IDisposable
     {
-        private byte[][] m_PlayerIOAddresses;
+        private byte[][] m_SniffingAddresses;
         private bool m_Sniff = false;
         private bool m_WaitingForResponse = false;
         private DateTime m_RequestTimestamp;
@@ -77,9 +77,9 @@ namespace Fluid
         /// Gets the player io api service's ip address
         /// </summary>
         /// <returns></returns>
-        private byte[][] GetPlayerIOAddresses()
+        private byte[][] GetAddresses(Uri uri)
         {
-            IPAddress[] addresses = Dns.GetHostAddresses("api.playerio.com"); //api.gameanalytics.com
+            IPAddress[] addresses = Dns.GetHostAddresses(uri.Host);
 
             byte[][] addressesBytes = new byte[addresses.Length][];
             for (int i = 0; i < addresses.Length; i++)
@@ -94,19 +94,19 @@ namespace Fluid
         /// Chceks if the IPV4 Address is the player io api
         /// </summary>
         /// <param name="address">The IPV4 Address</param>
-        private bool IsPlayerIOApi(IpV4Address address)
+        private bool IsMatchingAddress(IpV4Address address)
         {
-            if (m_PlayerIOAddresses == null)
+            if (m_SniffingAddresses == null)
             {
                 return false;
             }
 
             byte[] addressBytes = GetAddressBytes(address);
-            for (int j = 0; j < m_PlayerIOAddresses.Length; j++)
+            for (int j = 0; j < m_SniffingAddresses.Length; j++)
             {
                 for (int i = 0; i < addressBytes.Length; i++)
                 {
-                    if (addressBytes[i] != m_PlayerIOAddresses[j][i])
+                    if (addressBytes[i] != m_SniffingAddresses[j][i])
                     {
                         return false;
                     }
@@ -161,7 +161,7 @@ namespace Fluid
         /// <summary>
         /// Start asyncronously sniffing playerio api requests 
         /// </summary>
-        public void StartSniffingPlayerIORequests()
+        public void StartSniffingRequests(Uri uri)
         {
             if (m_Disposed)
             {
@@ -191,6 +191,7 @@ namespace Fluid
 
             if (m_SniffThread == null)
             {
+                m_SniffingAddresses = GetAddresses(uri);
                 CreateAndStartThread();
             }
             else
@@ -217,7 +218,7 @@ namespace Fluid
         {
             m_Sniff = true;
 
-            m_SniffThread = new Thread(SniffPlayerIORequests);
+            m_SniffThread = new Thread(SniffRequests);
             m_SniffThread.Name = "FluidSniffer";
             m_SniffThread.Start();
         }
@@ -225,7 +226,7 @@ namespace Fluid
         /// <summary>
         /// Stops sniffing for player io requests
         /// </summary>
-        public void StopSniffingPlayerIORequests()
+        public void StopSniffingRequests()
         {
             if (m_Disposed)
             {
@@ -242,7 +243,10 @@ namespace Fluid
 
             if (m_SniffThread == null)
             {
-                m_Log.Add(FluidLogCategory.Suggestion, "Consider checking if the wire is already sniffing before attempting to stop the sniffing.");
+                if (m_Log != null)
+                {
+                    m_Log.Add(FluidLogCategory.Suggestion, "Consider checking if the wire is already sniffing before attempting to stop the sniffing.");
+                }
                 return;
             }
 
@@ -255,15 +259,13 @@ namespace Fluid
         /// <summary>
         /// Sniffing thread
         /// </summary>
-        private void SniffPlayerIORequests()
+        private void SniffRequests()
         {
             try
             {
-                m_PlayerIOAddresses = GetPlayerIOAddresses();
-
                 while (m_Sniff && !m_Disposed)
                 {
-                    m_Communicator.ReceivePackets(1, PlayerIOPacketHandler);
+                    m_Communicator.ReceivePackets(1, SniffPacketHandler);
                 }
             }
             catch (ThreadAbortException)
@@ -294,7 +296,7 @@ namespace Fluid
         /// Handles a player io request
         /// </summary>
         /// <param name="packet"></param>
-        private void PlayerIOPacketHandler(Packet packet)
+        private void SniffPacketHandler(Packet packet)
         {
             IpV4Datagram ip = packet.Ethernet.IpV4;
 
@@ -312,9 +314,10 @@ namespace Fluid
                     while (parts.MoveNext())
                     {
                         HttpDatagram cur = parts.Current;
-                        if (tcp.Http.IsRequest)
+                        if (tcp.Http.IsResponse)
                         {
-                            if (IsPlayerIOApi(ip.Destination))
+                            Console.WriteLine(ip.Destination.ToString());
+                            if (IsMatchingAddress(ip.Destination))
                             {
                                 HttpRequestDatagram httpRequest = (HttpRequestDatagram)tcp.Http;
                                 if (httpRequest.Uri != null)
@@ -428,7 +431,6 @@ namespace Fluid
                 return false;
             }
 
-            Console.WriteLine("Opening...");
             IList<LivePacketDevice> allDevices = null;
             try
             {
@@ -441,22 +443,16 @@ namespace Fluid
                     m_Log.Add(FluidLogCategory.Message, "Failed to read packet devices from machine. IO error.");
                 }
 
-                Console.WriteLine("Failed.");
                 return false;
             }
 
-            Console.WriteLine("Found devives: {0}", allDevices.Count);
             if (allDevices.Count == 0)
             {
                 return false;
             }
 
             LivePacketDevice adapter = allDevices[0];
-
-            Console.WriteLine("Calling open()");
             m_Communicator = adapter.Open();
-
-            Console.WriteLine("Opened!");
             return true;
         }
 
@@ -473,7 +469,7 @@ namespace Fluid
             m_Disposed = true;
             if (SniffingRequests)
             {
-                StopSniffingPlayerIORequests();
+                StopSniffingRequests();
             }
 
             if (m_Communicator != null)

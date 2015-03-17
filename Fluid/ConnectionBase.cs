@@ -307,7 +307,7 @@ namespace Fluid
         /// <param name="m">The playerio message</param>
         private void MessageProcessor(object sender, Message m)
         {
-            bool handled = false;
+            bool handled = false; 
             if (OnPlayerIOMessage != null)
             {
                 PlayerIOMessage playerIOMessage = new PlayerIOMessage(m);

@@ -74,6 +74,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,22 +96,22 @@
     <Compile Include="Auth\MousebreakerAuth.cs" />
     <Compile Include="Auth\SimpleAuth.cs" />
     <Compile Include="BlockRequest.cs" />
-    <Compile Include="Blocks\Block.cs" />
-    <Compile Include="Blocks\BlockID.cs" />
-    <Compile Include="Blocks\CoinBlock.cs" />
-    <Compile Include="Blocks\DeathBlock.cs" />
-    <Compile Include="Blocks\Key.cs" />
-    <Compile Include="Blocks\LabelBlock.cs" />
-    <Compile Include="Blocks\Layer.cs" />
-    <Compile Include="Blocks\MusicBlock.cs" />
-    <Compile Include="Blocks\PercussionSound.cs" />
-    <Compile Include="Blocks\PianoNote.cs" />
-    <Compile Include="Blocks\Portal.cs" />
-    <Compile Include="Blocks\PurpleBlock.cs" />
-    <Compile Include="Blocks\RotatableBlock.cs" />
-    <Compile Include="Blocks\Rotation.cs" />
-    <Compile Include="Blocks\TextBlock.cs" />
-    <Compile Include="Blocks\WorldPortal.cs" />
+    <Compile Include="Room\Block.cs" />
+    <Compile Include="Room\BlockID.cs" />
+    <Compile Include="Room\CoinBlock.cs" />
+    <Compile Include="Room\DeathBlock.cs" />
+    <Compile Include="Room\Key.cs" />
+    <Compile Include="Room\LabelBlock.cs" />
+    <Compile Include="Room\Layer.cs" />
+    <Compile Include="Room\MusicBlock.cs" />
+    <Compile Include="Room\PercussionSound.cs" />
+    <Compile Include="Room\PianoNote.cs" />
+    <Compile Include="Room\Portal.cs" />
+    <Compile Include="Room\PurpleBlock.cs" />
+    <Compile Include="Room\RotatableBlock.cs" />
+    <Compile Include="Room\Rotation.cs" />
+    <Compile Include="Room\TextBlock.cs" />
+    <Compile Include="Room\WorldPortal.cs" />
     <Compile Include="ChatManager.cs" />
     <Compile Include="ChatMessage.cs" />
     <Compile Include="Config.cs" />

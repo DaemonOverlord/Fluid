@@ -8,19 +8,24 @@ namespace Fluid
     public class FluidColor
     {
         /// <summary>
-        /// Gets or sets the red
+        /// Gets or sets the red value
         /// </summary>
         public byte R { get; set; }
 
         /// <summary>
-        /// Gets or sets the green
+        /// Gets or sets the green value
         /// </summary>
         public byte G { get; set; }
 
         /// <summary>
-        /// Gets or sets the blue
+        /// Gets or sets the blue value
         /// </summary>
         public byte B { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alpha value
+        /// </summary>
+        public byte A { get; set; }
 
         /// <summary>
         /// Gets the brightness of the color
@@ -201,7 +206,7 @@ namespace Fluid
         /// </summary>
         public uint ToArgb()
         {
-            return Convert.ToUInt32(((uint)R << 16 | (uint)G << 8 | (uint)B) & -1);
+            return Convert.ToUInt32(((uint)A << 24 | (uint)R << 16 | (uint)G << 8 | (uint)B) & -1);
         }
 
         /// <summary>
@@ -236,6 +241,7 @@ namespace Fluid
         /// <param name="b">The blue value</param>
         public FluidColor(byte r, byte g, byte b)
         {
+            A = 255;
             R = r;
             G = g;
             B = b;
@@ -248,6 +254,7 @@ namespace Fluid
         public FluidColor(uint argb)
         {
             long value = argb & -1;
+            A = (byte)(value >> 24 & 255L);
             R = (byte)(value >> 16 & 255L);
             G = (byte)(value >> 8 & 255L);
             B = (byte)(value & 255L);
@@ -266,6 +273,7 @@ namespace Fluid
 
             if (hexColor[0] == '#' && hexColor.Length == 7)
             {
+                A = 255;
                 R = Convert.ToByte(hexColor.Substring(1, 2), 16);
                 G = Convert.ToByte(hexColor.Substring(3, 2), 16);
                 B = Convert.ToByte(hexColor.Substring(5, 2), 16);

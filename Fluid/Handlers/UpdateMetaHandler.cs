@@ -24,7 +24,7 @@ namespace Fluid.Handlers
             WorldConnection worldCon = (WorldConnection)connectionBase;
             World world = worldCon.World;
 
-            if (!handled)
+            if (!handled && world != null)
             {
                 string username = message.GetString(0);
                 if (string.Compare(world.Owner.Username, username, true) != 0)

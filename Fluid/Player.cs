@@ -27,9 +27,30 @@ namespace Fluid
         /// </summary>
         private void FetchConnectionId()
         {
-            if (m_Client != null && m_Client.PlayerDatabase.Connected)
+            if (m_Client != null)
             {
-                ConnectionId = m_Client.PlayerDatabase.GetConnectionId(Username);
+                if (Username.Contains("-"))
+                {
+                    ConnectionId = "simpleguest";
+                }
+                else
+                {
+                    ConnectionId = (m_Client.PlayerDatabase.Connected) ? m_Client.PlayerDatabase.GetConnectionId(Username) : null;
+                    if (ConnectionId == null)
+                    {
+                        Profile p = GetProfile();
+
+                        if (p != null)
+                        {
+                            ConnectionId = p.ConnectionId;
+
+                            if (!string.IsNullOrEmpty(ConnectionId) && m_Client.Config.AddProfilesToDatabase)
+                            {
+                                m_Client.PlayerDatabase.Set(ConnectionId, Username);
+                            }
+                        }
+                    }
+                }
             }
         }
 

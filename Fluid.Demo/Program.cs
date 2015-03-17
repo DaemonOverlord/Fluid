@@ -1,12 +1,6 @@
 ﻿using Fluid.Auth;
-using Fluid.Blocks;
-using Fluid.ServerEvents;
+using Fluid.Room;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fluid.Demo
 {
@@ -14,11 +8,15 @@ namespace Fluid.Demo
     {
         public static void Main()
         {
-            FluidClient client = new FluidClient(null);
-            if (client.LogIn())
+            FluidClient c = new FluidClient(new GuestAuth());
+
+            if (c.LogIn())
             {
-                return;
+                var con = c.GetWorldConnection("PWWfBtRhUAbEI");
+                con.Join();
             }
+  
+            Console.ReadKey();
         }
-    }  
+    }
 }

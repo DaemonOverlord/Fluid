@@ -1,38 +1,38 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    public class RotatableBlock : Block
+    public class PurpleBlock : Block
     {
         /// <summary>
-        /// Creates a rotatable block
+        /// Creates a world portal block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="rotation">The rotation of the block</param>
-        public RotatableBlock(BlockID blockId, int x, int y, Rotation rotation)
+        /// <param name="switchId">The switch id</param>
+        public PurpleBlock(BlockID blockId, int x, int y, uint switchId)
             : base(blockId, Layer.Foreground, x, y)
         {
-            Rotation = rotation;
+            SwitchID = switchId;
         }
 
         /// <summary>
-        /// Creates a rotatable block
+        /// Creates a world portal block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="rotation">The rotation of the block</param>
-        public RotatableBlock(WorldConnection worldCon, BlockID blockId, int x, int y, Rotation rotation)
+        /// <param name="switchId">The switch id</param>
+        public PurpleBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint switchId)
             : base(worldCon, blockId, Layer.Foreground, x, y)
         {
-            Rotation = rotation;
+            SwitchID = switchId;
         }
 
         /// <summary>
-        /// Gets the rotation of the block
+        /// Gets or sets the switch ID
         /// </summary>
-        public Rotation Rotation { get; set; }
+        public uint SwitchID { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -45,30 +45,30 @@
                 X,
                 Y,
                 (int)ID,
-                (int)Rotation
+                (int)SwitchID
             );
         }
 
         /// <summary>
-        /// Creates a clone of this rotatable block
+        /// Creates a clone of this purple block
         /// </summary>
-        /// <returns>A clone of this rotatable block</returns>
+        /// <returns>A clone of this purple block</returns>
         public override Block Clone()
         {
-            return new RotatableBlock(ID, X, Y, Rotation);
+            return new MusicBlock(ID, X, Y, SwitchID);
         }
 
         /// <summary>
-        /// Tests if a rotatatable block is equal to a block
+        /// Tests if a purple block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is RotatableBlock)
+            if (b is PurpleBlock)
             {
-                RotatableBlock rB = (RotatableBlock)b;
-                return rB.X == X && rB.Y == Y && rB.Layer == Layer && rB.ID == ID && rB.Rotation == Rotation;
+                PurpleBlock pB = (PurpleBlock)b;
+                return pB.X == X && pB.Y == Y && pB.Layer == Layer && pB.ID == ID && pB.SwitchID == SwitchID;
             }
 
             return false;

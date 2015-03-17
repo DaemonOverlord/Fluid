@@ -31,8 +31,7 @@ namespace Fluid.Handlers
             bool canEdit = message.GetBoolean(10);
             bool isOwner = message.GetBoolean(11);
 
-            WorldPlayer connected = new WorldPlayer(worldCon, username, userId);
-
+            WorldPlayer connected = new WorldPlayer(worldCon, username, worldCon.Client.ConnectionUserId, userId);
             FluidClient client = connectionBase.Client;
 
             if (client.GetConnectionType(client.ConnectionUserId) != PlayerType.Guest)

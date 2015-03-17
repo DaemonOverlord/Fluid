@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using Fluid.Physics;
 using PlayerIOClient;
 using System;
@@ -15,7 +15,7 @@ namespace Fluid
 
         internal double m_mox, m_moy;
 
-        internal int m_morx, m_mory;
+        internal double m_morx, m_mory;
 
         internal int m_pastx, m_pasty;
 
@@ -406,6 +406,29 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Gives the crown to the current player
+        /// </summary>
+        public void GiveCrown()
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.GiveCrown(this);
+            }
+        }
+
+        /// <summary>
+        /// Sets the god mode of the current player
+        /// </summary>
+        /// <param name="value">The godmode value</param>
+        public void SetGodMode(bool value)
+        {
+            if (m_Connection != null)
+            {
+                m_Connection.SetGodMode(this, value);
+            }
+        }
+
+        /// <summary>
         /// Touchs the player with a potion
         /// </summary>
         /// <param name="potion">The potion type</param>
@@ -519,6 +542,33 @@ namespace Fluid
         /// <param name="username">The username</param>
         /// <param name="id">The id</param>
         public WorldPlayer(WorldConnection connection, string username, int id) : base(connection.Client, username)
+        {
+            this.m_Connection = connection;
+            Id = id;
+
+            m_attachedData = new Dictionary<string, object>();
+            CollectedGoldCoins = new List<Block>();
+            CollectedBlueCoins = new List<Block>();
+            Potions = new ConcurrentDictionary<Potion, PotionState>();
+
+            Potion[] potiontypes = (Potion[])Enum.GetValues(typeof(Potion));
+            for (int i = 0; i < potiontypes.Length; i++)
+            {
+                Potions.TryAdd(potiontypes[i], PotionState.Inactive);
+            }
+
+            LastInput = 0;
+        }
+
+        /// <summary>
+        /// Creates a new 
+        /// </summary>
+        /// <param name="connection">The world connection</param>
+        /// <param name="username">The username</param>
+        /// <param name="connectionId">The connection id </param>
+        /// <param name="id">The id</param>
+        public WorldPlayer(WorldConnection connection, string username, string connectionId, int id)
+            : base(connection.Client, username, connectionId)
         {
             this.m_Connection = connection;
             Id = id;

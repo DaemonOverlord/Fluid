@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -9,6 +10,8 @@ namespace Fluid
     [DebuggerDisplay("Count = {Count}")]
     public class ChatManager
     {
+        private char[] m_Ext;
+        private Random m_Random;
         private WorldConnection m_Connection;
         private List<ChatMessage> m_ChatHistory;
 
@@ -29,13 +32,41 @@ namespace Fluid
         {
             get
             {
-                if (m_ChatHistory.Count > 0)
+                lock (m_ChatHistory)
                 {
-                    return m_ChatHistory[m_ChatHistory.Count - 1];
+                    if (m_ChatHistory.Count > 0)
+                    {
+                        return m_ChatHistory[m_ChatHistory.Count - 1];
+                    }
                 }
 
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Gets the amount of times this message has already been chatted
+        /// </summary>
+        /// <param name="message">The message to count</param>
+        /// <returns>The amount of recurrances</returns>
+        private int GetCount(string message)
+        {
+            int count = 0;
+            lock (m_ChatHistory)
+            {
+                for (int i = 0; i < m_ChatHistory.Count; i++)
+                {
+                    if (!m_ChatHistory[i].IsOld)
+                    {
+                        if (string.Compare(m_ChatHistory[i].Text, message, false) == 0)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            return count;
         }
 
         /// <summary>
@@ -78,6 +109,12 @@ namespace Fluid
 
             if (currentMessage.Length > 0)
             {
+                while (GetCount(currentMessage.ToString()) >= 4)
+                {
+                    char rnd = m_Ext[m_Random.Next(m_Ext.Length)];
+                    currentMessage.Append(rnd);
+                }
+
                 messages.Add(currentMessage.ToString());
             }
 
@@ -110,6 +147,8 @@ namespace Fluid
         {
             this.m_Connection = m_Connection;
             m_ChatHistory = new List<ChatMessage>();
+            m_Random = new Random();
+            m_Ext = new char[] { '·', '.', ',', '¸' };
         }
     }
 }

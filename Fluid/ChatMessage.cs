@@ -16,14 +16,21 @@ namespace Fluid
         public string Text { get; private set; }
 
         /// <summary>
+        /// Gets whether the chat message is old
+        /// </summary>
+        public bool IsOld { get; private set; }
+
+        /// <summary>
         /// Creates a new chat message
         /// </summary>
         /// <param name="player">The player</param>
         /// <param name="text">The text</param>
-        public ChatMessage(Player player, string text)
+        /// <param name="isOld">Is the chatmessage old</param>
+        public ChatMessage(Player player, string text, bool isOld)
         {
             Player = player;
             Text = text;
+            IsOld = isOld;
         }
     }
 }

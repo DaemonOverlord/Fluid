@@ -32,7 +32,7 @@ namespace Fluid.Handlers
                 player = worldCon.Client.GetPlayerByUsername(username);
             }
 
-            ChatMessage chatMessage = new ChatMessage(player, text);
+            ChatMessage chatMessage = new ChatMessage(player, text, true);
             if (!handled)
             {
                 worldCon.Chat.Add(chatMessage);

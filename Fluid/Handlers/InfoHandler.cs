@@ -58,7 +58,7 @@ namespace Fluid.Handlers
             {
                 WorldConnection worldCon = (WorldConnection)connectionBase;
                 WorldPlayer player = worldCon.Players.Get(pmUsername, true);
-                ChatMessage pm = new ChatMessage(player, text.TrimEnd(' '));
+                ChatMessage pm = new ChatMessage(player, text.TrimEnd(' '), false);
                 PrivateMessageEvent pmEvent = new PrivateMessageEvent()
                 {
                     Raw = message,
@@ -69,7 +69,7 @@ namespace Fluid.Handlers
                 return;
             }
 
-            ChatMessage systemMessage = new ChatMessage(null, string.Format("{0} {1}", title, text));
+            ChatMessage systemMessage = new ChatMessage(null, string.Format("{0} {1}", title, text), false);
             if (connectionBase is LobbyConnection)
             {
                 LobbyConnection lobbyCon = (LobbyConnection)connectionBase;

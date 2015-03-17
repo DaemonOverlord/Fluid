@@ -1,38 +1,38 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    public class DeathBlock : Block
+    public class RotatableBlock : Block
     {
         /// <summary>
-        /// Creates a death block
+        /// Creates a rotatable block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="requiredDeaths">The deaths required to activate</param>
-        public DeathBlock(BlockID blockId, int x, int y, uint requiredDeaths)
+        /// <param name="rotation">The rotation of the block</param>
+        public RotatableBlock(BlockID blockId, int x, int y, Rotation rotation)
             : base(blockId, Layer.Foreground, x, y)
         {
-            RequiredDeaths = requiredDeaths;
+            Rotation = rotation;
         }
 
         /// <summary>
-        /// Creates a death block
+        /// Creates a rotatable block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="requiredDeaths">The deaths required to activate</param>
-        public DeathBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint requiredDeaths)
+        /// <param name="rotation">The rotation of the block</param>
+        public RotatableBlock(WorldConnection worldCon, BlockID blockId, int x, int y, Rotation rotation)
             : base(worldCon, blockId, Layer.Foreground, x, y)
         {
-            RequiredDeaths = requiredDeaths;
+            Rotation = rotation;
         }
 
         /// <summary>
-        /// Gets or sets the required deaths
+        /// Gets the rotation of the block
         /// </summary>
-        public uint RequiredDeaths { get; set; }
+        public Rotation Rotation { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -45,30 +45,30 @@
                 X,
                 Y,
                 (int)ID,
-                (int)RequiredDeaths
+                (int)Rotation
             );
         }
 
         /// <summary>
-        /// Creates a clone of this death block
+        /// Creates a clone of this rotatable block
         /// </summary>
-        /// <returns>A clone of this death block</returns>
+        /// <returns>A clone of this rotatable block</returns>
         public override Block Clone()
         {
-            return new DeathBlock(ID, X, Y, RequiredDeaths);
+            return new RotatableBlock(ID, X, Y, Rotation);
         }
 
         /// <summary>
-        /// Tests if a death block is equal to a block
+        /// Tests if a rotatatable block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is DeathBlock)
+            if (b is RotatableBlock)
             {
-                DeathBlock dB = (DeathBlock)b;
-                return dB.X == X && dB.Y == Y && dB.Layer == Layer && dB.ID == ID && dB.RequiredDeaths == RequiredDeaths;
+                RotatableBlock rB = (RotatableBlock)b;
+                return rB.X == X && rB.Y == Y && rB.Layer == Layer && rB.ID == ID && rB.Rotation == Rotation;
             }
 
             return false;

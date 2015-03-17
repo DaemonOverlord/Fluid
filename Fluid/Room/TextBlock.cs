@@ -1,38 +1,41 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    public class PurpleBlock : Block
+    /// <summary>
+    /// A Sign or label
+    /// </summary>
+    public class TextBlock : Block
     {
         /// <summary>
-        /// Creates a world portal block
+        /// Creates a text block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="switchId">The switch id</param>
-        public PurpleBlock(BlockID blockId, int x, int y, uint switchId)
+        /// <param name="text">The text of the block</param>
+        public TextBlock(BlockID blockId, int x, int y, string text)
             : base(blockId, Layer.Foreground, x, y)
         {
-            SwitchID = switchId;
+            Text = text;
         }
 
         /// <summary>
-        /// Creates a world portal block
+        /// Creates a text block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="switchId">The switch id</param>
-        public PurpleBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint switchId)
+        /// <param name="text">The text of the block</param>
+        public TextBlock(WorldConnection worldCon, BlockID blockId, int x, int y, string text)
             : base(worldCon, blockId, Layer.Foreground, x, y)
         {
-            SwitchID = switchId;
+            Text = text;
         }
 
         /// <summary>
-        /// Gets or sets the switch ID
+        /// Gets the text
         /// </summary>
-        public uint SwitchID { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -45,30 +48,30 @@
                 X,
                 Y,
                 (int)ID,
-                (int)SwitchID
+                Text
             );
         }
 
         /// <summary>
-        /// Creates a clone of this purple block
+        /// Creates a clone of this text block
         /// </summary>
-        /// <returns>A clone of this purple block</returns>
+        /// <returns>A clone of this text block</returns>
         public override Block Clone()
         {
-            return new MusicBlock(ID, X, Y, SwitchID);
+            return new TextBlock(ID, X, Y, Text);
         }
 
         /// <summary>
-        /// Tests if a purple block is equal to a block
+        /// Tests if a text block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is PurpleBlock)
+            if (b is TextBlock)
             {
-                PurpleBlock pB = (PurpleBlock)b;
-                return pB.X == X && pB.Y == Y && pB.Layer == Layer && pB.ID == ID && pB.SwitchID == SwitchID;
+                TextBlock tB = (TextBlock)b;
+                return tB.X == X && tB.Y == Y && tB.Layer == Layer && tB.ID == ID && tB.Text == Text;
             }
 
             return false;

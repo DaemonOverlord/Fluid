@@ -21,20 +21,16 @@ namespace Fluid.Auth.Implementation
                     return null;
                 }
 
-                Console.WriteLine("Starting window.");
                 ProcessStartInfo startInfo = new ProcessStartInfo(config.MouseBreakerGameUrl);
                 startInfo.UseShellExecute = true; 
 
                 Process website = Process.Start(startInfo);
-
-                Console.WriteLine("Starting to sniff...");
                 NameValueCollection query = wireSniffer.SniffQuery("/clientintegrations/mousebreaker/auth?game=3&token=", 60 * 1000);
                 if (query == null)
                 {
                     return null;
                 }
 
-                Console.WriteLine("Sniffed!");
                 if (query["token"] != null)
                 {
                     if (website != null)

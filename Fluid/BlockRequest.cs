@@ -1,4 +1,5 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
+using Fluid.Room;
 using System;
 using System.Diagnostics;
 
@@ -7,7 +8,7 @@ namespace Fluid
     [DebuggerDisplay("Block = {Block}")]
     internal class BlockRequest
     {
-        private bool m_NullTimestamp = false;
+        //private bool m_NullTimestamp = false;
 
         /// <summary>
         /// Gets the block
@@ -40,7 +41,6 @@ namespace Fluid
         public void SetMissed()
         {
             Missed = true;
-            m_NullTimestamp = true;
         }
 
         /// <summary>
@@ -48,12 +48,19 @@ namespace Fluid
         /// </summary>
         public int GetTimePassed()
         {
-            if (!Timestamp.HasValue || m_NullTimestamp)
+            if (!Timestamp.HasValue)
             {
                 return 0;
             }
 
-            return (int)DateTime.Now.Subtract(Timestamp.Value).TotalMilliseconds;
+            try
+            {
+                return (int)DateTime.Now.Subtract(Timestamp.Value).TotalMilliseconds;
+            }
+            catch (InvalidOperationException)
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -61,7 +68,6 @@ namespace Fluid
         /// </summary>
         public void Request()
         {
-            m_NullTimestamp = false;
             Timestamp = DateTime.Now;
         }
 

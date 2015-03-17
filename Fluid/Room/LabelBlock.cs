@@ -1,4 +1,4 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
     /// <summary>
     /// A label block
@@ -13,7 +13,7 @@
         /// <param name="text">The text of the block</param>
         /// <param name="hexColor">The html color of the label</param>
         public LabelBlock(int x, int y, string text, string hexColor)
-            : base(BlockID.DecorLabel, x, y, text)
+            : base(BlockIDS.Action.Admin.Text, x, y, text)
         {
             Color = new FluidColor(hexColor);
         }
@@ -26,7 +26,7 @@
         /// <param name="text">The text of the block</param>
         /// <param name="color">The color of the label</param>
         public LabelBlock(int x, int y, string text, FluidColor color)
-            : base(BlockID.DecorLabel, x, y, text)
+            : base(BlockIDS.Action.Admin.Text, x, y, text)
         {
             Color = color;
         }
@@ -39,7 +39,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
         public LabelBlock(int x, int y, string text)
-            : base(BlockID.DecorLabel, x, y, text)
+            : base(BlockIDS.Action.Admin.Text, x, y, text)
         {
             Color = new FluidColor(255, 255, 255);
         }
@@ -53,7 +53,7 @@
         /// <param name="text">The text of the block</param>
         /// <param name="hexColor">The hexadecimal color string</param>
         public LabelBlock(WorldConnection worldCon, int x, int y, string text, string hexColor)
-            : base(worldCon, BlockID.DecorLabel, x, y, text)
+            : base(worldCon, BlockIDS.Action.Admin.Text, x, y, text)
         {
             Color = new FluidColor(hexColor);
         }
@@ -66,7 +66,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="text">The text of the block</param>
         public LabelBlock(WorldConnection worldCon, int x, int y, string text)
-            : base(worldCon, BlockID.DecorLabel, x, y, text)
+            : base(worldCon, BlockIDS.Action.Admin.Text, x, y, text)
         {
             Color = new FluidColor(255, 255, 255);
         }

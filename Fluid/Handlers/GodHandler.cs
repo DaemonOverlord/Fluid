@@ -27,16 +27,6 @@ namespace Fluid.Handlers
             WorldConnection worldCon = (WorldConnection)connectionBase;
             WorldPlayer player = worldCon.Players.Get(userId);
 
-            if (!handled && player != null)
-            {
-                player.InGodMode = godEnabled;
-
-                if ((player.AccessLevel & AccessLevel.Edit) == 0 && godEnabled)
-                {
-                    player.AccessLevel |= AccessLevel.Edit;
-                }
-            }
-
             GodEvent godEvent = new GodEvent()
             {
                 Raw = message,

@@ -1,41 +1,39 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
-    /// <summary>
-    /// A Sign or label
-    /// </summary>
-    public class TextBlock : Block
+    public class MusicBlock : Block
     {
         /// <summary>
-        /// Creates a text block
+        /// Creates a music block
         /// </summary>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="text">The text of the block</param>
-        public TextBlock(BlockID blockId, int x, int y, string text)
+        /// <param name="musicId">The id of the music; Drum, Piano</param>
+        public MusicBlock(BlockID blockId, int x, int y, uint musicId)
             : base(blockId, Layer.Foreground, x, y)
         {
-            Text = text;
+            MusicID = musicId;
         }
 
         /// <summary>
-        /// Creates a text block
+        /// Creates a music block
         /// </summary>
         /// <param name="worldCon">The world connection</param>
         /// <param name="blockId">the block ID</param>
         /// <param name="x">The x coorindate</param>
         /// <param name="y">The y coordinate</param>
-        /// <param name="text">The text of the block</param>
-        public TextBlock(WorldConnection worldCon, BlockID blockId, int x, int y, string text)
+        /// <param name="musicId">The id of the music; Drum, Piano</param>
+        public MusicBlock(WorldConnection worldCon, BlockID blockId, int x, int y, uint musicId)
             : base(worldCon, blockId, Layer.Foreground, x, y)
         {
-            Text = text;
+            MusicID = musicId;
         }
 
         /// <summary>
-        /// Gets the text
+        /// <para>Gets the music id</para>                               
+        /// <para>Use PianoNote and PercussionSound for more information</para>
         /// </summary>
-        public string Text { get; set; }
+        public uint MusicID { get; set; }
 
         /// <summary>
         /// Uploads the block to the server
@@ -48,30 +46,30 @@
                 X,
                 Y,
                 (int)ID,
-                Text
+                (int)MusicID
             );
         }
 
         /// <summary>
-        /// Creates a clone of this text block
+        /// Creates a clone of this music block
         /// </summary>
-        /// <returns>A clone of this text block</returns>
+        /// <returns>A clone of this music block</returns>
         public override Block Clone()
         {
-            return new TextBlock(ID, X, Y, Text);
+            return new MusicBlock(ID, X, Y, MusicID);
         }
 
         /// <summary>
-        /// Tests if a text block is equal to a block
+        /// Tests if a music block is equal to a block
         /// </summary>
         /// <param name="b">The block</param>
         /// <returns>True if equal in value</returns>
         public override bool EqualsBlock(Block b)
         {
-            if (b is TextBlock)
+            if (b is MusicBlock)
             {
-                TextBlock tB = (TextBlock)b;
-                return tB.X == X && tB.Y == Y && tB.Layer == Layer && tB.ID == ID && tB.Text == Text;
+                MusicBlock mB = (MusicBlock)b;
+                return mB.X == X && mB.Y == Y && mB.Layer == Layer && mB.ID == ID && mB.MusicID == MusicID;
             }
 
             return false;

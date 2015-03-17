@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Net;
 using System.Net.NetworkInformation;
 
 namespace Fluid
 {
     public class ConnectionValue
     {
+        private IPAddress m_yahooAddress;
+
         /// <summary>
         /// Gets the pure connection lag
         /// </summary>
@@ -12,7 +15,7 @@ namespace Fluid
         public long GetLag()
         {
             Ping playerIOPing = new Ping();
-            PingReply reply = playerIOPing.Send("api.playerio.com");
+            PingReply reply = playerIOPing.Send(m_yahooAddress);
             if (reply.Status == IPStatus.Success)
             {
                 return reply.RoundtripTime / 2;
@@ -37,6 +40,11 @@ namespace Fluid
             {
                 return 20;
             }
+        }
+
+        public ConnectionValue()
+        {
+            m_yahooAddress = new IPAddress(new byte[] { 98, 138, 219, 189 });
         }
     }
 }

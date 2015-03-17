@@ -1,4 +1,4 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
     public enum PercussionSound
     {

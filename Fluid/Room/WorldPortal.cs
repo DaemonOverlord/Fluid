@@ -1,4 +1,4 @@
-﻿namespace Fluid.Blocks
+﻿namespace Fluid.Room
 {
     public class WorldPortal : Block
     {
@@ -9,7 +9,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
         public WorldPortal(int x, int y, string targetId)
-            : base(BlockID.WorldPortal, Layer.Foreground, x, y)
+            : base(BlockIDS.Action.Portals.World, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }
@@ -22,7 +22,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
         public WorldPortal(WorldConnection worldCon, int x, int y, string targetId)
-            : base(worldCon, BlockID.WorldPortal, Layer.Foreground, x, y)
+            : base(worldCon, BlockIDS.Action.Portals.World, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }

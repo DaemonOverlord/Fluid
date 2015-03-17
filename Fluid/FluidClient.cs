@@ -1,5 +1,5 @@
 ﻿using Fluid.Auth;
-using Fluid.Blocks;
+using Fluid.Room;
 using PlayerIOClient;
 using System;
 using System.Collections.Generic;
@@ -252,7 +252,7 @@ namespace Fluid
         {
             if (m_PlayerDatabase.Connected)
             {
-                string username = PlayerDatabase.GetUsername(connectionId);
+                string username = m_PlayerDatabase.GetUsername(connectionId);
                 if (username != null)
                 {
                     return new Player(this, username, connectionId);
@@ -306,7 +306,7 @@ namespace Fluid
             if (lobbyConnection != null)
             {
                 Profile profile = lobbyConnection.GetProfile(username);
-                lobbyConnection.Disconnect();
+                //lobbyConnection.Disconnect();
 
                 return profile;
             }
@@ -332,9 +332,9 @@ namespace Fluid
             if (lobbyConnection != null)
             {
                 PlayerObject playerObject = lobbyConnection.GetPlayerObject();
-                lobbyConnection.Disconnect();
 
-                return playerObject;
+                //lobbyConnection.Disconnect();
+                return playerObject;     
             }
 
             return null;
@@ -517,16 +517,15 @@ namespace Fluid
                     }
                 }
 
-                
                 m_Player = GetPlayerByConnectionId(ConnectionUserId);
                 if (m_Player == null && Config.AddProfilesToDatabase)
                 {
                     PlayerObject pObject = LoadMyPlayerObject();
                     if (pObject != null)
                     {
-                        if (m_PlayerDatabase.Connected)
+                        if (!string.IsNullOrEmpty(pObject.Username) && m_PlayerDatabase.Connected)
                         {
-                            PlayerDatabase.Add(pObject.Username, ConnectionUserId);
+                            m_PlayerDatabase.Add(pObject.Username, ConnectionUserId);
                             m_Player = new Player(this, pObject.Username, ConnectionUserId);
                         }
                     }

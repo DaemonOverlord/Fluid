@@ -1,4 +1,4 @@
-﻿using Fluid.Blocks;
+﻿using Fluid.Room;
 using Fluid.ServerEvents;
 using Fluid.Handlers;
 using Fluid.Physics;
@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text;
+using Id = System.Int32;
 
 namespace Fluid
 {
@@ -75,9 +76,15 @@ namespace Fluid
         /// <summary>
         /// Joins the world
         /// </summary>
-        /// <returns>The connection for chaining your code if necessary</returns>
-        public WorldConnection Join()
+        /// <param name="attempt">The number of attempts passed</param>
+        /// <returns>The current world connection</returns>
+        private WorldConnection JoinInternal(int attempt)
         {
+            if (attempt >= 3)
+            {
+                return this;
+            }
+
             Connection connection = m_Client.CreateWorldConnection(WorldID);
             this.SetConnection(connection);
 
@@ -85,7 +92,7 @@ namespace Fluid
             Physics.Start();
 
             InitEvent initEvent = null;
-            if ((initEvent = WaitForServerEvent<InitEvent>(3000)) != null)
+            if ((initEvent = WaitForServerEvent<InitEvent>(5000)) != null)
             {
                 //Invoke waiting server events for init if any
                 if (m_MessageAwaiters.ContainsKey(typeof(InitEvent)))
@@ -94,13 +101,22 @@ namespace Fluid
                 }
 
                 this.SendMessage("init2");
+                return this;
             }
             else
             {
                 Physics.Stop();
+                return this.JoinInternal(attempt + 1);
             }
+        }
 
-            return this;
+        /// <summary>
+        /// Joins the world
+        /// </summary>
+        /// <returns>The connection for chaining your code if necessary</returns>
+        public WorldConnection Join()
+        {
+            return JoinInternal(0);
         }
 
         /// <summary>
@@ -128,27 +144,29 @@ namespace Fluid
         /// Activates a key
         /// </summary>
         /// <param name="key">The key to activate</param>
-        public void ActivateKey(Key key)
+        /// <param name="blockX">The key's x coordinate</param>
+        /// <param name="blockY">The key's y coordinate</param>
+        public void ActivateKey(Key key, int blockX, int blockY)
         {
             switch (key)
             {
                 case Key.Red:
-                    this.SendMessage(World.WorldKey + "r");
+                    this.SendMessage(World.WorldKey + "r", blockX, blockY);
                     break;
                 case Key.Green:
-                    this.SendMessage(World.WorldKey + "g");
+                    this.SendMessage(World.WorldKey + "g", blockX, blockY);
                     break;
                 case Key.Blue:
-                    this.SendMessage(World.WorldKey + "b");
+                    this.SendMessage(World.WorldKey + "b", blockX, blockY);
                     break;
                 case Key.Cyan:
-                    this.SendMessage(World.WorldKey + "c");
+                    this.SendMessage(World.WorldKey + "c", blockX, blockY);
                     break;
                 case Key.Magenta:
-                    this.SendMessage(World.WorldKey + "m");
+                    this.SendMessage(World.WorldKey + "m", blockX, blockY);
                     break;
                 case Key.Yellow:
-                    this.SendMessage(World.WorldKey + "y");
+                    this.SendMessage(World.WorldKey + "y", blockX, blockY);
                     break;
                 default:
                     string keyName = Enum.GetName(typeof(Key), key);
@@ -212,6 +230,11 @@ namespace Fluid
                 return;
             }
 
+            if (!block.IsBinded)
+            {
+                block.Bind(this);
+            }
+
             CheckThrottle();
             block.Upload();
             Thread.Sleep((int)m_blockThrottle.Value);
@@ -228,6 +251,11 @@ namespace Fluid
             if (block == null)
             {
                 return;
+            }
+
+            if (!block.IsBinded)
+            {
+                block.Bind(this);
             }
 
             block.Upload();
@@ -256,7 +284,6 @@ namespace Fluid
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
         public void UploadBlockAsync(BlockID id, int x, int y, int blockThrottle)
         {
-
             this.UploadBlockAsync(new Block(this, id, GetBlockLayer(id), x, y), blockThrottle);
         }
 
@@ -349,19 +376,112 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Clears the level
+        /// </summary>
+        public void Clear()
+        {
+            this.SendMessage("clear");
+        }
+
+        /// <summary>
         /// Gives the crown to the connected player
         /// </summary>
-        public void GetCrown()
+        /// <param name="blockX">The crown's x coordinate</param>
+        /// <param name="blockY">The crown's y coordinate</param>
+        public void GetCrown(int blockX, int blockY)
         {
-            this.SendMessage(World.WorldKey + "k");
+            this.SendMessage(World.WorldKey + "k", blockX, blockY);
+        }
+
+        /// <summary>
+        /// Gives a crown to a player
+        /// </summary>
+        /// <param name="player">The player</param>
+        public void GiveCrown(WorldPlayer player)
+        {
+            if (player != null)
+            {
+                GiveCrown(player.Username);
+            }
+            else
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Player argument was null.");
+            }
+        }
+
+        /// <summary>
+        /// Gives a crown to a player
+        /// </summary>
+        /// <param name="username">The player's username</param>
+        public void GiveCrown(string username)
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                this.SendMessage("say", string.Format("/givecrown {0}", username));
+            }
+            else
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Username argument was null or empty.");
+            }
+        }
+
+        /// <summary>
+        /// Removes the crown from the crown holder
+        /// </summary>
+        public void RemoveCrown()
+        {
+            this.SendMessage("say", "/removecrown");
+        }
+
+        /// <summary>
+        /// Sets a player's godmode on
+        /// </summary>
+        /// <param name="player">The world player</param>
+        /// <param name="value">Value of godmode</param>
+        public void SetGodMode(WorldPlayer player, bool value)
+        {
+            if (player != null)
+            {
+                SetGodMode(player.Username, value);
+            }
+            else
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Player argument was null.");
+            }
+        }
+
+        /// <summary>
+        /// Sets a player's godmode on
+        /// </summary>
+        /// <param name="username">The player username</param>
+        /// <param name="value">Value of godmode</param>
+        public void SetGodMode(string username, bool value)
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                if (value)
+                {
+                    this.SendMessage("say", string.Format("/godon {0}", username));
+                }
+                else
+                {
+                    this.SendMessage("say", string.Format("/godoff {0}", username));
+                }
+            }
+            else
+            {
+                m_Client.Log.Add(FluidLogCategory.Suggestion, "Username argument was null or empty.");
+            }
         }
 
         /// <summary>
         /// Gets the silver crown
         /// </summary>
-        public void GetSilverCrown()
+        /// <param name="blockX">The silver crown's x coordinate</param>
+        /// <param name="blockY">The silver crown's y coordinate</param>
+        public void GetSilverCrown(int blockX, int blockY)
         {
-            this.SendMessage("levelcomplete");
+            this.SendMessage("levelcomplete", blockX, blockY);
         }
 
         /// <summary>
@@ -781,6 +901,11 @@ namespace Fluid
         /// <param name="y">The world pixel y</param>
         public void MoveToLocation(double x, double y)
         {
+            if (World == null)
+            {
+                return;
+            }
+
             this.SendMessage("m", x, y, 0, 0, 0, 0, 0, 0, World.Gravity, false);
         }
 
