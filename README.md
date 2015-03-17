@@ -232,7 +232,7 @@ Most of the time, it will be easier to use the players directly without a variab
 In this example we will say hello to all the players in the room except ourselves (the bot). Please note that the bot is included in the list of connected players.
 
 ```c#
-foreach (WorldPlayer player in connection.Players)
+foreach (WorldPlayer player in con.Players)
 {
     //Make sure the player is not us
     if (!player.IsConnectedPlayer)
@@ -265,4 +265,4 @@ public static void OnCoin(ConnectionBase connection, CoinEvent e)
 }
 ```
 
-And it's as simple as that. Please note that after your program exits your player information will not be saved. To learn how to save player data to hard memory skip to ****[Using Storage Providers](#using-storage-providers)****.
+And it's as simple as that. Please note that after your program exits your player information will not be saved. To learn how to save player data to hard memory skip to ***[Using Storage Providers](#using-storage-providers)***.
