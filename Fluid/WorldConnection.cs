@@ -258,6 +258,11 @@ namespace Fluid
                 block.Bind(this);
             }
 
+            if (blockThrottle < 0)
+            {
+                blockThrottle = 10;
+            }
+
             block.Upload();
             Thread.Sleep(blockThrottle);
         }
@@ -327,6 +332,11 @@ namespace Fluid
             if (!block.IsBinded)
             {
                 block.Bind(this);
+            }
+
+            if (blockThrottle < 0)
+            {
+                blockThrottle = 10;
             }
 
             m_UploadManager.QueueBlock(block, (int)blockThrottle);

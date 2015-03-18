@@ -57,8 +57,8 @@ namespace Fluid.Handlers
             if (!handled)
             {
                 Block old = world[x, y, layer];
-                if (old.ID == BlockIDS.Action.Coins.Gold ||
-                    old.ID == BlockIDS.Action.Coins.Blue)
+                if (old.ID == BlockIDs.Action.Coins.Gold ||
+                    old.ID == BlockIDs.Action.Coins.Blue)
                 {
                     if (blockId != old.ID)
                     {

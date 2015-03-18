@@ -126,32 +126,37 @@ namespace Fluid.Auth
         /// <summary>
         /// Log in through armorgames
         /// </summary>
-        /// <param name="config">The config</param>
-        /// <returns>The established client if valid; otherwise null</returns>
-        public Client LogIn(Config config)
+        /// <param name="config">The game configuration</param>
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        public void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback)
         {
             string loginCookie = GetArmorgamesLoginCookie();
             if (loginCookie == null)
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Could not load armorgames."));
+                return;
             }
 
             ArmorgamesFlashvars flashVars = GetFlashvars(loginCookie);
             if (flashVars == null)
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Could not load armorgames flashvars."));
+                return;
             }
 
             FluidClient guestClient = new FluidClient(new GuestAuth());
             if (!guestClient.LogIn())
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Could not login with guest client."));
+                return;
             }
 
             SecureConnection secureConnection = guestClient.GetSecureConnection();
             if (secureConnection == null)
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Could not login to everybodyedit's secure room."));
+                return;
             }
 
             secureConnection.SendAuth(flashVars.UserId, flashVars.AuthToken);
@@ -159,11 +164,12 @@ namespace Fluid.Auth
 
             if (armorGamesAuth.IsAuthenitcated())
             {
-                return PlayerIO.Connect(config.GameID, "secure", armorGamesAuth.UserID, armorGamesAuth.AuthToken, "armorgames");
+                PlayerIO.Connect(config.GameID, "secure", armorGamesAuth.UserID, armorGamesAuth.AuthToken, "armorgames", null, clientCallback, errorCallback);
             }
             else
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Invalid armorgames credentials."));
+                return;
             }
         }
 

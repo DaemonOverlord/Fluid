@@ -11,7 +11,8 @@ namespace Fluid
         /// Log's in to the game
         /// </summary>
         /// <param name="config">The game configuration</param>
-        /// <returns>PlayerIO Client</returns>
-        Client LogIn(Config config);
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback);
     }
 }

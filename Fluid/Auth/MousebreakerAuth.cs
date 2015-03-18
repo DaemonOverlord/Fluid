@@ -50,17 +50,19 @@ namespace Fluid.Auth
         /// <summary>
         /// Logs in with mouse breaker
         /// </summary>
-        /// <param name="config"></param>
-        /// <returns></returns>
-        public Client LogIn(Config config)
+        /// <param name="config">The config</param>
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        public void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback)
         {
             MousebreakerApiData apiData = GetAPIRequest();
             if (apiData == null)
             {
-                return null;
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Invalid or missing mousebreaker credentials."));
+                return;
             }
 
-            return PlayerIO.Connect(config.GameID, "secure", apiData.MBuid, apiData.MAuth, "mousebreaker");
+            PlayerIO.Connect(config.GameID, "secure", apiData.MBuid, apiData.MAuth, "mousebreaker", null, clientCallback, errorCallback);
         }
 
         /// <summary>

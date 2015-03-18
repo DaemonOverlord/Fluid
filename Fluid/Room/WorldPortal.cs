@@ -9,7 +9,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
         public WorldPortal(int x, int y, string targetId)
-            : base(BlockIDS.Action.Portals.World, Layer.Foreground, x, y)
+            : base(BlockIDs.Action.Portals.World, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }
@@ -22,7 +22,7 @@
         /// <param name="y">The y coordinate</param>
         /// <param name="targetId">The target world id</param>
         public WorldPortal(WorldConnection worldCon, int x, int y, string targetId)
-            : base(worldCon, BlockIDS.Action.Portals.World, Layer.Foreground, x, y)
+            : base(worldCon, BlockIDs.Action.Portals.World, Layer.Foreground, x, y)
         {
             TargetID = targetId;
         }

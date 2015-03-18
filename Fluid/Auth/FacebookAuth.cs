@@ -151,15 +151,18 @@ namespace Fluid.Auth
         /// Log's in through facebook
         /// </summary>
         /// <param name="config">The config</param>
-        public Client LogIn(Config config)
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        public void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback)
         {
             string accessToken = GetAccessToken(Email, Password);
             if (accessToken != null)
             {
-                return PlayerIO.QuickConnect.FacebookOAuthConnect(config.GameID, accessToken, null, null);
+                PlayerIO.QuickConnect.FacebookOAuthConnect(config.GameID, accessToken, null, null, clientCallback, errorCallback);
+                return;
             }
 
-            return null;
+            errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Failed to login to facebook."));
         }
 
         /// <summary>

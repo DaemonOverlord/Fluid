@@ -48,10 +48,10 @@ namespace Fluid.Handlers
 
             switch (blockId)
             {
-                case BlockIDS.Action.Gates.BlueCoin:
-                case BlockIDS.Action.Doors.BlueCoin:
-                case BlockIDS.Action.Gates.GoldCoin:
-                case BlockIDS.Action.Doors.GoldCoin:
+                case BlockIDs.Action.Gates.BlueCoin:
+                case BlockIDs.Action.Doors.BlueCoin:
+                case BlockIDs.Action.Gates.GoldCoin:
+                case BlockIDs.Action.Doors.GoldCoin:
                     {
                         CoinBlock block = new CoinBlock(worldCon, blockId, x, y, arg)
                         {
@@ -73,8 +73,8 @@ namespace Fluid.Handlers
                         connectionBase.RaiseServerEvent<CoinBlockEvent>(coinBlockEvent);
                     }
                     break;
-                case BlockIDS.Action.Doors.Death:
-                case BlockIDS.Action.Gates.Death:
+                case BlockIDs.Action.Doors.Death:
+                case BlockIDs.Action.Gates.Death:
                     {
                         DeathBlock block = new DeathBlock(worldCon, blockId, x, y, arg)
                         {
@@ -96,9 +96,9 @@ namespace Fluid.Handlers
                         connectionBase.RaiseServerEvent<DeathBlockEvent>(deathBlockEvent);
                     }
                     break;
-                case BlockIDS.Action.Switches.Switch:
-                case BlockIDS.Action.Doors.Switch:
-                case BlockIDS.Action.Gates.Switch:
+                case BlockIDs.Action.Switches.Switch:
+                case BlockIDs.Action.Doors.Switch:
+                case BlockIDs.Action.Gates.Switch:
                     {
                         PurpleBlock block = new PurpleBlock(worldCon, blockId, x, y, arg)
                         {

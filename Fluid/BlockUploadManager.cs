@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fluid
 {
@@ -15,6 +16,7 @@ namespace Fluid
         private WorldConnection m_WorldConnection;
         private Thread m_uploadThread;
         private ManualResetEvent m_ResetEvent;
+        private ManualResetEvent m_TimeoutEvent;
 
         /// <summary>
         /// The event when blocks are finished being uploaded
@@ -59,6 +61,15 @@ namespace Fluid
                 m_ResetEvent.Dispose();
                 m_ResetEvent = null;
             }
+        }
+
+        /// <summary>
+        /// Waits for the blocks to be sent asynchronously
+        /// </summary>
+        /// <returns>The asynchronous task</returns>
+        public Task WaitForBlocksAsync()
+        {
+            return Task.Run(() => WaitForBlocks());
         }
 
         /// <summary>
@@ -117,14 +128,35 @@ namespace Fluid
         {
             try
             {
-                while (m_Queue.Count > 0 && m_WorldConnection.Connected)
+                while (m_Queue.Count > 0)
                 {
+                    if (!m_WorldConnection.Connected)
+                    {
+                        //Dont clear the queue or fire any events
+                        m_TimeoutEvent.Dispose();
+                        m_TimeoutEvent = null;
+                        return;
+                    }
+
                     //Send the most tasked block
                     BlockRequest send = GetNextInList();
                     if (send == null)
                     {
-                        m_Queue.Clear();
-                        break;
+                        //We've sent all blocks that we've missed and all in the queue
+                        //But it doesnt mean the queue is empty or is done yet
+                        //Start waiting for block events for a certain delay, if none are received the requests
+                        //were timed out and we need to resend
+                        if (!m_TimeoutEvent.WaitOne(375))
+                        {
+                            //Blocks timedout set all queue blocks as missed
+                            for (int i = 0; i < m_Queue.Count; i++)
+                            {
+                                m_Queue[i].SetMissed();
+                            }
+                        }
+
+                        m_TimeoutEvent.Reset();
+                        continue;
                     }
                     else if (send.Missed)
                     {
@@ -165,6 +197,12 @@ namespace Fluid
                 m_WorldConnection.Client.Log.Add(FluidLogCategory.Fail, ex.Message);
             }
 
+            //Dispose of timeout event
+            m_TimeoutEvent.Dispose();
+            m_TimeoutEvent = null;
+
+            //Clear the queue
+            m_Queue.Clear();
             if (OnQueueFinished != null)
             {
                 OnQueueFinished(this, EventArgs.Empty);
@@ -210,6 +248,7 @@ namespace Fluid
             m_uploadThread.Start();
 
             m_ResetEvent = new ManualResetEvent(false);
+            m_TimeoutEvent = new ManualResetEvent(false);
         }
 
         /// <summary>
@@ -249,8 +288,12 @@ namespace Fluid
             {
                 if (block.Placer.Id == m_WorldConnection.Me.Id)
                 {
-                    Block expected = m_Queue[0].Block;
+                    if (m_TimeoutEvent != null)
+                    {
+                        m_TimeoutEvent.Set();
+                    }
 
+                    Block expected = m_Queue[0].Block;
                     if (!block.EqualsBlock(expected))
                     {
                         lock (m_Queue)

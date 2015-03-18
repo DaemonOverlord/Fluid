@@ -191,18 +191,27 @@ namespace Fluid.Auth
         /// Log in through kongregate
         /// </summary>
         /// <param name="config">The config</param>
-        /// <returns>The established client if valid; otherwise null</returns>
-        public Client LogIn(Config config)
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        public void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback)
         {
             KongregateSession kongSession = GetNewKongregateSession();
 
             if (LoginToKongregate(kongSession))
             {
                 KongregatePlayerObject playerObject = GetPlayerObject(kongSession);
-                return PlayerIO.QuickConnect.KongregateConnect(config.GameID, playerObject.UserID, playerObject.GameAuthToken, null);
+                if (playerObject != null)
+                {
+                    PlayerIO.QuickConnect.KongregateConnect(config.GameID, playerObject.UserID, playerObject.GameAuthToken, null, clientCallback, errorCallback);
+                    return;
+                }
+
+                errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Failed to load kongregate authentication."));
+                return;
             }
 
-            return null;
+            errorCallback(new PlayerIOError(ErrorCode.ExternalError, "Failed to login to kongregate."));
+            return;
         }
 
         /// <summary>

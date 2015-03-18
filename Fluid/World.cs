@@ -361,8 +361,8 @@ namespace Fluid
                 for (int y = 0; y < Height; y++)
                 {
                     Block current = m_WorldData[x, y, 0];
-                    if (current.ID == BlockIDS.Action.Portals.Portal ||
-                        current.ID == BlockIDS.Action.Portals.InvisPortal)
+                    if (current.ID == BlockIDs.Action.Portals.Portal ||
+                        current.ID == BlockIDs.Action.Portals.InvisPortal)
                     {
                         Portal portal = (Portal)current;
                         if (portal.SourceID == id)
@@ -413,7 +413,7 @@ namespace Fluid
                         m_WorldData[x, y, 0] = new Block(workareaId, Layer.Foreground, x, y);
                     }
 
-                    m_WorldData[x, y, 1] = new Block(BlockIDS.Action.Gravity.Down, Layer.Background, x, y);
+                    m_WorldData[x, y, 1] = new Block(BlockIDs.Action.Gravity.Down, Layer.Background, x, y);
                 }
             }
         }
@@ -459,7 +459,7 @@ namespace Fluid
                 {
                     for (int layer = 0; layer < 2; layer++)
                     {
-                        m_WorldData[x, y, layer] = new Block(BlockIDS.Action.Gravity.Down, (Layer)layer, x, y);
+                        m_WorldData[x, y, layer] = new Block(BlockIDs.Action.Gravity.Down, (Layer)layer, x, y);
                     }
                 }
             }
@@ -572,17 +572,17 @@ namespace Fluid
 
                             switch (blockId)
                             {
-                                case BlockIDS.Decor.Scifi2013.Blue:
-                                case BlockIDS.Decor.Scifi2013.BlueDiagonal:
-                                case BlockIDS.Decor.Scifi2013.Gold:
-                                case BlockIDS.Decor.Scifi2013.GoldDiagonal:
-                                case BlockIDS.Decor.Scifi2013.Green:
-                                case BlockIDS.Decor.Scifi2013.GreenDiagonal:
-                                case BlockIDS.Action.Hazards.Spike:
-                                case BlockIDS.Blocks.OneWay.Cyan:
-                                case BlockIDS.Blocks.OneWay.Pink:
-                                case BlockIDS.Blocks.OneWay.Orange:
-                                case BlockIDS.Blocks.OneWay.Gold:
+                                case BlockIDs.Decor.Scifi2013.Blue:
+                                case BlockIDs.Decor.Scifi2013.BlueDiagonal:
+                                case BlockIDs.Decor.Scifi2013.Gold:
+                                case BlockIDs.Decor.Scifi2013.GoldDiagonal:
+                                case BlockIDs.Decor.Scifi2013.Green:
+                                case BlockIDs.Decor.Scifi2013.GreenDiagonal:
+                                case BlockIDs.Action.Hazards.Spike:
+                                case BlockIDs.Blocks.OneWay.Cyan:
+                                case BlockIDs.Blocks.OneWay.Pink:
+                                case BlockIDs.Blocks.OneWay.Orange:
+                                case BlockIDs.Blocks.OneWay.Gold:
                                     {
                                         Rotation rotation = (Rotation)blockData.GetUInt("rotation");
 
@@ -590,10 +590,10 @@ namespace Fluid
                                         SetBlock(rotatableBlock);
                                     }
                                     break;
-                                case BlockIDS.Action.Doors.GoldCoin:
-                                case BlockIDS.Action.Gates.GoldCoin:
-                                case BlockIDS.Action.Doors.BlueCoin:
-                                case BlockIDS.Action.Gates.BlueCoin:
+                                case BlockIDs.Action.Doors.GoldCoin:
+                                case BlockIDs.Action.Gates.GoldCoin:
+                                case BlockIDs.Action.Doors.BlueCoin:
+                                case BlockIDs.Action.Gates.BlueCoin:
                                     {
                                         uint goal = blockData.GetUInt("goal");
 
@@ -601,8 +601,8 @@ namespace Fluid
                                         SetBlock(door);
                                     }
                                     break;
-                                case BlockIDS.Action.Music.Drum:
-                                case BlockIDS.Action.Music.Piano:
+                                case BlockIDs.Action.Music.Drum:
+                                case BlockIDs.Action.Music.Piano:
                                     {
                                         uint musicId = blockData.GetUInt("id");
 
@@ -610,8 +610,8 @@ namespace Fluid
                                         SetBlock(musicBlock);
                                     }
                                     break;
-                                case BlockIDS.Action.Portals.Portal:
-                                case BlockIDS.Action.Portals.InvisPortal:
+                                case BlockIDs.Action.Portals.Portal:
+                                case BlockIDs.Action.Portals.InvisPortal:
                                     {
                                         Rotation rotation = (Rotation)blockData.GetUInt("rotation");
                                         uint portalid = blockData.GetUInt("id");
@@ -621,9 +621,9 @@ namespace Fluid
                                         SetBlock(portal);
                                     }
                                     break;
-                                case BlockIDS.Action.Switches.Switch:
-                                case BlockIDS.Action.Doors.Switch:
-                                case BlockIDS.Action.Gates.Switch:
+                                case BlockIDs.Action.Switches.Switch:
+                                case BlockIDs.Action.Doors.Switch:
+                                case BlockIDs.Action.Gates.Switch:
                                     {
                                         uint goal = 0;
                                         if (blockData.Contains("goal"))
@@ -635,8 +635,8 @@ namespace Fluid
                                         SetBlock(purpleBlock);
                                     }
                                     break;
-                                case BlockIDS.Action.Doors.Death:
-                                case BlockIDS.Action.Gates.Death:
+                                case BlockIDs.Action.Doors.Death:
+                                case BlockIDs.Action.Gates.Death:
                                     {
                                         uint goal = blockData.GetUInt("goal");
 
@@ -644,7 +644,7 @@ namespace Fluid
                                         SetBlock(deathBlock);
                                     }
                                     break;
-                                case BlockIDS.Action.Portals.World:
+                                case BlockIDs.Action.Portals.World:
                                     {
                                         string targetId = blockData.GetString("target");
 
@@ -652,7 +652,7 @@ namespace Fluid
                                         SetBlock(worldPortal);
                                     }
                                     break;
-                                case BlockIDS.Action.Sign.Block:
+                                case BlockIDs.Action.Sign.Block:
                                     {
                                         string text = blockData.GetString("text");
 
@@ -660,7 +660,7 @@ namespace Fluid
                                         SetBlock(textBlock);
                                     }
                                     break;
-                                case BlockIDS.Action.Admin.Text:
+                                case BlockIDs.Action.Admin.Text:
                                     {
                                         string text = blockData.GetString("text");
                                         if (blockData.Contains("text_color"))
@@ -736,17 +736,17 @@ namespace Fluid
 
                     switch (blockId)
                     {
-                        case BlockIDS.Decor.Scifi2013.Blue:
-                        case BlockIDS.Decor.Scifi2013.BlueDiagonal:
-                        case BlockIDS.Decor.Scifi2013.Gold:
-                        case BlockIDS.Decor.Scifi2013.GoldDiagonal:
-                        case BlockIDS.Decor.Scifi2013.Green:
-                        case BlockIDS.Decor.Scifi2013.GreenDiagonal:
-                        case BlockIDS.Action.Hazards.Spike:
-                        case BlockIDS.Blocks.OneWay.Cyan:
-                        case BlockIDS.Blocks.OneWay.Pink:
-                        case BlockIDS.Blocks.OneWay.Orange:
-                        case BlockIDS.Blocks.OneWay.Gold:
+                        case BlockIDs.Decor.Scifi2013.Blue:
+                        case BlockIDs.Decor.Scifi2013.BlueDiagonal:
+                        case BlockIDs.Decor.Scifi2013.Gold:
+                        case BlockIDs.Decor.Scifi2013.GoldDiagonal:
+                        case BlockIDs.Decor.Scifi2013.Green:
+                        case BlockIDs.Decor.Scifi2013.GreenDiagonal:
+                        case BlockIDs.Action.Hazards.Spike:
+                        case BlockIDs.Blocks.OneWay.Cyan:
+                        case BlockIDs.Blocks.OneWay.Pink:
+                        case BlockIDs.Blocks.OneWay.Orange:
+                        case BlockIDs.Blocks.OneWay.Gold:
                             {
                                 Rotation rotation = (Rotation)message.GetUInt(index++);
 
@@ -757,10 +757,10 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Doors.GoldCoin:
-                        case BlockIDS.Action.Gates.GoldCoin:
-                        case BlockIDS.Action.Doors.BlueCoin:
-                        case BlockIDS.Action.Gates.BlueCoin:
+                        case BlockIDs.Action.Doors.GoldCoin:
+                        case BlockIDs.Action.Gates.GoldCoin:
+                        case BlockIDs.Action.Doors.BlueCoin:
+                        case BlockIDs.Action.Gates.BlueCoin:
                             {
                                 uint goal = message.GetUInt(index++);
 
@@ -771,8 +771,8 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Music.Drum:
-                        case BlockIDS.Action.Music.Piano:
+                        case BlockIDs.Action.Music.Drum:
+                        case BlockIDs.Action.Music.Piano:
                             {
                                 uint musicId = message.GetUInt(index++);
 
@@ -783,8 +783,8 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Portals.Portal:
-                        case BlockIDS.Action.Portals.InvisPortal:
+                        case BlockIDs.Action.Portals.Portal:
+                        case BlockIDs.Action.Portals.InvisPortal:
                             {
                                 Rotation rotation = (Rotation)message.GetUInt(index++);
                                 uint portalid = message.GetUInt(index++);
@@ -797,9 +797,9 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Switches.Switch:
-                        case BlockIDS.Action.Doors.Switch:
-                        case BlockIDS.Action.Gates.Switch:
+                        case BlockIDs.Action.Switches.Switch:
+                        case BlockIDs.Action.Doors.Switch:
+                        case BlockIDs.Action.Gates.Switch:
                             {
                                 uint goal = message.GetUInt(index++);
 
@@ -810,8 +810,8 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Doors.Death:
-                        case BlockIDS.Action.Gates.Death:
+                        case BlockIDs.Action.Doors.Death:
+                        case BlockIDs.Action.Gates.Death:
                             {
                                 uint goal = message.GetUInt(index++);
 
@@ -822,7 +822,7 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Portals.World:
+                        case BlockIDs.Action.Portals.World:
                             {
                                 string targetId = message.GetString(index++);
 
@@ -833,7 +833,7 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Sign.Block:
+                        case BlockIDs.Action.Sign.Block:
                             {
                                 string text = message.GetString(index++);
 
@@ -844,7 +844,7 @@ namespace Fluid
                                 }
                             }
                             break;
-                        case BlockIDS.Action.Admin.Text:
+                        case BlockIDs.Action.Admin.Text:
                             {
                                 string text = message.GetString(index++);
                                 string hexColor = message.GetString(index++);

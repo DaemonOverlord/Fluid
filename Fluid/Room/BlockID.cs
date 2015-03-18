@@ -11,7 +11,7 @@
     /// <summary>
     /// The list of organized block ids
     /// </summary>
-    public static class BlockIDS
+    public static class BlockIDs
     {
         /// <summary>
         /// The blocks tab
@@ -29,9 +29,9 @@
                 public const BlockID Gray = (BlockID)9;
 
                 /// <summary>
-                /// The dark blue basic block
+                /// The blue basic block
                 /// </summary>
-                public const BlockID DarkBlue = (BlockID)10;
+                public const BlockID Blue = (BlockID)10;
 
                 /// <summary>
                 /// The purple basic block
@@ -66,7 +66,7 @@
                 /// <summary>
                 /// The black basic block
                 /// </summary>
-                public const BlockID Black = (BlockID)16;
+                public const BlockID Black = (BlockID)182;
             }
 
             /// <summary>

@@ -201,10 +201,10 @@ namespace Fluid.Physics
         {
             switch (blockId)
             {
-                case BlockIDS.Action.Ladders.Chain:
-                case BlockIDS.Action.Ladders.HorizontalVine:
-                case BlockIDS.Action.Ladders.Ladder:
-                case BlockIDS.Action.Ladders.VerticalVine:
+                case BlockIDs.Action.Ladders.Chain:
+                case BlockIDs.Action.Ladders.HorizontalVine:
+                case BlockIDs.Action.Ladders.Ladder:
+                case BlockIDs.Action.Ladders.VerticalVine:
                     return true;
             }
 
@@ -251,10 +251,10 @@ namespace Fluid.Physics
                 case (BlockID)194:
                 case (BlockID)211:
                 case (BlockID)216:
-                case BlockIDS.Blocks.OneWay.Cyan:
-                case BlockIDS.Blocks.OneWay.Gold:
-                case BlockIDS.Blocks.OneWay.Orange:
-                case BlockIDS.Blocks.OneWay.Pink:              
+                case BlockIDs.Blocks.OneWay.Cyan:
+                case BlockIDs.Blocks.OneWay.Gold:
+                case BlockIDs.Blocks.OneWay.Orange:
+                case BlockIDs.Blocks.OneWay.Pink:              
                     return true;
             }
 
@@ -286,7 +286,7 @@ namespace Fluid.Physics
             Block on = World[cx, cy, Layer.Foreground];
 
             worldPlayer.m_current = (int)on.ID;
-            if (!worldPlayer.IsGod() && (worldPlayer.Current == BlockIDS.Action.Portals.Portal || worldPlayer.Current == BlockIDS.Action.Portals.InvisPortal))
+            if (!worldPlayer.IsGod() && (worldPlayer.Current == BlockIDs.Action.Portals.Portal || worldPlayer.Current == BlockIDs.Action.Portals.InvisPortal))
             {
                 Portal portal = (Portal)on;
 
@@ -527,48 +527,48 @@ namespace Fluid.Physics
             {
                 switch (worldPlayer.Current)
                 {
-                    case BlockIDS.Action.Gravity.Left:
-                    case BlockIDS.Action.Gravity.InvisLeft:
+                    case BlockIDs.Action.Gravity.Left:
+                    case BlockIDs.Action.Gravity.InvisLeft:
                         worldPlayer.m_morx = -Gravity;
                         worldPlayer.m_mory = 0;
                         break;
-                    case BlockIDS.Action.Gravity.Up:
-                    case BlockIDS.Action.Gravity.InvisUp:
+                    case BlockIDs.Action.Gravity.Up:
+                    case BlockIDs.Action.Gravity.InvisUp:
                         worldPlayer.m_morx = 0;
                         worldPlayer.m_mory = -Gravity;
                         break;
-                    case BlockIDS.Action.Gravity.Right:
-                    case BlockIDS.Action.Gravity.InvisRight:
+                    case BlockIDs.Action.Gravity.Right:
+                    case BlockIDs.Action.Gravity.InvisRight:
                         worldPlayer.m_morx = Gravity;
                         worldPlayer.m_mory = 0;
                         break;
-                    case BlockIDS.Action.Boost.Left:
-                    case BlockIDS.Action.Boost.Right:
-                    case BlockIDS.Action.Boost.Up:
-                    case BlockIDS.Action.Boost.Down:
-                    case BlockIDS.Action.Ladders.Chain:
-                    case BlockIDS.Action.Ladders.HorizontalVine:
-                    case BlockIDS.Action.Ladders.Ladder:
-                    case BlockIDS.Action.Ladders.VerticalVine:
-                    case BlockIDS.Action.Gravity.Dot:
-                    case BlockIDS.Action.Gravity.InvisDot:
+                    case BlockIDs.Action.Boost.Left:
+                    case BlockIDs.Action.Boost.Right:
+                    case BlockIDs.Action.Boost.Up:
+                    case BlockIDs.Action.Boost.Down:
+                    case BlockIDs.Action.Ladders.Chain:
+                    case BlockIDs.Action.Ladders.HorizontalVine:
+                    case BlockIDs.Action.Ladders.Ladder:
+                    case BlockIDs.Action.Ladders.VerticalVine:
+                    case BlockIDs.Action.Gravity.Dot:
+                    case BlockIDs.Action.Gravity.InvisDot:
                         worldPlayer.m_morx = 0;
                         worldPlayer.m_mory = 0;
                         break;
-                    case BlockIDS.Action.Liquids.Water:
+                    case BlockIDs.Action.Liquids.Water:
                         worldPlayer.m_morx = 0;
                         worldPlayer.m_mory = WaterBuoyancy;
                         break;
-                    case BlockIDS.Action.Liquids.Mud:
+                    case BlockIDs.Action.Liquids.Mud:
                         worldPlayer.m_morx = 0;
                         worldPlayer.m_mory = MudBuoyancy;
                         break;
-                    case BlockIDS.Action.Liquids.Lava:
+                    case BlockIDs.Action.Liquids.Lava:
                         worldPlayer.m_morx = 0;
                         worldPlayer.m_mory = LavaBuoyancy;
                         break;
-                    case BlockIDS.Action.Hazards.Fire:
-                    case BlockIDS.Action.Hazards.Spike:
+                    case BlockIDs.Action.Hazards.Fire:
+                    case BlockIDs.Action.Hazards.Spike:
                         if (!worldPlayer.IsDead && !worldPlayer.HasProtection)
                         {
                             worldPlayer.KillPlayerInternal();
@@ -582,43 +582,43 @@ namespace Fluid.Physics
 
                 switch ((BlockID)worldPlayer.m_delayed)
                 {
-                    case BlockIDS.Action.Gravity.Left:
-                    case BlockIDS.Action.Gravity.InvisLeft:
+                    case BlockIDs.Action.Gravity.Left:
+                    case BlockIDs.Action.Gravity.InvisLeft:
                         worldPlayer.m_mox = -Gravity;
                         worldPlayer.m_moy = 0;
                         break;
-                    case BlockIDS.Action.Gravity.Up:
-                    case BlockIDS.Action.Gravity.InvisUp:
+                    case BlockIDs.Action.Gravity.Up:
+                    case BlockIDs.Action.Gravity.InvisUp:
                         worldPlayer.m_mox = 0;
                         worldPlayer.m_moy = -Gravity;
                         break;
-                    case BlockIDS.Action.Gravity.Right:
-                    case BlockIDS.Action.Gravity.InvisRight:
+                    case BlockIDs.Action.Gravity.Right:
+                    case BlockIDs.Action.Gravity.InvisRight:
                         worldPlayer.m_mox = Gravity;
                         worldPlayer.m_moy = 0;
                         break;
-                    case BlockIDS.Action.Boost.Left:
-                    case BlockIDS.Action.Boost.Right:
-                    case BlockIDS.Action.Boost.Up:
-                    case BlockIDS.Action.Boost.Down:
-                    case BlockIDS.Action.Ladders.Chain:
-                    case BlockIDS.Action.Ladders.HorizontalVine:
-                    case BlockIDS.Action.Ladders.Ladder:
-                    case BlockIDS.Action.Ladders.VerticalVine:
-                    case BlockIDS.Action.Gravity.Dot:
-                    case BlockIDS.Action.Gravity.InvisDot:
+                    case BlockIDs.Action.Boost.Left:
+                    case BlockIDs.Action.Boost.Right:
+                    case BlockIDs.Action.Boost.Up:
+                    case BlockIDs.Action.Boost.Down:
+                    case BlockIDs.Action.Ladders.Chain:
+                    case BlockIDs.Action.Ladders.HorizontalVine:
+                    case BlockIDs.Action.Ladders.Ladder:
+                    case BlockIDs.Action.Ladders.VerticalVine:
+                    case BlockIDs.Action.Gravity.Dot:
+                    case BlockIDs.Action.Gravity.InvisDot:
                         worldPlayer.m_mox = 0;
                         worldPlayer.m_moy = 0;
                         break;
-                    case BlockIDS.Action.Liquids.Water:
+                    case BlockIDs.Action.Liquids.Water:
                         worldPlayer.m_mox = 0;
                         worldPlayer.m_moy = WaterBuoyancy;
                         break;
-                    case BlockIDS.Action.Liquids.Mud:
+                    case BlockIDs.Action.Liquids.Mud:
                         worldPlayer.m_mox = 0;
                         worldPlayer.m_moy = MudBuoyancy;
                         break;
-                    case BlockIDS.Action.Liquids.Lava:
+                    case BlockIDs.Action.Liquids.Lava:
                         worldPlayer.m_mox = 0;
                         worldPlayer.m_moy = LavaBuoyancy;
                         break;
@@ -669,11 +669,11 @@ namespace Fluid.Physics
                 {
                     worldPlayer.m_speedX *= NoModifierDrag;
                 }
-                else if (worldPlayer.Current == BlockIDS.Action.Liquids.Water && !isGodMode)
+                else if (worldPlayer.Current == BlockIDs.Action.Liquids.Water && !isGodMode)
                 {
                     worldPlayer.m_speedX *= WaterDrag;
                 }
-                else if (worldPlayer.Current == BlockIDS.Action.Liquids.Mud && !isGodMode)
+                else if (worldPlayer.Current == BlockIDs.Action.Liquids.Mud && !isGodMode)
                 {
                     worldPlayer.m_speedX *= MudDrag;
                 }
@@ -702,11 +702,11 @@ namespace Fluid.Physics
                 {
                     worldPlayer.m_speedY *= NoModifierDrag;
                 }
-                else if (worldPlayer.Current == BlockIDS.Action.Liquids.Water && !isGodMode) 
+                else if (worldPlayer.Current == BlockIDs.Action.Liquids.Water && !isGodMode) 
                 {
                     worldPlayer.m_speedY *= WaterDrag;
                 }
-                else if (worldPlayer.Current == BlockIDS.Action.Liquids.Mud && !isGodMode)
+                else if (worldPlayer.Current == BlockIDs.Action.Liquids.Mud && !isGodMode)
                 {
                     worldPlayer.m_speedY *= MudDrag;
                 }
@@ -728,16 +728,16 @@ namespace Fluid.Physics
             {
                 switch (worldPlayer.Current)
                 {
-                    case BlockIDS.Action.Boost.Left:
+                    case BlockIDs.Action.Boost.Left:
                         worldPlayer.m_speedX = -Boost;
                         break;
-                    case BlockIDS.Action.Boost.Right:
+                    case BlockIDs.Action.Boost.Right:
                         worldPlayer.m_speedX = Boost;
                         break;
-                    case BlockIDS.Action.Boost.Up:
+                    case BlockIDs.Action.Boost.Up:
                         worldPlayer.m_speedY = -Boost;
                         break;
-                    case BlockIDS.Action.Boost.Down:
+                    case BlockIDs.Action.Boost.Down:
                         worldPlayer.m_speedY = Boost;
                         break;
                 }
@@ -776,7 +776,7 @@ namespace Fluid.Physics
                 bool coinsChanged = false;
                 switch (worldPlayer.Current)
                 {
-                    case BlockIDS.Action.Coins.Gold:
+                    case BlockIDs.Action.Coins.Gold:
                         lock (worldPlayer.CollectedGoldCoins)
                         {                            
                             bool alreadyCollected = false;
@@ -797,7 +797,7 @@ namespace Fluid.Physics
                             }
                         }
                         break;
-                    case BlockIDS.Action.Coins.Blue:
+                    case BlockIDs.Action.Coins.Blue:
                         lock (worldPlayer.CollectedBlueCoins)
                         {                         
                             bool alreadyCollected = false;
@@ -824,54 +824,54 @@ namespace Fluid.Physics
                 {
                     switch (worldPlayer.Current)
                     {
-                        case BlockIDS.Action.Crowns.Crown:
+                        case BlockIDs.Action.Crowns.Crown:
                             m_WorldConnection.GetCrown(cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Red:
+                        case BlockIDs.Action.Keys.Red:
                             m_WorldConnection.ActivateKey(Key.Red, cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Green:
+                        case BlockIDs.Action.Keys.Green:
                             m_WorldConnection.ActivateKey(Key.Green, cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Blue:
+                        case BlockIDs.Action.Keys.Blue:
                             m_WorldConnection.ActivateKey(Key.Blue, cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Cyan:
+                        case BlockIDs.Action.Keys.Cyan:
                             m_WorldConnection.ActivateKey(Key.Cyan, cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Magenta:
+                        case BlockIDs.Action.Keys.Magenta:
                             m_WorldConnection.ActivateKey(Key.Magenta, cx, cy);
                             break;
-                        case BlockIDS.Action.Keys.Yellow:
+                        case BlockIDs.Action.Keys.Yellow:
                             m_WorldConnection.ActivateKey(Key.Yellow, cx, cy);
                             break;
-                        case BlockIDS.Action.Diamond.Block:
+                        case BlockIDs.Action.Diamond.Block:
                             m_WorldConnection.TouchDiamond(cx, cy);
                             break;
-                        case BlockIDS.Action.Cake.Block:
+                        case BlockIDs.Action.Cake.Block:
                             m_WorldConnection.TouchCake(cx, cy);
                             break;
-                        case BlockIDS.Action.Hologram.Block:
+                        case BlockIDs.Action.Hologram.Block:
                             m_WorldConnection.TouchHologram(cx, cy);
                             break;
-                        case BlockIDS.Action.Tools.Checkpoint:
+                        case BlockIDs.Action.Tools.Checkpoint:
                             m_WorldConnection.TouchCheckpoint(cx, cy);
                             break;
-                        case BlockIDS.Action.Tools.Trophy:
+                        case BlockIDs.Action.Tools.Trophy:
                             m_WorldConnection.GetSilverCrown(cx, cy);
                             break;
                     }
 
                     switch (worldPlayer.Current)
                     {
-                        case BlockIDS.Action.Switches.Switch:
+                        case BlockIDs.Action.Switches.Switch:
                             if (World[cx, cy, Layer.Foreground] is PurpleBlock)
                             {
                                 PurpleBlock block = (PurpleBlock)World[cx, cy, Layer.Foreground];
                                 worldPlayer.m_switches[block.SwitchID] = !worldPlayer.m_switches[block.SwitchID];
                             }
                             break;
-                        case BlockIDS.Action.Tools.Checkpoint:
+                        case BlockIDs.Action.Tools.Checkpoint:
                             if (!isGodMode)
                             {
                                 worldPlayer.LastCheckpoint = World[cx, cy, Layer.Foreground];
@@ -897,9 +897,9 @@ namespace Fluid.Physics
             var imx = ((int)worldPlayer.m_speedX << 8);
             var imy = ((int)worldPlayer.m_speedY << 8);
 
-            if (worldPlayer.Current != BlockIDS.Action.Liquids.Water &&
-                worldPlayer.Current != BlockIDS.Action.Liquids.Mud &&
-                worldPlayer.Current != BlockIDS.Action.Liquids.Lava &&
+            if (worldPlayer.Current != BlockIDs.Action.Liquids.Water &&
+                worldPlayer.Current != BlockIDs.Action.Liquids.Mud &&
+                worldPlayer.Current != BlockIDs.Action.Liquids.Lava &&
                 !isGodMode)
             {
                 if (imx == 0)
@@ -1043,7 +1043,7 @@ namespace Fluid.Physics
                                 rot = (uint)rotatableBlock.Rotation;
                             }
 
-                            if (tileId == BlockIDS.Blocks.OneWay.Cyan || tileId == BlockIDS.Blocks.OneWay.Gold || tileId == BlockIDS.Blocks.OneWay.Orange || tileId == BlockIDS.Blocks.OneWay.Pink)
+                            if (tileId == BlockIDs.Blocks.OneWay.Cyan || tileId == BlockIDs.Blocks.OneWay.Gold || tileId == BlockIDs.Blocks.OneWay.Orange || tileId == BlockIDs.Blocks.OneWay.Pink)
                             {
                                 if ((p.SpeedY < 0 || a <= p.m_overlapy) && rot == 1)
                                 {
@@ -1105,91 +1105,91 @@ namespace Fluid.Physics
 
                         switch (tileId)
                         {
-                            case BlockIDS.Action.Doors.Red:
+                            case BlockIDs.Action.Doors.Red:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Red))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Green:
+                            case BlockIDs.Action.Doors.Green:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Green))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Blue:
+                            case BlockIDs.Action.Doors.Blue:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Blue))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Red:
+                            case BlockIDs.Action.Gates.Red:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Red))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Green:
+                            case BlockIDs.Action.Gates.Green:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Green))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Blue:
+                            case BlockIDs.Action.Gates.Blue:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Blue))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Timed:
+                            case BlockIDs.Action.Doors.Timed:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.TimeDoor))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Timed:
+                            case BlockIDs.Action.Gates.Timed:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.TimeDoor))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Cyan:
+                            case BlockIDs.Action.Doors.Cyan:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Cyan))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Magenta:
+                            case BlockIDs.Action.Doors.Magenta:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Magenta))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Yellow:
+                            case BlockIDs.Action.Doors.Yellow:
                                 if (m_WorldConnection.Keys.IsKeyActive(Key.Yellow))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Cyan:
+                            case BlockIDs.Action.Gates.Cyan:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Cyan))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Magenta:
+                            case BlockIDs.Action.Gates.Magenta:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Magenta))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Yellow:
+                            case BlockIDs.Action.Gates.Yellow:
                                 if (m_WorldConnection.Keys.IsKeyHidden(Key.Yellow))
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Switch:
+                            case BlockIDs.Action.Doors.Switch:
                                 {
                                     PurpleBlock purpleBlock = (PurpleBlock)World[x, y, Layer.Foreground];
 
@@ -1199,7 +1199,7 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Switch:
+                            case BlockIDs.Action.Gates.Switch:
                                 {
                                     PurpleBlock purpleBlock = (PurpleBlock)World[x, y, Layer.Foreground];
 
@@ -1209,7 +1209,7 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Death:
+                            case BlockIDs.Action.Doors.Death:
                                 {
                                     DeathBlock deathBlock = (DeathBlock)World[x, y, Layer.Foreground];
 
@@ -1219,7 +1219,7 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Death:
+                            case BlockIDs.Action.Gates.Death:
                                 {
                                     DeathBlock deathBlock = (DeathBlock)World[x, y, Layer.Foreground];
 
@@ -1229,20 +1229,20 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.BuildersClub:
+                            case BlockIDs.Action.Doors.BuildersClub:
                                 if (p.HasBuildersClub)
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.BuildersClub:
+                            case BlockIDs.Action.Gates.BuildersClub:
                                 if (!p.HasBuildersClub)
                                 {
                                     continue;
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.BlueCoin:
-                            case BlockIDS.Action.Doors.GoldCoin:
+                            case BlockIDs.Action.Doors.BlueCoin:
+                            case BlockIDs.Action.Doors.GoldCoin:
                                 {
                                     CoinBlock coinBlock = (CoinBlock)World[x, y, Layer.Foreground];
 
@@ -1252,8 +1252,8 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.BlueCoin:
-                            case BlockIDS.Action.Gates.GoldCoin:
+                            case BlockIDs.Action.Gates.BlueCoin:
+                            case BlockIDs.Action.Gates.GoldCoin:
                                 {
                                     CoinBlock coinBlock = (CoinBlock)World[x, y, Layer.Foreground];
 
@@ -1263,7 +1263,7 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Gates.Zombie:
+                            case BlockIDs.Action.Gates.Zombie:
                                 {
                                     if (p.HasPotionActive(Potion.Zombie))
                                     {
@@ -1271,7 +1271,7 @@ namespace Fluid.Physics
                                     }
                                 }
                                 break;
-                            case BlockIDS.Action.Doors.Zombie:
+                            case BlockIDs.Action.Doors.Zombie:
                                 {
                                     if (!p.HasPotionActive(Potion.Zombie))
                                     {
@@ -1368,7 +1368,7 @@ namespace Fluid.Physics
         {
             foreach (KeyValuePair<int, WorldPlayer> playerNode in m_WorldConnection.Players.GetList())
             {
-                if (block.ID == BlockIDS.Action.Coins.Gold)
+                if (block.ID == BlockIDs.Action.Coins.Gold)
                 {
                     for (int i = 0; i < playerNode.Value.CollectedGoldCoins.Count; i++)
                     {
@@ -1379,7 +1379,7 @@ namespace Fluid.Physics
                         }
                     }
                 }
-                else if (block.ID == BlockIDS.Action.Coins.Blue)
+                else if (block.ID == BlockIDs.Action.Coins.Blue)
                 {
                     for (int i = 0; i < playerNode.Value.CollectedBlueCoins.Count; i++)
                     {

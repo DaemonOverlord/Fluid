@@ -5,10 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fluid
 {
+    /// <summary>
+    /// The client used for logging in to the game
+    /// </summary>
     public sealed class FluidClient
     {
         private bool m_LoggedIn = false;
@@ -21,6 +25,7 @@ namespace Fluid
 
         private Player m_Player;
         private Client m_Client;
+        private ManualResetEvent m_LoginHandle;
 
         /// <summary>
         /// Gets the authentication used to log in.
@@ -462,6 +467,26 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Event handler for when a client is created
+        /// </summary>
+        /// <param name="client">The created client</param>
+        internal void ClientCreated(Client client)
+        {
+            this.m_Client = client;
+            m_LoginHandle.Set();
+        }
+
+        /// <summary>
+        /// Event handler for when a playerio error is received
+        /// </summary>
+        /// <param name="error">The playerio error</param>
+        internal void PlayerIOErrorReceived(PlayerIOError error)
+        {
+            m_Log.Add(FluidLogCategory.Fail, error.Message);
+            m_LoginHandle.Set();
+        }
+
+        /// <summary>
         /// Log's in to the game
         /// </summary>
         /// <returns>True if logged in successfully; otherwise false</returns>
@@ -482,10 +507,13 @@ namespace Fluid
         {
             if (m_Client == null)
             {
-                m_Client = m_Toolbelt.RunSafe<Client>(() => Auth.LogIn(m_Config));
+                m_LoginHandle = new ManualResetEvent(false);
+                Auth.LogIn(m_Config, new Callback<Client>(ClientCreated), new Callback<PlayerIOError>(PlayerIOErrorReceived));
+
+                m_LoginHandle.WaitOne(10000);
                 if (m_Client == null)
                 {
-                    m_Log.Add(FluidLogCategory.Fail, "Authentication failed.");
+                    //Error should be logged from PlayerIOErrorReceived
                     return false;
                 }
 

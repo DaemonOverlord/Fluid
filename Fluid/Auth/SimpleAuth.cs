@@ -18,9 +18,11 @@ namespace Fluid.Auth
         /// Log's In to everybody edits
         /// </summary>
         /// <param name="config">The game configuration</param>
-        public Client LogIn(Config config)
+        /// <param name="clientCallback">The client success callback</param>
+        /// <param name="errorCallback">The playerio error callback</param>
+        public void LogIn(Config config, Callback<Client> clientCallback, Callback<PlayerIOError> errorCallback)
         {
-            return PlayerIO.QuickConnect.SimpleConnect(config.GameID, Email, Password, null);
+            PlayerIO.QuickConnect.SimpleConnect(config.GameID, Email, Password, null, clientCallback, errorCallback);
         }
 
         /// <summary>
