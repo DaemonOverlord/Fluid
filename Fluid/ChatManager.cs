@@ -83,8 +83,9 @@ namespace Fluid
         /// </summary>
         /// <param name="message">The message</param>
         /// <param name="length">Segment length</param>
+        /// <param name="offset">Offset length used for adding unique characters</param>
         /// <returns>The message segments</returns>
-        internal List<string> SplitMessage(string message, int length)
+        internal List<string> SplitMessage(string message, int length, int offset)
         {
             List<string> messages = new List<string>();
 
@@ -109,14 +110,61 @@ namespace Fluid
 
             if (currentMessage.Length > 0)
             {
-                while (GetCount(currentMessage.ToString()) >= 4)
-                {
-                    char rnd = m_Ext[m_Random.Next(m_Ext.Length)];
-                    currentMessage.Append(rnd);
-                }
-
                 messages.Add(currentMessage.ToString());
             }
+
+            string overlapped = null;
+            for (int j = 0; j < messages.Count; j++)
+            {
+                string current = (overlapped == null) ? messages[j].Trim() : messages[j].Insert(0, overlapped).Trim();
+
+                int overlap = current.Length - (length - offset);
+                if (overlap <= 0)
+                {
+                    overlapped = null;
+                    messages[j] = current;
+                    continue;
+                }
+
+                while (overlap > 0)
+                {
+                    string[] words = current.Split(' ');
+                    if (words.Length != 0)
+                    {
+                        int index = current.LastIndexOf(words[words.Length - 1]);
+
+                        overlapped = current.Substring(index);
+                        current = current.Substring(0, index);
+                    }
+                    else
+                    {
+                        //Remove exact amount of characters
+                        overlapped = current.Substring(current.Length - overlap);
+                        current = current.Substring(0, current.Length - overlap);
+                    }
+
+                    overlap = current.Length - (length - offset);
+                }
+
+                messages[j] = current.Trim();
+            }
+
+            if (overlapped != null)
+            {
+                messages.Add(overlapped);
+            }
+
+            for (int i = 0; i < messages.Count; i++)
+            {
+                int c = 0;
+                while (GetCount(messages[i]) >= 4)
+                {
+                    char rnd = m_Ext[m_Random.Next(m_Ext.Length)];
+                    messages[i] += rnd;
+                    c++;
+                }
+            }
+
 
             return messages;
         }
@@ -127,7 +175,7 @@ namespace Fluid
         /// <param name="message">The message to say</param>
         public void Say(string message, string prefix = "")
         {
-            List<string> messageSegments = SplitMessage(message, 80 - prefix.Length);
+            List<string> messageSegments = SplitMessage(message, 80 - prefix.Length, 5);
             Task chatTask = Task.Run(delegate()
             {
                 for (int i = 0; i < messageSegments.Count; i++)

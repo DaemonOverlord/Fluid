@@ -165,7 +165,8 @@ namespace Fluid.Physics
                         m_WorldConnection.RaiseEventAsync<PhysicsUpdateEvent>(updateEvent);
                     }
 
-                    if (EventMode == PhysicsEventMode.Send)
+                    if (EventMode == PhysicsEventMode.Send &&
+                        m_WorldConnection.Me != null)
                     {
                         PlayerOverlaps(m_WorldConnection.Me);
                     }

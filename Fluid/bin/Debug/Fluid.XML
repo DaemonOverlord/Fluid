@@ -4401,12 +4401,13 @@
             </summary>
             <param name="chatMessage"></param>
         </member>
-        <member name="M:Fluid.ChatManager.SplitMessage(System.String,System.Int32)">
+        <member name="M:Fluid.ChatManager.SplitMessage(System.String,System.Int32,System.Int32)">
             <summary>
             Splits a message up into segments by length
             </summary>
             <param name="message">The message</param>
             <param name="length">Segment length</param>
+            <param name="offset">Offset length used for adding unique characters</param>
             <returns>The message segments</returns>
         </member>
         <member name="M:Fluid.ChatManager.Say(System.String,System.String)">

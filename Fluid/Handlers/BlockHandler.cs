@@ -56,17 +56,20 @@ namespace Fluid.Handlers
 
             if (!handled)
             {
-                Block old = world[x, y, layer];
-                if (old.ID == BlockIDs.Action.Coins.Gold ||
-                    old.ID == BlockIDs.Action.Coins.Blue)
+                if (world != null)
                 {
-                    if (blockId != old.ID)
+                    Block old = world[x, y, layer];
+                    if (old.ID == BlockIDs.Action.Coins.Gold ||
+                        old.ID == BlockIDs.Action.Coins.Blue)
                     {
-                        worldCon.Physics.RemoveCoin(old);
+                        if (blockId != old.ID)
+                        {
+                            worldCon.Physics.RemoveCoin(old);
+                        }
                     }
-                }
 
-                world.SetBlock(block);               
+                    world.SetBlock(block);
+                }
             }
 
             worldCon.CheckBlock(block);

@@ -2,6 +2,7 @@
 using Fluid.Room;
 using Fluid.ServerEvents;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,20 +14,21 @@ namespace Fluid.Demo
         public static void Main()
         {
             FluidClient c = new FluidClient(new GuestAuth());
+            c.Config.AddProfilesToDatabase = true;
+
             if (c.LogIn())
             {
-                var con = c.GetWorldConnection("PWAEQiKc2Ma0I");
+                var con = c.GetWorldConnection("PWyiCdOcZEbEI");
+                con.Physics.EventMode = Physics.PhysicsEventMode.Send;
                 con.Join();
 
-                for (int x = 0; x < 200; x++)
+                for (int i = 0; i < 20; i++)
                 {
-                    con.UploadBlockAsync(BlockIDs.Blocks.Basic.Purple, x, 0, 10);
+                    con.Say("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at gravida felis. Pellentesque condimentum vulputate diam, nec ullamcorper nulla volutpat eu. Nunc posuere lobortis quam, a vehicula mi aliquet vel.");
                 }
 
-                con.Uploader.WaitForBlocks();
+                Console.ReadKey();
             }
-
-            Console.ReadKey();
         }
     }
 }
