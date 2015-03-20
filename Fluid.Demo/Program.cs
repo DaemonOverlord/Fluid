@@ -18,17 +18,22 @@ namespace Fluid.Demo
 
             if (c.LogIn())
             {
-                var con = c.GetWorldConnection("PWyiCdOcZEbEI");
-                con.Physics.EventMode = Physics.PhysicsEventMode.Send;
+                var con = c.GetWorldConnection("PWjF93CG-2a0I");
                 con.Join();
 
-                for (int i = 0; i < 20; i++)
+                bool blue = false;
+                while (true)
                 {
-                    con.Say("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at gravida felis. Pellentesque condimentum vulputate diam, nec ullamcorper nulla volutpat eu. Nunc posuere lobortis quam, a vehicula mi aliquet vel.");
-                }
+                    for (int i = 0; i < 18; i++)
+                    {
+                        con.UploadBlock((blue) ? BlockIDs.Action.Coins.Blue : BlockIDs.Action.Coins.Gold, 1, i + 1, 10);
+                    }
 
-                Console.ReadKey();
+                    blue = !blue;
+                }
             }
+
+            Console.ReadKey();
         }
     }
 }
