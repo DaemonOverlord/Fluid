@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Fluid.Auth;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fluid.Auth;
-using System.Collections.Generic;
 
 namespace Fluid.Tests
 {

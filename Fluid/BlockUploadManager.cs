@@ -111,6 +111,13 @@ namespace Fluid
                 //Check queue for the oldest unattempted send
                 for (int i = 0; i < m_Queue.Count; i++)
                 {
+                    if (m_Queue[i] == null)
+                    {
+                        m_Queue.RemoveAt(i);
+                        i--;
+                        continue;
+                    }
+
                     if (!m_Queue[i].HasBeenSent)
                     {
                         return m_Queue[i];
@@ -119,6 +126,23 @@ namespace Fluid
             }
 
             return null;
+        }
+
+        private bool RemoveFromQueue(Block b)
+        {
+            lock (m_Queue)
+            {
+                for (int i = 0; i < m_Queue.Count; i++)
+                {
+                    if (m_Queue[i].Block.EqualsBlock(b))
+                    {
+                        m_Queue.RemoveAt(i);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -161,30 +185,29 @@ namespace Fluid
                     else if (send.Missed)
                     {
                         bool removed = false;
-                        Block existing = m_WorldConnection.World[send.Block.X, send.Block.Y, send.Block.Layer];
-                        if (existing.EqualsBlock(send.Block))
+                        Block ex1 = m_WorldConnection.World[send.Block.X, send.Block.Y, send.Block.Layer];
+                        if (ex1.EqualsBlock(send.Block))
                         {
-                            lock (m_Queue)
-                            {
-                                for (int i = 0; i < m_Queue.Count; i++)
-                                {
-                                    if (m_Queue[i].Block.EqualsBlock(send.Block))
-                                    {
-                                        m_Queue.RemoveAt(i);
-                                        removed = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (removed)
-                        {
+                            RemoveFromQueue(send.Block);
                             continue;
                         }
                     }
 
+                    if (!m_WorldConnection.World.CanPlace(send.Block))
+                    {
+                        RemoveFromQueue(send.Block);
+                        continue;
+                    }
+
                     send.Request();
+
+                    Block ex2 = m_WorldConnection.World[send.Block.X, send.Block.Y, send.Block.Layer];
+                    if (ex2.EqualsBlock(send.Block))
+                    {
+                        RemoveFromQueue(send.Block);
+                        continue;
+                    }
+
                     m_WorldConnection.UploadBlockRequest(send);
                 }
             }
@@ -197,9 +220,12 @@ namespace Fluid
                 m_WorldConnection.Client.Log.Add(FluidLogCategory.Fail, ex.Message);
             }
 
-            //Dispose of timeout event
-            m_TimeoutEvent.Dispose();
-            m_TimeoutEvent = null;
+            if (m_TimeoutEvent != null)
+            {
+                //Dispose of timeout event
+                m_TimeoutEvent.Dispose();
+                m_TimeoutEvent = null;
+            }
 
             //Clear the queue
             m_Queue.Clear();
@@ -303,7 +329,6 @@ namespace Fluid
                                 if (m_Queue[i].Block.EqualsBlock(block))
                                 {
                                     m_Queue.RemoveAt(i);
-                                    i--;
                                     break;
                                 }
                                 else

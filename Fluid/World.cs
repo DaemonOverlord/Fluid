@@ -296,6 +296,75 @@ namespace Fluid
         }
 
         /// <summary>
+        /// Calculates whether the block can be placed successfully
+        /// </summary>
+        /// <param name="block">The block</param>
+        public bool CanPlace(Block block)
+        {
+            string package = ItemInfo.GetBlockPack(block.ID);
+
+            if (IsBorderBlock(block))
+            {               
+                switch (package)
+                {
+                    case "":
+                    case "pro":
+                        return true;
+                }
+
+                switch (block.ID)
+                {
+                    case BlockIDs.Blocks.Brick.Black:
+                    case BlockIDs.Blocks.Brick.Blue:
+                    case BlockIDs.Blocks.Brick.DarkGreen:
+                    case BlockIDs.Blocks.Brick.DirtBrown:
+                    case BlockIDs.Blocks.Brick.Gray:
+                    case BlockIDs.Blocks.Brick.LightGreen:
+                    case BlockIDs.Blocks.Brick.PaleBrown:
+                    case BlockIDs.Blocks.Brick.Purple:
+                    case BlockIDs.Blocks.Brick.Red:
+                        return true;
+                }
+
+                return false;
+            }
+
+            if (!m_Client.HasBlock(block.ID))
+            {
+                return false;
+            }
+
+            if (block.Layer == Layer.Background)
+            {
+                return true;
+            }
+
+            int blocksOwned = m_Client.CountBlock(block.ID);
+            if (blocksOwned == -1)
+            {
+                return true;
+            }
+            else if (blocksOwned == 0)
+            {
+                return false;
+            }        
+
+            int placed = 0;
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    if (m_WorldData[x, y, 0].ID == block.ID)
+                    {
+                        placed++;
+                    }
+                }
+            }
+
+            return placed < blocksOwned;
+        }
+
+        /// <summary>
         /// Gets the world type from the world's width and height
         /// </summary>
         internal WorldType GetWorldType(int width, int height)

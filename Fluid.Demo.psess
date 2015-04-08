@@ -71,6 +71,9 @@
     <Report>
       <Path>Fluid.Demo150306.vspx</Path>
     </Report>
+    <Report>
+      <Path>Fluid.Demo150405.vspx</Path>
+    </Report>
   </Reports>
   <Launches>
     <ProjBinary>

@@ -804,6 +804,11 @@ namespace Fluid.Physics
                             bool alreadyCollected = false;
                             for (int i = 0; i < worldPlayer.CollectedBlueCoins.Count; i++)
                             {
+                                if (i >= worldPlayer.CollectedBlueCoins.Count)
+                                {
+                                    break;
+                                }
+
                                 if (worldPlayer.CollectedBlueCoins[i].X == cx &&
                                     worldPlayer.CollectedBlueCoins[i].Y == cy)
                                 {
@@ -1192,11 +1197,14 @@ namespace Fluid.Physics
                                 break;
                             case BlockIDs.Action.Doors.Switch:
                                 {
-                                    PurpleBlock purpleBlock = (PurpleBlock)World[x, y, Layer.Foreground];
-
-                                    if (p.m_switches[purpleBlock.SwitchID])
+                                    if (World[x, y, Layer.Foreground] is PurpleBlock)
                                     {
-                                        continue;
+                                        PurpleBlock purpleBlock = (PurpleBlock)World[x, y, Layer.Foreground];
+
+                                        if (p.m_switches[purpleBlock.SwitchID])
+                                        {
+                                            continue;
+                                        }
                                     }
                                 }
                                 break;

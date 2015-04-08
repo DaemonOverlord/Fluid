@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text;
-using Id = System.Int32;
 
 namespace Fluid
 {
@@ -176,22 +175,6 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Gets the layer of a block id
-        /// </summary>
-        /// <param name="blockId">The block id</param>
-        /// <returns>The layer of the block</returns>
-        public Layer GetBlockLayer(BlockID blockId)
-        {
-            int id = (int)blockId;
-            if (500 <= id && id <= 700)
-            {
-                return Layer.Background;
-            }
-
-            return Layer.Foreground;
-        }
-
-        /// <summary>
         /// Sends a block to the world synchronouslyu
         /// </summary>
         /// <param name="id">The block id</param>
@@ -201,7 +184,7 @@ namespace Fluid
         [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(BlockID id, int x, int y)
         {
-            this.UploadBlock(new Block(id, GetBlockLayer(id), x, y));
+            this.UploadBlock(Block.Create(this, id, x, y));
         }
 
         /// <summary>
@@ -215,7 +198,7 @@ namespace Fluid
         [Obsolete("Uploading synchronously does not guarantee the success of this block being uploaded. Use UploadBlockAsync instead.")]
         public void UploadBlock(BlockID id, int x, int y, int blockThrottle)
         {
-            this.UploadBlock(new Block(id, GetBlockLayer(id), x, y), blockThrottle);
+            this.UploadBlock(Block.Create(this, id, x, y), blockThrottle);
         }
 
         /// <summary>
@@ -276,7 +259,7 @@ namespace Fluid
         /// <param name="y">The y coordinate</param>
         public void UploadBlockAsync(BlockID id, int x, int y)
         {
-            this.UploadBlockAsync(new Block(this, id, GetBlockLayer(id), x, y));
+            this.UploadBlockAsync(Block.Create(this, id, x, y));
         }
 
         /// <summary>
@@ -289,7 +272,7 @@ namespace Fluid
         /// <param name="blockThrottle">The speed at which to upload the block in milliseconds</param>
         public void UploadBlockAsync(BlockID id, int x, int y, int blockThrottle)
         {
-            this.UploadBlockAsync(new Block(this, id, GetBlockLayer(id), x, y), blockThrottle);
+            this.UploadBlockAsync(Block.Create(this, id, x, y), blockThrottle);
         }
 
         /// <summary>

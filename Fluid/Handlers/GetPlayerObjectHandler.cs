@@ -46,7 +46,7 @@ namespace Fluid.Handlers
 
             pom.HomeWorld = new WorldReference(connectionBase.Client, message.GetString(14));
 
-            string[] worldList = message.GetString(16).Split(',');
+            string[] worldList = message.GetString(16).Split('|');
             pom.OwnedWorlds = new WorldReference[worldList.Length];
             for (int i = 0; i < worldList.Length; i++)
             {

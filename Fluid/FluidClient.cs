@@ -20,7 +20,6 @@ namespace Fluid
         private FluidLog m_Log;
         private FluidParser m_Parser;
         private FluidToolbelt m_Toolbelt;
-        private FluidShopInfo m_ShopInfo;
         private FluidPlayerDatabase m_PlayerDatabase;
 
         private Player m_Player;
@@ -405,72 +404,10 @@ namespace Fluid
         }
 
         /// <summary>
-        /// Attempts to locate the database
-        /// </summary>
-        /// <returns>The path of the database if found; otherwise null</returns>
-        internal string FindDatabase()
-        {
-            string currentDirectory = Directory.GetCurrentDirectory();
-
-            DirectoryInfo parentDir = Directory.GetParent(currentDirectory);
-
-            int roots = 0;
-            while (roots < 2)
-            {
-                if (parentDir.Parent == null)
-                {
-                    return null;
-                }
-
-                parentDir = parentDir.Parent;
-                roots++;
-            }
-
-            string[] dirs = Directory.GetDirectories(parentDir.FullName);
-            for (int i = 0; i < dirs.Length; i++)
-            {
-                string dirName = Path.GetFileName(dirs[i]);
-                if (string.Compare(dirName, "packages", false) == 0)
-                {
-                    //Found packages folder
-                    string[] packages = Directory.GetDirectories(dirs[i]);
-                    for (int j = 0; j < packages.Length; j++)
-                    {
-                        //Found fluid package
-                        string packageName = Path.GetFileName(packages[j]);
-                        if (packageName.Contains("Fluid"))
-                        {
-                            string[] fluidDirs = Directory.GetDirectories(packages[j]);
-                            for (int k = 0; k < fluidDirs.Length; k++)
-                            {
-                                string fluidDirName = Path.GetFileName(fluidDirs[k]);
-                                if (string.Compare(fluidDirName, "build", false) == 0)
-                                {
-                                    //Found fluid build folder
-                                    string[] buildFiles = Directory.GetFiles(fluidDirs[k]);
-                                    for (int l = 0; l < buildFiles.Length; l++)
-                                    {
-                                        string buildFileExt = Path.GetExtension(buildFiles[l]);
-                                        if (string.Compare(buildFileExt, ".db", false) == 0)
-                                        {
-                                            return buildFiles[l];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Event handler for when a client is created
         /// </summary>
         /// <param name="client">The created client</param>
-        internal void ClientCreated(Client client)
+        private void OnClientCreated(Client client)
         {
             this.m_Client = client;
             m_LoginHandle.Set();
@@ -480,7 +417,7 @@ namespace Fluid
         /// Event handler for when a playerio error is received
         /// </summary>
         /// <param name="error">The playerio error</param>
-        internal void PlayerIOErrorReceived(PlayerIOError error)
+        private void OnPlayerIOErrorReceived(PlayerIOError error)
         {
             m_Log.Add(FluidLogCategory.Fail, error.Message);
             m_LoginHandle.Set();
@@ -508,7 +445,7 @@ namespace Fluid
             if (m_Client == null)
             {
                 m_LoginHandle = new ManualResetEvent(false);
-                Auth.LogIn(m_Config, new Callback<Client>(ClientCreated), new Callback<PlayerIOError>(PlayerIOErrorReceived));
+                Auth.LogIn(m_Config, new Callback<Client>(OnClientCreated), new Callback<PlayerIOError>(OnPlayerIOErrorReceived));
 
                 m_LoginHandle.WaitOne(10000);
                 if (m_Client == null)
@@ -519,29 +456,18 @@ namespace Fluid
 
                 m_LoggedIn = true;
                 m_Client.Multiplayer.UseSecureConnections = useSecureConnection;
+                m_Client.PayVault.Refresh();
 
                 if (!m_PlayerDatabase.Connected)
                 {
-                    //Check if database exists
-                    if (File.Exists("gDat.db"))
+                    string databaseFile = ExternalResources.FindFile("gDat.db");
+                    if (databaseFile != null)
                     {
-                        m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt, "gDat.db"));
+                        m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt, databaseFile));
                     }
                     else
                     {
-                        m_Log.Add(FluidLogCategory.Message, "Database not in filepath, attempting to locate database in nuget package.");
-
-                        //Try and locate from nuget build
-                        string nugetPath = FindDatabase();
-                        if (nugetPath != null)
-                        {
-                            m_Log.Add(FluidLogCategory.Message, "Found database.");
-                            m_Toolbelt.RunSafe(() => m_PlayerDatabase.Connect(m_Toolbelt, nugetPath));      
-                        }
-                        else
-                        {
-                            m_Log.Add(FluidLogCategory.Fail, "Database could not be loaded. You can download the latest database from https://github.com/ThyChief/Fluid");
-                        }
+                        m_Log.Add(FluidLogCategory.Message, "Could not file the player database file. Please make the file is in the nuget package's \"build\" folder or in the same directory as the program.");
                     }
                 }
 
@@ -610,12 +536,13 @@ namespace Fluid
         /// Checks to see if the player has a block
         /// </summary>
         /// <param name="blockId">The block id</param>
-        /// <returns></returns>
-        public bool HasBlock(BlockID blockId)
+        /// <param name="refreshPayvault">Whether to reload the payvault</param>
+        /// <returns>True is the block is owned; otherwise false</returns>
+        public bool HasBlock(BlockID blockId, bool refreshPayvault = false)
         {
             int block = (int)blockId;
 
-            int[] defaultBlocks = m_ShopInfo.GetDefaultBlocks();
+            int[] defaultBlocks = ItemInfo.GetDefaultBlocks();
             for (int i = 0; i < defaultBlocks.Length; i++)
             {
                 if (defaultBlocks[i] == block)
@@ -624,14 +551,74 @@ namespace Fluid
                 }
             }
 
-            string blockPack = m_ShopInfo.GetBlockPack(blockId);
+            string blockPack = ItemInfo.GetBlockPack(blockId);
             if (blockPack == null)
             {
                 return false;
             }
 
-            m_Client.PayVault.Refresh();
+            if (refreshPayvault)
+            {
+                m_Client.PayVault.Refresh();
+            }
+
             return m_Client.PayVault.Has(blockPack);
+        }
+
+        /// <summary>
+        /// Counts the amount of blocks owned
+        /// </summary>
+        /// <param name="blockId">The block id</param>
+        /// <param name="refreshPayvault">Whether to reload the payvault</param>
+        /// <returns>The number of blocks owned; -1 if no limit</returns>
+        public int CountBlock(BlockID blockId, bool refreshPayvault = false)
+        {
+            int block = (int)blockId;
+
+            int[] defaultBlocks = ItemInfo.GetDefaultBlocks();
+            for (int i = 0; i < defaultBlocks.Length; i++)
+            {
+                if (defaultBlocks[i] == block)
+                {
+                    return -1;
+                }
+            }
+
+            string package = ItemInfo.GetBlockPack(blockId);
+            if (package == null)
+            {
+                return -1;
+            }
+
+            if (refreshPayvault)
+            {
+                m_Client.PayVault.Refresh();
+            }
+
+            int multiplier = 1;
+            switch (package)
+            {
+                case "brickcoindoor":
+                case "brickbluecoindoor":
+                case "brickswitchpurple":
+                case "brickdeathdoor":
+                case "bricktimeddoor":
+                case "brickzombiedoor":
+                case "brickcoingate":
+                case "brickbluecoingate":
+                case "brickspike":
+                case "brickfire":
+                    multiplier = 10;
+                    break;
+                case "brickportal":
+                case "brickinvisibleportal":
+                    multiplier = 5;
+                    break;
+            }
+
+            int count = m_Client.PayVault.Count(package);
+
+            return count * multiplier;
         }
 
         /// <summary>
@@ -641,7 +628,7 @@ namespace Fluid
         /// <returns>The block pack name</returns>
         public string GetBlockPack(BlockID blockId)
         {
-            return m_ShopInfo.GetBlockPack(blockId);
+            return ItemInfo.GetBlockPack(blockId);
         }
 
         /// <summary>
@@ -651,7 +638,7 @@ namespace Fluid
         /// <returns></returns>
         public bool HasSmiley(FaceID smiley)
         {
-            string smileyPack = m_ShopInfo.GetSmileyId(smiley);
+            string smileyPack = ItemInfo.GetSmileyId(smiley);
             if (smileyPack == null)
             {
                 return false;
@@ -671,7 +658,7 @@ namespace Fluid
         /// <param name="smiley">The smiley</param>
         public string GetSmileyPackName(FaceID smiley)
         {
-            return m_ShopInfo.GetSmileyId(smiley);
+            return ItemInfo.GetSmileyId(smiley);
         }
 
         /// <summary>
@@ -824,7 +811,6 @@ namespace Fluid
             m_Config = new Config();        
             m_Parser = new FluidParser();
             m_Toolbelt = new FluidToolbelt();
-            m_ShopInfo = new FluidShopInfo();
             m_PlayerDatabase = new FluidPlayerDatabase(this, m_Log);
         }
     }

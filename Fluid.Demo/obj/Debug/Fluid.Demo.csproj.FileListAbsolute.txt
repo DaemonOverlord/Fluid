@@ -1,6 +1,4 @@
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.exe.config
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.exe
-C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.exe
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.Demo.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Fluid.dll
@@ -22,3 +20,5 @@ C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\Newtonsoft.Jso
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Base.pdb
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\bin\Debug\PcapDotNet.Base.xml
 C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.csprojResolveAssemblyReference.cache
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.exe
+C:\Users\Austin Green\Documents\GitHub\Fluid\Fluid.Demo\obj\Debug\Fluid.Demo.pdb

@@ -73,6 +73,7 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -95,7 +96,10 @@
     <Compile Include="Auth\MousebreakerApiData.cs" />
     <Compile Include="Auth\MousebreakerAuth.cs" />
     <Compile Include="Auth\SimpleAuth.cs" />
+    <Compile Include="BlockImage.cs" />
     <Compile Include="BlockRequest.cs" />
+    <Compile Include="ComparisonMethod.cs" />
+    <Compile Include="ExternalResources.cs" />
     <Compile Include="Room\Block.cs" />
     <Compile Include="Room\BlockID.cs" />
     <Compile Include="Room\CoinBlock.cs" />
@@ -141,7 +145,7 @@
     <Compile Include="QuickChatMessage.cs" />
     <Compile Include="FluidRect.cs" />
     <Compile Include="SecureConnection.cs" />
-    <Compile Include="FluidShopInfo.cs" />
+    <Compile Include="ItemInfo.cs" />
     <Compile Include="FluidToolbelt.cs" />
     <Compile Include="FluidWire.cs" />
     <Compile Include="ServerEvents\PrivateMessageEvent.cs" />

@@ -2932,7 +2932,7 @@
                 /// <summary>
                 /// The black dark block
                 /// </summary>
-                public const BlockID Black = (BlockID)642;
+                public const BlockID Black = (BlockID)652;
             }
 
             /// <summary>

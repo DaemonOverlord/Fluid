@@ -295,6 +295,50 @@
             Gets or Sets the token
             </summary>
         </member>
+        <member name="M:Fluid.BlockImage.ValidPixel(System.Int32,System.Int32)">
+            <summary>
+            Checks if the x and y location is a valid pixel
+            </summary>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <returns>True if value; otherwise false</returns>
+        </member>
+        <member name="M:Fluid.BlockImage.GetPixel(System.Int32,System.Int32)">
+            <summary>
+            Gets a pixel at a x and y coordinate
+            </summary>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <returns>The color of the block at the coordinate</returns>
+        </member>
+        <member name="P:Fluid.BlockImage.Width">
+            <summary>
+            Gets the block image's width
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockImage.Height">
+            <summary>
+            Gets the block image's height
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockImage.Values">
+            <summary>
+            Gets the color values of the image
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockImage.Image">
+            <summary>
+            Gets the image as a System.Drawing.Image
+            </summary>
+        </member>
+        <member name="P:Fluid.BlockImage.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets a pixel at a x and y coordinate
+            </summary>
+            <param name="x">The x coordinate</param>
+            <param name="y">The y coordinate</param>
+            <returns>The color of the block at the coordinate</returns>
+        </member>
         <member name="M:Fluid.BlockRequest.SetMissed">
             <summary>
             Sets the block as missed
@@ -342,11 +386,30 @@
             Gets or sets whether the block has been sent
             </summary>
         </member>
+        <member name="M:Fluid.ExternalResources.FindFile(System.String)">
+            <summary>
+            Find's a file in the file system
+            </summary>
+            <param name="filename">The name of the file to find</param>
+            <returns>The file path</returns>
+        </member>
         <member name="M:Fluid.Room.Block.Location">
             <summary>
             Gets the location of the block
             </summary>
             <returns>The location of the block</returns>
+        </member>
+        <member name="M:Fluid.Room.Block.GetMinimapColor">
+            <summary>
+            Gets the minimap color
+            </summary>
+            <returns>The minimap color of the block if known; otherwise null</returns>
+        </member>
+        <member name="M:Fluid.Room.Block.GetImage">
+            <summary>
+            Gets the block image
+            </summary>
+            <returns>The image of the block if known; otherwise null</returns>
         </member>
         <member name="M:Fluid.Room.Block.Bind(Fluid.WorldConnection)">
             <summary>
@@ -389,6 +452,32 @@
             <param name="layer">The layer</param>
             <param name="x">The x coorindate</param>
             <param name="y">The y coordinate</param>
+        </member>
+        <member name="M:Fluid.Room.Block.GetBlockLayer(Fluid.Room.BlockID)">
+            <summary>
+            Gets the layer of a block id
+            </summary>
+            <param name="blockId">The block id</param>
+            <returns>The layer of the block</returns>
+        </member>
+        <member name="M:Fluid.Room.Block.Create(Fluid.Room.BlockID,System.Int32,System.Int32)">
+            <summary>
+            Creates a default block
+            </summary>
+            <param name="id">The id of the block</param>
+            <param name="x">The block x coordinate</param>
+            <param name="y">The block y coordinate</param>
+            <returns>The created block</returns>
+        </member>
+        <member name="M:Fluid.Room.Block.Create(Fluid.WorldConnection,Fluid.Room.BlockID,System.Int32,System.Int32)">
+            <summary>
+            Creates a default block
+            </summary>
+            <param name="con">The attached world connection</param>
+            <param name="id">The id of the block</param>
+            <param name="x">The block x coordinate</param>
+            <param name="y">The block y coordinate</param>
+            <returns>The created block</returns>
         </member>
         <member name="P:Fluid.Room.Block.ID">
             <summary>
@@ -4711,19 +4800,13 @@
             Loads all shop items owned asynchronously
             </summary>
         </member>
-        <member name="M:Fluid.FluidClient.FindDatabase">
-            <summary>
-            Attempts to locate the database
-            </summary>
-            <returns>The path of the database if found; otherwise null</returns>
-        </member>
-        <member name="M:Fluid.FluidClient.ClientCreated(PlayerIOClient.Client)">
+        <member name="M:Fluid.FluidClient.OnClientCreated(PlayerIOClient.Client)">
             <summary>
             Event handler for when a client is created
             </summary>
             <param name="client">The created client</param>
         </member>
-        <member name="M:Fluid.FluidClient.PlayerIOErrorReceived(PlayerIOClient.PlayerIOError)">
+        <member name="M:Fluid.FluidClient.OnPlayerIOErrorReceived(PlayerIOClient.PlayerIOError)">
             <summary>
             Event handler for when a playerio error is received
             </summary>
@@ -4771,12 +4854,21 @@
             Logs out of the game asynchronously
             </summary>
         </member>
-        <member name="M:Fluid.FluidClient.HasBlock(Fluid.Room.BlockID)">
+        <member name="M:Fluid.FluidClient.HasBlock(Fluid.Room.BlockID,System.Boolean)">
             <summary>
             Checks to see if the player has a block
             </summary>
             <param name="blockId">The block id</param>
-            <returns></returns>
+            <param name="refreshPayvault">Whether to reload the payvault</param>
+            <returns>True is the block is owned; otherwise false</returns>
+        </member>
+        <member name="M:Fluid.FluidClient.CountBlock(Fluid.Room.BlockID,System.Boolean)">
+            <summary>
+            Counts the amount of blocks owned
+            </summary>
+            <param name="blockId">The block id</param>
+            <param name="refreshPayvault">Whether to reload the payvault</param>
+            <returns>The number of blocks owned; -1 if no limit</returns>
         </member>
         <member name="M:Fluid.FluidClient.GetBlockPack(Fluid.Room.BlockID)">
             <summary>
@@ -4889,6 +4981,54 @@
             Gets the connection user id
             </summary>
         </member>
+        <member name="M:Fluid.FluidColor.GetLabValues">
+            <summary>
+            Gets the color's L*A*B* values
+            </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.CIE76(Fluid.FluidColor)">
+            <summary>
+            Implements the CIE76 method of delta-e: http://en.wikipedia.org/wiki/Color_difference#CIE76
+            </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.CIE94(Fluid.FluidColor)">
+            <summary>
+            Implements the Cie94 method of delta-e: http://en.wikipedia.org/wiki/Color_difference#CIE94
+            </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.CIEDE2000(Fluid.FluidColor)">
+            <summary>
+            Implements the DE2000 method of delta-e: http://en.wikipedia.org/wiki/Color_difference#CIEDE2000
+            Correct implementation provided courtesy of Jonathan Hofinger, jaytar42
+            </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.Cmc(Fluid.FluidColor)">
+            <summary>
+            Implements the CMC l:c (1984) method of delta-e: http://en.wikipedia.org/wiki/Color_difference#CMC_l:c_.281984.29
+            </summary>
+        </member>
+        <member name="M:Fluid.FluidColor.Compare``1(Fluid.ComparisonMethod,System.Func{``0,Fluid.FluidColor},``0[])">
+            <summary>
+            Compares this color to other colors and calculates the most similiar color
+            </summary>
+            <param name="method">The method for comparision</param>
+            <param name="colors">The list of colors</param>
+            <returns>The most similiar color</returns>
+        </member>
+        <member name="M:Fluid.FluidColor.Compare(Fluid.ComparisonMethod,Fluid.FluidColor[])">
+            <summary>
+            Compares this color to other colors and calculates the most similiar color
+            </summary>
+            <param name="method">The method for comparision</param>
+            <param name="colors">The list of colors</param>
+            <returns>The most similiar color</returns>
+        </member>
+        <member name="M:Fluid.FluidColor.Invert">
+            <summary>
+            Gets the inverse of the color
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Fluid.FluidColor.GetBrightness">
             <summary>
             Gets the brightness of the color
@@ -4909,7 +5049,7 @@
         </member>
         <member name="M:Fluid.FluidColor.Lerp(Fluid.FluidColor,System.Double)">
             <summary>
-            Linearly interpolates fits the color with another color
+            Linearly interpolates the color with another color
             </summary>
             <param name="color">The color</param>
             <param name="amount">The amount; a rate or time between 0 and 1</param>
@@ -4950,7 +5090,16 @@
             <param name="g">The green value</param>
             <param name="b">The blue value</param>
         </member>
-        <member name="M:Fluid.FluidColor.#ctor(System.UInt32)">
+        <member name="M:Fluid.FluidColor.#ctor(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Creates a new Fluid color
+            </summary>
+            <param name="a">The alpha value</param>
+            <param name="r">The red value</param>
+            <param name="g">The green value</param>
+            <param name="b">The blue value</param>
+        </member>
+        <member name="M:Fluid.FluidColor.#ctor(System.Int64)">
             <summary>
             Creates a new Fluid color
             </summary>
@@ -5940,25 +6089,50 @@
             <param name="client">The Fluid client</param>
             <param name="connection">The playerio connection</param>
         </member>
-        <member name="M:Fluid.FluidShopInfo.GetDefaultBlocks">
+        <member name="M:Fluid.ItemInfo.GetDefaultBlocks">
             <summary>
             Gets a list of default blocks
             </summary>
         </member>
-        <member name="M:Fluid.FluidShopInfo.GetBlockPack(Fluid.Room.BlockID)">
+        <member name="M:Fluid.ItemInfo.GetAllIDs">
+            <summary>
+            Gets all block ids
+            </summary>
+            <returns>The list of all block ids</returns>
+        </member>
+        <member name="M:Fluid.ItemInfo.GetBlockPack(Fluid.Room.BlockID)">
             <summary>
             Gets the corresponding block pack to a block id
             </summary>
             <param name="blockId">The block id</param>
             <returns>The corresponding block pack if found; otherwise null</returns>
         </member>
-        <member name="M:Fluid.FluidShopInfo.GetSmileyId(Fluid.FaceID)">
+        <member name="M:Fluid.ItemInfo.GetSmileyId(Fluid.FaceID)">
             <summary>
             Gets the smiley shop id
             </summary>
             <param name="smiley">The smiley</param>
         </member>
-        <member name="M:Fluid.FluidShopInfo.#ctor">
+        <member name="M:Fluid.ItemInfo.GetMinimapColor(Fluid.Room.BlockID)">
+            <summary>
+            Gets the minimap color that a block produces
+            </summary>
+            <param name="blockId">The block id</param>
+            <returns>The minimap color if known; otherwise null</returns>
+        </member>
+        <member name="M:Fluid.ItemInfo.GetBlockImage(Fluid.Room.BlockID)">
+            <summary>
+            Gets the block image for a block id
+            </summary>
+            <param name="blockId">The block id</param>
+            <returns>The block image if known; otherwise null</returns>
+        </member>
+        <member name="M:Fluid.ItemInfo.Color(Fluid.Room.BlockID)">
+            <summary>
+            Gets the minimap color of this id
+            </summary>
+        </member>
+        <member name="M:Fluid.ItemInfo.#cctor">
             <summary>
             Creates the shop info
             </summary>
@@ -6137,13 +6311,6 @@
             <param name="key">The key to activate</param>
             <param name="blockX">The key's x coordinate</param>
             <param name="blockY">The key's y coordinate</param>
-        </member>
-        <member name="M:Fluid.WorldConnection.GetBlockLayer(Fluid.Room.BlockID)">
-            <summary>
-            Gets the layer of a block id
-            </summary>
-            <param name="blockId">The block id</param>
-            <returns>The layer of the block</returns>
         </member>
         <member name="M:Fluid.WorldConnection.UploadBlock(Fluid.Room.BlockID,System.Int32,System.Int32)">
             <summary>
@@ -9557,6 +9724,12 @@
             Sets the block without sending the block to the server
             </summary>
             <param name="block">Block to set in the world</param>
+        </member>
+        <member name="M:Fluid.World.CanPlace(Fluid.Room.Block)">
+            <summary>
+            Calculates whether the block can be placed successfully
+            </summary>
+            <param name="block">The block</param>
         </member>
         <member name="M:Fluid.World.GetWorldType(System.Int32,System.Int32)">
             <summary>
